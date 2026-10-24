@@ -541,6 +541,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-lbl" data-i="Eyni mal təkrar oxunanda">Eyni mal təkrar oxunanda</div><div class="n-seg"><button type="button" data-k="dubl" data-v="artir" onclick="secim('dubl','artir')" data-i="Sayı artır">Sayı artır</button><button type="button" data-k="dubl" data-v="sorus" onclick="secim('dubl','sorus')" data-i="Soruş">Soruş</button><button type="button" data-k="dubl" data-v="xeber" onclick="secim('dubl','xeber')" data-i="Xəbərdarlıq">Xəbərdarlıq</button></div>
     <div class="n-lbl" data-i="Sayımda məbləğ qiyməti">Sayımda məbləğ qiyməti</div><div class="n-seg"><button type="button" data-k="sayQiy" data-v="alis" onclick="secim('sayQiy','alis')">Alış</button><button type="button" data-k="sayQiy" data-v="satis" onclick="secim('sayQiy','satis')">Satış</button></div>
     <div class="n-lbl" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</div><div class="n-card"><div class="n-f"><label for="cfgPin" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</label><input class="n-in" id="cfgPin" type="password" placeholder="••••" oninput="" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="pinQur()" data-i="Saxla">Saxla</button></div></div>
+    <div class="n-lbl">FTP server (1C ilə avtomatik mübadilə)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Proqram açılanda FTP-ni avtomatik işə sal</div><div style="font-size:12px;color:#64748b;margin-top:2px">Kök qovluq: TerminalFilesBarkodPRO</div></div><button type="button" id="sw_ftpAvto" class="n-sw" role="switch" aria-label="FTP avtomatik" onclick="tgl('ftpAvto')"></button></div><div class="n-f"><label for="cfgFtpPort">Port</label><input class="n-in" id="cfgFtpPort" type="number" inputmode="numeric" placeholder="2221" oninput="cfgSaxla()"></div><div class="n-f"><label for="cfgFtpUser">İstifadəçi adı</label><input class="n-in" id="cfgFtpUser" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgFtpPass">Parol</label><input class="n-in" id="cfgFtpPass" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><div id="ftpDurum" style="font-size:13px;font-weight:700;word-break:break-all"></div><div style="display:flex;gap:8px;margin-top:8px"><button class="n-btn" onclick="ftpBasla(true)">▶ Başlat / yenilə</button><button class="n-btn" onclick="ftpDayan()">■ Dayandır</button></div></div></div>
     <div class="n-lbl" data-i="Fayllar">Fayllar</div><div class="n-card"><div class="n-f" style="display:flex;flex-direction:column;gap:8px"><button class="n-btn" onclick="autoFayl(true)">🔄 Qovluqdan yenilə (mal, qalıq, kontragent)</button><button class="n-btn" onclick="ayarSaxla()" data-i="💾 Ayarları fayla saxla">💾 Ayarları fayla saxla</button><button class="n-btn" onclick="ayarYukle()" data-i="♻️ Ayarları geri yüklə">♻️ Ayarları geri yüklə</button><button class="n-btn" onclick="ehtiyatFayl()" data-i="🗂 Ehtiyat fayl yarat (gözləyən sənədlər)">🗂 Ehtiyat fayl yarat (gözləyən sənədlər)</button></div><div class="n-f" id="fsYolGor" style="font-size:12px;color:#64748b;word-break:break-all"></div></div>
     <input type="file" id="idxFayl" multiple accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="faylIdxal(this)">
     <input type="file" id="kontFayl" accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="kontFaylSec(this)">
@@ -2037,9 +2038,31 @@ malFaylYukle=function(){return autoFayl(true)};kontFaylYukle=malFaylYukle;
 function ustuGoster(){try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;var so=document.getElementById('sOp');if(so)so.scrollTop=0;
   var c=document.getElementById('listCont');if(c&&c.firstElementChild){var f=c.firstElementChild;f.classList.remove('nflash');void f.offsetWidth;f.classList.add('nflash')}}catch(e){}}
 function ustuQaldir(it){if(it){var i=siyahi.indexOf(it);if(i>0){siyahi.splice(i,1);siyahi.unshift(it)}}saxla();render();ustuGoster()}
+// ═══ Daxili FTP server (1C ilə avtomatik mübadilə) ═══
+DIRS=['EXTERNAL','DOCUMENTS','DATA'];
+if(CFG.ftpAvto===undefined)CFG.ftpAvto=true;CFG.ftpPort=CFG.ftpPort||2221;CFG.ftpUser=CFG.ftpUser||'terminal';if(CFG.ftpPass==null)CFG.ftpPass='terminal';
+var _ftp={running:false},_ftpDayandi=false;
+function ftpP(){var C=window.Capacitor;return C&&C.Plugins&&C.Plugins.FtpServer}
+function ftpGor(r){_ftp=r||{running:false};var e=document.getElementById('ftpDurum');
+  if(e){e.textContent=_ftp.running?'🟢 İşləyir: ftp://'+_ftp.ip+':'+_ftp.port+'  (istifadəçi: '+(CFG.ftpUser||'—')+')':'⚪ Dayanıb'+(_ftp.error?' — '+_ftp.error:'');e.style.color=_ftp.running?'#15803d':'#64748b'}
+  durumUI()}
+async function ftpBasla(goster){var P=ftpP();if(!P){if(goster)toast('FTP modulu bu APK-da yoxdur','err');return}
+  _ftpDayandi=false;
+  try{var r=await P.start({port:parseInt(CFG.ftpPort)||2221,user:CFG.ftpUser||'',pass:CFG.ftpPass||''});ftpGor(r);
+    if(goster)toast(r.running?'FTP işə düşdü: ftp://'+r.ip+':'+r.port:'FTP başlamadı: '+(r.error||'naməlum xəta'),r.running?'ok':'err')}
+  catch(e){toast('FTP xətası: '+(e&&e.message?e.message:e),'err')}}
+async function ftpDayan(){var P=ftpP();if(!P)return;_ftpDayandi=true;try{ftpGor(await P.stop())}catch(e){}toast('FTP dayandırıldı','info')}
+async function ftpDurum(){var P=ftpP();if(!P)return;try{var r=await P.status();ftpGor(r);if(CFG.ftpAvto&&!_ftpDayandi&&!r.running&&!r.error)ftpBasla(false)}catch(e){}}
+function ftpAvtoBasla(){if(CFG.ftpAvto!==false)ftpBasla(false)}
+var _du0=durumUI;durumUI=function(){var p=document.getElementById('durPill');if(!p)return;if(_ftp&&_ftp.running){p.className='n-pill ok';p.querySelector('span').textContent='FTP '+_ftp.ip+':'+_ftp.port}else _du0()};
+var _pd3=paramDoldur;paramDoldur=function(){_pd3();var w=document.getElementById('sw_ftpAvto');if(w){w.className='n-sw'+(CFG.ftpAvto?' on':'');w.setAttribute('aria-checked',CFG.ftpAvto?'true':'false')}
+  function sv(i,v){var e=document.getElementById(i);if(e)e.value=v==null?'':v}sv('cfgFtpPort',CFG.ftpPort);sv('cfgFtpUser',CFG.ftpUser);sv('cfgFtpPass',CFG.ftpPass);ftpGor(_ftp)};
+var _cs3=cfgSaxla;cfgSaxla=function(){_cs3();function g(i){var e=document.getElementById(i);return e?e.value.trim():null}
+  var p=g('cfgFtpPort');if(p!==null)CFG.ftpPort=parseInt(p)||2221;var u=g('cfgFtpUser');if(u!==null)CFG.ftpUser=u;var w=g('cfgFtpPass');if(w!==null)CFG.ftpPass=w;sj('anbar_cfg',CFG)};
+setInterval(ftpDurum,15000);
 function basla(){var ilk=!CFG.hazir&&!localStorage.getItem('anbar_cfg');
   if(CFG.ekran===undefined)CFG.ekran=true;if(CFG.bat===undefined)CFG.bat=true;if(CFG.ehtiyat===undefined)CFG.ehtiyat=true;CFG.dubl=CFG.dubl||'sorus';CFG.sayQiy=CFG.sayQiy||'alis';CFG.dil=CFG.dil||'az';LNG=CFG.dil;
-  modUI();init();homeStat();qovlugHazirla().then(function(){return autoFayl()});menuGor();trApply();durumYoxla();
+  modUI();init();homeStat();qovlugHazirla().then(function(){return autoFayl()}).then(function(){ftpAvtoBasla()});menuGor();trApply();durumYoxla();
   setInterval(durumYoxla,20000);setInterval(homeStat,15000);setInterval(ehtiyatDovr,600000);window.addEventListener('online',durumYoxla);wakeTetbiq();batIzle();
   if(ilk){paramDoldur();screenAc('sWizard')}else pinGoster()}
 restoreBackup().then(basla,basla);

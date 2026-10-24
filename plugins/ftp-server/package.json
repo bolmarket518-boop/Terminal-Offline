@@ -1,0 +1,8 @@
+{
+  "name": "ftp-server-plugin",
+  "version": "1.0.0",
+  "description": "BarkodPRO Terminal daxili FTP server (Capacitor plagini)",
+  "files": ["android/src/main/", "android/build.gradle"],
+  "capacitor": { "android": { "src": "android" } },
+  "peerDependencies": { "@capacitor/core": "^6.0.0" }
+}
