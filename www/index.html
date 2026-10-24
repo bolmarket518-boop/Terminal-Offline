@@ -265,7 +265,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 .n-btn{width:100%;min-height:44px;border-radius:12px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;font-size:14px;font-weight:700}
 .n-row{display:flex;width:100%;justify-content:space-between;align-items:center;border:0;border-top:1px solid #f1f5f9;background:#fff;padding:14px;font-size:14px;font-weight:600;color:#0f172a;text-align:left}.n-row:first-child{border-top:0}.n-row span{color:#94a3b8}
 .n-sw{position:relative;flex:none;width:44px;height:26px;border:0;border-radius:999px;background:#cbd5e1;padding:0}.n-sw.on{background:#1d4ed8}.n-sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s}.n-sw.on::after{left:20px}
-.n-stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.n-seg{display:flex;gap:4px;background:#e2e8f0;border-radius:12px;padding:4px}.n-seg button{flex:1;border:0;border-radius:9px;padding:9px 0;font-size:13px;font-weight:700;color:#475569;background:transparent}.n-seg button.on{background:#1d4ed8;color:#fff}.n-lab2{display:block;font-size:11.5px;font-weight:600;color:#64748b;margin-bottom:4px}.n-tb{width:100%;border-collapse:collapse;font-size:13px}.n-tb th,.n-tb td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left}.n-tb th{background:#f8fafc;color:#64748b;font-size:11.5px}#hesTar{display:flex}#secOd,#secHes,#modBtn,#pendBtn{display:none!important}@media (orientation:landscape){#spl img{object-fit:contain!important}}#sOp.sayim-mod .ep-pr{display:none}
+.n-stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.n-seg{display:flex;gap:4px;background:#e2e8f0;border-radius:12px;padding:4px}.n-seg button{flex:1;border:0;border-radius:9px;padding:9px 0;font-size:13px;font-weight:700;color:#475569;background:transparent}.n-seg button.on{background:#1d4ed8;color:#fff}.n-lab2{display:block;font-size:11.5px;font-weight:600;color:#64748b;margin-bottom:4px}.n-tb{width:100%;border-collapse:collapse;font-size:13px}.n-tb th,.n-tb td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left}.n-tb th{background:#f8fafc;color:#64748b;font-size:11.5px}#hesTar{display:flex}.nflash{animation:nflash 1.4s ease-out}@keyframes nflash{0%{background:#bfdbfe;box-shadow:0 0 0 3px #3b82f6}100%{background:transparent;box-shadow:none}}#secOd,#secHes,#modBtn,#pendBtn{display:none!important}@media (orientation:landscape){#spl img{object-fit:contain!important}}#sOp.sayim-mod .ep-pr{display:none}
 </style>
 </head>
 <body>
@@ -1230,7 +1230,7 @@ function ruSaxla(){
   saxla();hideAll();updBS('','');
   var eb=document.getElementById('elBarkod');if(eb)eb.value='';
   toast(ruMal.ad+': +'+fq(add)+' - cəmi '+fq(ruMal.say)+' ed','ok');
-  ruMal=null;render();
+  var ru0=ruMal;ruMal=null;ustuQaldir(ru0);
 }
 function ruLegv(){
   ruMal=null;hideAll();updBS('','');
@@ -1241,7 +1241,7 @@ function siyahiyaElave(){
   if(!curMal)return;
   var qi=document.getElementById('qtyInp');
   qty=pq(qi?qi.value:'1',1);
-  siyahi.push({barkod:curMal.barkod,ad:curMal.ad,say:qty,alis:curMal.alis,satis:curMal.satis,yeni:false,code:curMal.code||''});
+  siyahi.unshift({barkod:curMal.barkod,ad:curMal.ad,say:qty,alis:curMal.alis,satis:curMal.satis,yeni:false,code:curMal.code||''});setTimeout(function(){ustuGoster()},60);
   toast(curMal.ad+' - '+fq(qty)+' ed','ok');
   saxla();hideAll();updBS('','');
   var eb=document.getElementById('elBarkod');if(eb)eb.value='';
@@ -1259,7 +1259,7 @@ function yeniMalElave(){
   if(!ad||!barkod){toast('Ad və barkod mütləqdir!','err');return;}
   mallar.push({barkod:barkod,ad:ad,alis:alis,satis:satis});
   sj(MK,mallar);
-  siyahi.push({barkod:barkod,ad:ad,say:say,alis:alis,satis:satis,yeni:true});
+  siyahi.unshift({barkod:barkod,ad:ad,say:say,alis:alis,satis:satis,yeni:true});setTimeout(function(){ustuGoster()},60);
   saxla();hideAll();updBS('','');
   var eb=document.getElementById('elBarkod');if(eb)eb.value='';
   setST(mallar.length+' mal yüklü');
@@ -1893,7 +1893,7 @@ function tgl(k){CFG[k]=!CFG[k];sj('anbar_cfg',CFG);paramDoldur();if(k==='ekran')
 function faylDeyis(){tgl('fayl')}
 function secim(k,v){CFG[k]=v;sj('anbar_cfg',CFG);if(k==='dil'){LNG=v;trApply();durumUI();modUI()}paramDoldur()}
 function dubl(x){var r=CFG.dubl||'sorus';if(curOp==='sayim')r='artir';
-  if(r==='artir'){x.say=(x.say||0)+1;beep(true);saxla();render();toast(x.ad+': '+x.say,'ok');return}
+  if(r==='artir'){x.say=(x.say||0)+1;beep(true);toast(x.ad+': '+x.say,'ok');ustuQaldir(x);return}
   if(r==='xeber'){beep(false);if(navigator.vibrate)navigator.vibrate(200);toast(t('Bu mal artıq siyahıdadır'),'warn');return}
   beep(true);showUpdate(x)}
 // giriş açarı: HMAC-SHA256(açar, vaxt+yol)
@@ -1956,7 +1956,7 @@ function sayimQiy(){return CFG.sayQiy==='satis'?'satis':'alis'}
 function sayimOxu(m){var ex=siyahi.find(function(x){return x.barkod===m.barkod&&(x.code||'')===(m.code||'')});
   if(ex){ex.say=(ex.say||0)+1;toast(ex.ad+': '+fq(ex.say),'ok')}
   else{siyahi.unshift({barkod:m.barkod,ad:m.ad,say:1,alis:m.alis,satis:m.satis,yeni:false,code:m.code||'',sis:m.qaliq||0});toast(m.ad+': 1','ok')}
-  beep(true);saxla();render()}
+  beep(true);ustuQaldir(ex||siyahi[0])}
 function sayimChips(it){if(it.sis==null){var mm=mallar.find(function(x){return x.barkod===it.barkod&&(x.code||'')===(it.code||'')})||mallar.find(function(x){return x.barkod===it.barkod});it.sis=mm?(mm.qaliq||0):0}
   var f=Math.round(((it.say||0)-(it.sis||0))*1000)/1000,c=f===0?'#15803d':(f<0?'#b91c1c':'#b45309');
   return '<span class="chip chip-say">Sayılan: '+fq(it.say)+'</span><span class="chip" style="background:#e2e8f0;color:#334155">Sistem: '+fq(it.sis||0)+'</span><span class="chip" style="background:#fff;border:1px solid '+c+';color:'+c+'">Fərq: '+(f>0?'+':'')+fq(f)+'</span>'}
@@ -2033,6 +2033,10 @@ autoFayl=async function(force){
     homeStat();try{ktRender()}catch(e4){}
   }catch(e){}};
 malFaylYukle=function(){return autoFayl(true)};kontFaylYukle=malFaylYukle;
+// ═══ Skan olunan mal siyahının başına gəlir və ekran yuxarı qalxır ═══
+function ustuGoster(){try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;var so=document.getElementById('sOp');if(so)so.scrollTop=0;
+  var c=document.getElementById('listCont');if(c&&c.firstElementChild){var f=c.firstElementChild;f.classList.remove('nflash');void f.offsetWidth;f.classList.add('nflash')}}catch(e){}}
+function ustuQaldir(it){if(it){var i=siyahi.indexOf(it);if(i>0){siyahi.splice(i,1);siyahi.unshift(it)}}saxla();render();ustuGoster()}
 function basla(){var ilk=!CFG.hazir&&!localStorage.getItem('anbar_cfg');
   if(CFG.ekran===undefined)CFG.ekran=true;if(CFG.bat===undefined)CFG.bat=true;if(CFG.ehtiyat===undefined)CFG.ehtiyat=true;CFG.dubl=CFG.dubl||'sorus';CFG.sayQiy=CFG.sayQiy||'alis';CFG.dil=CFG.dil||'az';LNG=CFG.dil;
   modUI();init();homeStat();qovlugHazirla().then(function(){return autoFayl()});menuGor();trApply();durumYoxla();
