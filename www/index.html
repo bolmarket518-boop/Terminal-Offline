@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Anbar Terminal</title>
+<title>Android Terminal</title>
 <style>
 html{font-size:14px;-webkit-text-size-adjust:100%}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -275,7 +275,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 
 <!-- ══ ANA EKRAN ══ -->
 <div class="screen active" id="sHome">
-  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" width="40" height="40" style="border-radius:10px;display:block" onerror="this.style.display='none'"><div><div class="n-t">Anbar Terminal</div><div class="n-s" id="homeSub">Mal bazası yüklənməyib</div></div></div><div class="n-pill" id="durPill"><i></i><span>Yoxlanılır</span></div></div>
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" width="40" height="40" style="border-radius:10px;display:block" onerror="this.style.display='none'"><div><div class="n-t">Terminal BarkodPRO</div><div class="n-s" id="homeSub">Mal bazası yüklənməyib</div></div></div><div class="n-pill" id="durPill"><i></i><span>Yoxlanılır</span></div></div>
   <div class="n-body">
     <div class="n-stats3"><div class="n-st"><b id="stGoz">0</b><span data-i="Qovluqda sənəd">Qovluqda sənəd</span></div><div class="n-st"><b id="stBug">0</b><span data-i="Bu gün sənəd">Bu gün sənəd</span></div><div class="n-st"><b id="stMal">0</b><span data-i="Mal sayı">Mal sayı</span></div></div>
     <button class="btn-home" id="ftpBtn" onclick="ftpTogl()" style="margin-top:12px"></button>
@@ -291,7 +291,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="sync-info" id="syncSt">—</div>
     <div class="n-lbl" data-i="Digər">Digər</div>
     <button class="btn-home" onclick="screenAc('sParam')" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="diagGor()" data-i="🩺 Diaqnostika" style="color:#374151">🩺 Diaqnostika</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
-    <div class="n-foot">Anbar Terminal v3.2<br><span data-i="Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.">Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.</span></div>
+    <div class="n-foot">Terminal BarkodPRO v3.2<br><span data-i="Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.">Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.</span></div>
   </div>
 </div>
 
@@ -543,7 +543,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-lbl" data-i="Sayımda məbləğ qiyməti">Sayımda məbləğ qiyməti</div><div class="n-seg"><button type="button" data-k="sayQiy" data-v="alis" onclick="secim('sayQiy','alis')">Alış</button><button type="button" data-k="sayQiy" data-v="satis" onclick="secim('sayQiy','satis')">Satış</button></div>
     <div class="n-lbl" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</div><div class="n-card"><div class="n-f"><label for="cfgPin" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</label><input class="n-in" id="cfgPin" type="password" placeholder="••••" oninput="" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="pinQur()" data-i="Saxla">Saxla</button></div></div>
     <div class="n-lbl">FTP server (1C ilə avtomatik mübadilə)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Proqram açılanda FTP-ni avtomatik işə sal</div><div style="font-size:12px;color:#64748b;margin-top:2px">Kök qovluq: TerminalFilesBarkodPRO</div></div><button type="button" id="sw_ftpAvto" class="n-sw" role="switch" aria-label="FTP avtomatik" onclick="tgl('ftpAvto')"></button></div><div class="n-f"><label for="cfgFtpPort">Port</label><input class="n-in" id="cfgFtpPort" type="number" inputmode="numeric" placeholder="2221" oninput="cfgSaxla()"></div><div class="n-f"><label for="cfgFtpUser">İstifadəçi adı</label><input class="n-in" id="cfgFtpUser" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgFtpPass">Parol</label><input class="n-in" id="cfgFtpPass" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><div id="ftpDurum" style="font-size:13px;font-weight:700;word-break:break-all"></div><div style="display:flex;gap:8px;margin-top:8px"><button class="n-btn" onclick="ftpBasla(true)">▶ Başlat / yenilə</button><button class="n-btn" onclick="ftpDayan()">■ Dayandır</button></div></div></div>
-    <div class="n-lbl" data-i="Fayllar">Fayllar</div><div class="n-card"><div class="n-f" style="display:flex;flex-direction:column;gap:8px"><button class="n-btn" onclick="autoFayl(true)">🔄 Qovluqdan yenilə (mal, qalıq, kontragent)</button><button class="n-btn" onclick="ayarSaxla()" data-i="💾 Ayarları fayla saxla">💾 Ayarları fayla saxla</button><button class="n-btn" onclick="ayarYukle()" data-i="♻️ Ayarları geri yüklə">♻️ Ayarları geri yüklə</button><button class="n-btn" onclick="ehtiyatFayl()" data-i="🗂 Ehtiyat fayl yarat (gözləyən sənədlər)">🗂 Ehtiyat fayl yarat (gözləyən sənədlər)</button></div><div class="n-f" id="fsYolGor" style="font-size:12px;color:#64748b;word-break:break-all"></div></div>
+    <div class="n-lbl" data-i="Fayllar">Fayllar</div><div class="n-card"><div class="n-f" style="display:flex;flex-direction:column;gap:8px"><button class="n-btn" onclick="autoFayl(true)">🔄 Məlumatları yenilə (mal, qalıq, kontragent)</button><button class="n-btn" onclick="ayarSaxla()" data-i="💾 Ayarları fayla saxla">💾 Ayarları fayla saxla</button><button class="n-btn" onclick="ayarYukle()" data-i="♻️ Ayarları geri yüklə">♻️ Ayarları geri yüklə</button><button class="n-btn" onclick="ehtiyatFayl()" data-i="🗂 Ehtiyat fayl yarat (gözləyən sənədlər)">🗂 Ehtiyat fayl yarat (gözləyən sənədlər)</button></div><div class="n-f" id="fsYolGor" style="font-size:12px;color:#64748b;word-break:break-all"></div></div>
     <input type="file" id="idxFayl" multiple accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="faylIdxal(this)">
     <input type="file" id="kontFayl" accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="kontFaylSec(this)">
     <input type="file" id="malFayl" accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="malFaylSec(this)">
@@ -554,7 +554,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 </div>
 
 <div class="screen" id="sMexfilik">
-  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t">Məxfilik siyasəti</div><div class="n-s">Anbar Terminal</div></div></div></div>
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t">Məxfilik siyasəti</div><div class="n-s">Android Terminal</div></div></div></div>
   <div class="n-body" style="overflow:auto;padding-bottom:40px"><div class="n-card" style="margin-top:14px;padding:14px;font-size:13.5px;line-height:1.6;color:#334155">
     <p style="margin:0 0 10px">1. Oflayn terminal heç bir serverə və internetə qoşulmur. Sənədlər yalnız cihazdakı TerminalFilesBarkodPRO qovluğuna yazılır.</p>
     <p style="margin:0 0 10px">2. Cihazda ayarlar, mal siyahısı, gözləyən sənədlər və qaralamalar saxlanılır. Bu məlumat üçüncü tərəflə paylaşılmır.</p>
@@ -595,7 +595,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 <div class="screen" id="sHaqqinda">
   <div class="topbar param-bg">
     <button class="btn-geri" onclick="screenAc('sHome')">‹</button>
-    <div class="topbar-mid"><div class="topbar-title">Proqram haqqında</div><div class="topbar-sub">Anbar Terminal</div></div>
+    <div class="topbar-mid"><div class="topbar-title">Proqram haqqında</div><div class="topbar-sub">Android Terminal</div></div>
   </div>
   <div style="padding:14px;display:flex;flex-direction:column;gap:12px;overflow:auto">
     <div style="background:#fff;border:1px solid #d1d5db;border-radius:12px;overflow:hidden">
@@ -2056,7 +2056,7 @@ async function ftpDayan(){var P=ftpP();if(!P)return;_ftpDayandi=true;try{ftpGor(
 async function ftpDurum(){var P=ftpP();if(!P)return;try{var r=await P.status();ftpGor(r);if(CFG.ftpAvto&&!_ftpDayandi&&!r.running&&!r.error)ftpBasla(false)}catch(e){}}
 function ftpBtnUI(){var b=document.getElementById('ftpBtn');if(!b)return;
   if(_ftp&&_ftp.running){b.textContent='■ FTP işləyir: ftp://'+_ftp.ip+':'+_ftp.port+' — dayandır';b.style.cssText='margin-top:12px;color:#15803d;border-color:#86efac;background:#f0fdf4;font-weight:800'}
-  else{b.textContent='▶ FTP-ni başlat (1C ilə mübadilə)';b.style.cssText='margin-top:12px;color:#fff;background:#1d4ed8;border-color:#1d4ed8;font-weight:800'}}
+  else{b.textContent='▶ Əlaqəni Başlat';b.style.cssText='margin-top:12px;color:#fff;background:#1d4ed8;border-color:#1d4ed8;font-weight:800'}}
 function ftpTogl(){if(_ftp&&_ftp.running)ftpDayan();else ftpBasla(true)}
 var _fg0=ftpGor;ftpGor=function(r){_fg0(r);ftpBtnUI()};
 function ftpAvtoBasla(){ftpBtnUI();if(CFG.ftpAvto!==false)ftpBasla(false)}
