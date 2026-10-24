@@ -1,6 +1,6 @@
 {
-  "appId": "az.barkodpro.terminal.offline",
-  "appName": "Terminal Oflayn BarkodPRO",
+  "appId": "az.barkodpro.anbar.offline",
+  "appName": "BarkodPRO Terminal Oflayn",
   "webDir": "www",
   "server": {
     "androidScheme": "http",
