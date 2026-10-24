@@ -275,23 +275,23 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 
 <!-- ══ ANA EKRAN ══ -->
 <div class="screen active" id="sHome">
-  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" width="40" height="40" style="border-radius:10px;display:block" onerror="this.style.display='none'"><div><div class="n-t">Anbar Terminal</div><div class="n-s" id="homeSub">Mal bazası yüklənməyib</div></div></div><div class="n-pill" id="durPill"><i></i><span>Yoxlanılır</span></div></div>
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" width="40" height="40" style="border-radius:10px;display:block" onerror="this.style.display='none'"><div><div class="n-t">Terminal BarkodPRO</div><div class="n-s" id="homeSub">Mal bazası yüklənməyib</div></div></div><div class="n-pill" id="durPill"><i></i><span>Yoxlanılır</span></div></div>
   <div class="n-body">
-    <div class="n-stats3"><div class="n-st"><b id="stGoz">0</b><span data-i="Qovluqda sənəd">Qovluqda sənəd</span></div><div class="n-st"><b id="stBug">0</b><span data-i="Bu gün sənəd">Bu gün sənəd</span></div><div class="n-st"><b id="stMal">0</b><span data-i="Mal sayı">Mal sayı</span></div></div>
+    <div class="n-stats3"><div class="n-st"><b id="stGoz">0</b><span data-i="Qovluqda sənəd">Yüklənməyən sənəd</span></div><div class="n-st"><b id="stBug">0</b><span data-i="Bu gün sənəd">Bu gün sənəd</span></div><div class="n-st"><b id="stMal">0</b><span data-i="Mal sayı">Mal sayı</span></div></div>
     <button class="btn-home" id="ftpBtn" onclick="ftpTogl()" style="margin-top:12px"></button>
     <div class="n-lbl" data-i="Anbar əməliyyatları">Anbar əməliyyatları</div>
     <div class="n-grid"><div class="n-tile" onclick="qebulGiris()"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qəbulu">Mal qəbulu</div><div class="n-td" data-i="Təchizatçıdan daxil olan">Təchizatçıdan daxil olan</div></div></div><div class="n-tile" onclick="opGiris('qaytarma')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qaytarma">Mal qaytarma</div><div class="n-td" data-i="Təchizatçıya qaytarılan">Təchizatçıya qaytarılan</div></div></div><div class="n-tile" onclick="opGiris('sayim')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="n-tt" data-i="Mal sayımı">Mal sayımı</div><div class="n-td" data-i="Qrup üzrə inventarizasiya">Qrup üzrə inventarizasiya</div></div></div><div class="n-tile" onclick="opGiris('silinme')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></div><div><div class="n-tt" data-i="Mal silinməsi">Mal silinməsi</div><div class="n-td" data-i="Zədəli, vaxtı keçmiş">Zədəli, vaxtı keçmiş</div></div></div><div class="n-tile" onclick="opGiris('satis')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2 11h10l2-8H7M9 20h.01M17 20h.01"/></svg></div><div><div class="n-tt" data-i="Mal satışı">Mal satışı</div><div class="n-td" data-i="Qiymət və qalıq ilə">Qiymət və qalıq ilə</div></div></div><div class="n-tile" onclick="screenAc('sTarix')"><div class="n-ic" style="background:#f1f5f9"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2M21 12a9 9 0 11-3-6.7L21 8M21 3v5h-5"/></svg></div><div><div class="n-tt" data-i="Qaimə tarixçəsi">Qaimə tarixçəsi</div><div class="n-td" data-i="Əvvəlki əməliyyatlar">Əvvəlki əməliyyatlar</div></div></div></div>
     <div id="secOd"><div class="n-lbl" data-i="Ödənişlər">Ödənişlər</div><div class="n-grid"><div class="n-tile" onclick="kassaAc('kassa_medaxil')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa mədaxil">Kassa mədaxil</div><div class="n-td" data-i="Daxil olan pul">Daxil olan pul</div></div></div><div class="n-tile" onclick="kassaAc('kassa_mexaric')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa məxaric">Kassa məxaric</div><div class="n-td" data-i="Çıxan pul">Çıxan pul</div></div></div></div></div>
     <div id="secHes"><div class="n-lbl" data-i="Hesabatlar">Hesabatlar</div><div class="n-card"><button class="n-row" onclick="hesabatAc('qaliq','Anbar qalığı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Anbar qalığı">Anbar qalığı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('borc','Kontragent borcları')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kontragent borcları">Kontragent borcları</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('tedhes','Tədarükçü hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Tədarükçü hesabatı">Tədarükçü hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('satis','Satış hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Satış hesabatı">Satış hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('kassa','Kassa hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kassa hesabatı">Kassa hesabatı</span></span><span>›</span></button></div></div>
-    <div class="n-lbl" data-i="Rejim və mal bazası">Rejim və mal bazası</div>
+    <div class="n-lbl" data-i="Sinxronizasiya ">Sinxronizasiya </div>
     <button class="btn-home" id="modBtn" onclick="modDeyis()"></button>
     <button class="btn-home" id="pendBtn" onclick="outboxGonder()" style="display:none;color:var(--a1);border-color:var(--a3);background:var(--a4)"></button>
-    <button class="btn-home" onclick="autoFayl(true)" style="background:#eff6ff;border-color:#93c5fd;color:#1d4ed8;font-weight:800">🔄 Qovluqdan yenilə (mal, qalıq, kontragent)</button>
+    <button class="btn-home" onclick="autoFayl(true)" style="background:#eff6ff;border-color:#93c5fd;color:#1d4ed8;font-weight:800">🔄 Localdan yenilə (mal, qalıq, kontragent)</button>
     
     <div class="sync-info" id="syncSt">—</div>
     <div class="n-lbl" data-i="Digər">Digər</div>
-    <button class="btn-home" onclick="screenAc('sParam')" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="diagGor()" data-i="🩺 Diaqnostika" style="color:#374151">🩺 Diaqnostika</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
-    <div class="n-foot">Anbar Terminal v3.2<br><span data-i="Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.">Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.</span></div>
+    <button class="btn-home" onclick="screenAc('sParam')" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
+    <div class="n-foot">Anbar Terminal v3.2.0<br><span data-i="Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.">Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.</span></div>
   </div>
 </div>
 
@@ -328,6 +328,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
       <div class="topbar-sub" id="opSub">—</div>
     </div>
     <div class="scan-dot-wrap"><div class="scan-dot"></div><span>Skan</span></div>
+    <button class="btn-top" id="btnSaxla" onclick="yaddasaYaz()" title="Yaddaşa yaz">💾</button>
     <button class="btn-top" onclick="loadMallar()">🔄</button>
   </div>
   <div class="stats-strip" id="opStats">
@@ -339,7 +340,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 
     <!-- Offline xəbərdarlıq -->
     <div class="offline-badge" id="offlineBadge" style="display:none">
-      ⚠️ Offline rejimdə — siyahı lokal saxlanılır, sonra göndərilər
+      ⚠️ Offline rejimdə — siyahı lokal saxlanılır, sonra göndərilir
     </div>
 
     <!-- Qəbul üçün əlavə sahələr -->
@@ -360,7 +361,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
       </div>
       <div>
         <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:3px">QEYD</div>
-        <input id="qebulQeyd" type="text" placeholder="Isteyee gore qeyd..." style="width:100%;height:38px;font-size:13px;padding:0 10px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)">
+        <input id="qebulQeyd" type="text" placeholder="İstəyə görə qeyd..." style="width:100%;height:38px;font-size:13px;padding:0 10px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)">
       </div>
     </div>
 
@@ -396,7 +397,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
       </div>
       <!-- Siyahıdan seçim -->
       <button class="btn-mal-sec" onclick="modalAc('mMalSec')">
-        📋 Siyahıdan mal seç (çəki mallar üçün)
+        📋 Siyahıdan mal seç (barkodsuz mallar üçün)
       </button>
 
       <!-- Nəticə kartları -->
@@ -536,7 +537,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 <div class="screen" id="sParam">
   <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t" data-i="Ayarlar">Ayarlar</div><div class="n-s" data-i="Bağlantı, fayl və ehtiyat">Bağlantı, fayl və ehtiyat</div></div></div></div>
   <div class="n-body" style="overflow:auto;padding-bottom:40px">
-    <div class="n-lbl" data-i="Terminal">Terminal</div><div class="n-card"><div class="n-f"><label for="cfgTerm" data-i="Terminal adı">Terminal adı</label><input class="n-in" id="cfgTerm" type="text" placeholder="T1" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgAnbar" data-i="Anbar adı (1C-yə göndəriləcək)">Anbar adı (1C-yə göndəriləcək)</label><input class="n-in" id="cfgAnbar" type="text" placeholder="Anbar-1" oninput="cfgSaxla()" autocomplete="off"></div></div>
+    <div class="n-lbl" data-i="Terminal">Terminal</div><div class="n-card"><div class="n-f"><label for="cfgTerm" data-i="Terminal adı">Terminal adı</label><input class="n-in" id="cfgTerm" type="text" placeholder="Terminal İstifadəçi" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgAnbar" data-i="Anbar adı (1C-yə göndəriləcək)">Anbar adı (1C-yə göndəriləcək)</label><input class="n-in" id="cfgAnbar" type="text" placeholder="Anbar-1" oninput="cfgSaxla()" autocomplete="off"></div></div>
     <div class="n-lbl" data-i="Dil">Dil</div><div class="n-seg"><button type="button" data-k="dil" data-v="az" onclick="secim('dil','az')">AZ</button><button type="button" data-k="dil" data-v="ru" onclick="secim('dil','ru')">RU</button><button type="button" data-k="dil" data-v="tr" onclick="secim('dil','tr')">TR</button><button type="button" data-k="dil" data-v="en" onclick="secim('dil','en')">EN</button></div>
     <div class="n-lbl" data-i="Cihaz">Cihaz</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Ekran sönməsin">Ekran sönməsin</div></div><button type="button" id="sw_ekran" class="n-sw" role="switch" aria-label="Ekran sönməsin" onclick="tgl('ekran')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Batareya xəbərdarlığı">Batareya xəbərdarlığı</div></div><button type="button" id="sw_bat" class="n-sw" role="switch" aria-label="Batareya xəbərdarlığı" onclick="tgl('bat')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Avtomatik ehtiyat nüsxə">Avtomatik ehtiyat nüsxə</div></div><button type="button" id="sw_ehtiyat" class="n-sw" role="switch" aria-label="Avtomatik ehtiyat nüsxə" onclick="tgl('ehtiyat')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Skandan sonra klaviatura açılsın</div><div style="font-size:12px;color:#64748b;margin-top:2px">Açıqdırsa, mal oxunanda say sahəsi seçilir, klaviatura açılır, Enter ilə əlavə olunur</div></div><button type="button" id="sw_klav" class="n-sw" role="switch" aria-label="Skandan sonra klaviatura" onclick="tgl('klav')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a" data-i="Yan skan düyməsi">Yan skan düyməsi</div><button class="n-btn" style="width:auto;padding:0 14px" onclick="yanOgren()" data-i="Düyməni öyrət">Düyməni öyrət</button></div></div>
     <div class="n-lbl" data-i="Eyni mal təkrar oxunanda">Eyni mal təkrar oxunanda</div><div class="n-seg"><button type="button" data-k="dubl" data-v="artir" onclick="secim('dubl','artir')" data-i="Sayı artır">Sayı artır</button><button type="button" data-k="dubl" data-v="sorus" onclick="secim('dubl','sorus')" data-i="Soruş">Soruş</button><button type="button" data-k="dubl" data-v="xeber" onclick="secim('dubl','xeber')" data-i="Xəbərdarlıq">Xəbərdarlıq</button></div>
@@ -1547,7 +1548,7 @@ async function tarixYukle(){
   if(!list.length){cont.innerHTML='<div class="empty-box"><div class="empty-ico">&#128220;</div><div class="empty-txt">Bu dövrdə qaimə yoxdur.</div></div>';return;}
   cont.innerHTML=list.map(function(h,i){
     var op=h.op||h.emeliyyat,ted=h.ted||h.kontragent||'';
-    var b=h.draft?['QARALAMA','var(--p4)','var(--p2)']:(h.offline?['GÖZLƏYİR','var(--a4)','var(--a1)']:['GÖNDƏRİLDİ','var(--g4)','var(--g1)']);
+    var b=h.draft?['QARALAMA','var(--p4)','var(--p2)']:(h.offline?['GÖZLƏYİR','var(--a4)','var(--a1)']:['YAZILDI','var(--g4)','var(--g1)']);
     return '<div class="qaime-kart" data-tidx="'+i+'" style="cursor:pointer;touch-action:manipulation"><div class="qk-top"><span class="qk-no">'+esc(OPS[op]?OPS[op].title:'Qaimə')+(h.no?' #'+esc(h.no):'')+'</span><span style="background:'+b[1]+';color:'+b[2]+';font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700">'+b[0]+'</span></div><div class="qk-row"><span>📅 '+esc(h.tarix)+'</span><span>📦 '+(h.movqe||0)+' mövqe</span>'+(h.cemi?'<span>💰 '+esc(h.cemi)+' ₼</span>':'')+(ted?'<span>👤 '+esc(ted)+'</span>':'')+'</div></div>';
   }).join('');
   cont._tdata=list;
@@ -1559,11 +1560,11 @@ function tarixDetalAc(idx){
   var h=cont&&cont._tdata?cont._tdata[idx]:null;if(!h)return;
   var op=h.op||h.emeliyyat,pend=(h.draft===true||h.offline===true);
   document.getElementById('qaimeModalTitle').textContent=(OPS[op]?OPS[op].title:'Qaimə')+(h.no?' #'+h.no:'');
-  var st=h.draft?'📌 Qaralama':(h.offline?'⏳ Göndərilməyi gözləyir':'✅ Göndərildi');
+  var st=h.draft?'📌 Qaralama':(h.offline?'⏳ Göndərilməyi gözləyir':'✅ Fayla yazılıb');
   var html='<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">'+sat('Növ',OPS[op]?OPS[op].title:'-')+sat('Tarix',h.tarix||'-')+sat('Anbar',h.anbar||h.anbarAd||'-')+sat('Kontragent',h.ted||h.kontragent||'-')+(h.cemi?sat('Cəmi',h.cemi+' ₼'):'')+sat('Status',st)+(h.err?sat('Xəta',h.err):'')+'</div>'+mallarHtml(h.siyahi);
   html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">'+
     (pend?bH('btnTxGonder','&#128228; 1C-yə göndər','background:var(--g2);color:#fff')+bH('btnTxSil','&#128465; Sil','background:#fff;border:2px solid var(--r3);color:var(--r2)')+(h.draft?'<div style="grid-column:1/-1">'+bH('btnTxDavam','&#9654; Davam et','width:100%;background:var(--p2);color:#fff')+'</div>':'')
-         :bH('btnTxRedakte','&#9998; Redaktə et','background:var(--p2);color:#fff')+bH('btnTxSil','&#128465; Sil (lokal)','background:#fff;border:2px solid var(--r3);color:var(--r2)'))+'</div>';
+         :bH('btnTxSil','&#128465; Sil (fayl «Silinenler» qovluğuna köçürülür)','background:#fff;border:2px solid var(--r3);color:var(--r2)'))+'</div>';
   document.getElementById('qaimeModalBody').innerHTML=html;
   modalAc('mQaime');
   var hid=h.id,hc=JSON.parse(JSON.stringify(h));
@@ -1833,7 +1834,7 @@ async function tPost(ep,body){
   if(!CFG.fayl)return aPost(ep,body);
   var ad=faylAdi(body),obj={v:1,terminal:CFG.termAd,ep:ep,fayl:ad,sened:body},yoxEp=false;
   if(CFG.mode!=='offline'){try{await aPost('/fayl',{ad:ad,mezmun:obj});return{ok:true,no:'fayl'}}catch(e){if(e.net){}else if(/404/.test(e.message))yoxEp=true;else throw e}}
-  if(window.OFFLINE_APP){await faylYaz(ad,JSON.stringify(obj,null,1));try{homeStat()}catch(e1){}return{ok:true,no:'fayl'}}
+  if(window.OFFLINE_APP){await faylYaz(ad,JSON.stringify(obj,null,1));try{homeStat()}catch(e1){}var cn=(parseInt(localStorage.getItem('anbar_no_say')||'0')||0)+1;try{localStorage.setItem('anbar_no_say',String(cn))}catch(e2){}window._sonFayl=ad;return{ok:true,no:String(cn),fayl:ad}}
   await faylYaz(ad,JSON.stringify(obj,null,1));
   if(!yoxEp&&!window.OFFLINE_APP){var g=lj('anbar_fayl_gozleyen',[]);g.push({ad:ad,mezmun:obj});sj('anbar_fayl_gozleyen',g)}
   return{ok:true,no:'fayl (cihazda)'}}
@@ -2057,7 +2058,7 @@ async function ftpDayan(){var P=ftpP();if(!P)return;_ftpDayandi=true;try{ftpGor(
 async function ftpDurum(){var P=ftpP();if(!P)return;try{var r=await P.status();ftpGor(r);if(CFG.ftpAvto&&!_ftpDayandi&&!r.running&&!r.error)ftpBasla(false)}catch(e){}}
 function ftpBtnUI(){var b=document.getElementById('ftpBtn');if(!b)return;
   if(_ftp&&_ftp.running){b.textContent='■ FTP işləyir: ftp://'+_ftp.ip+':'+_ftp.port+' — dayandır';b.style.cssText='margin-top:12px;color:#15803d;border-color:#86efac;background:#f0fdf4;font-weight:800'}
-  else{b.textContent='▶ FTP-ni başlat (1C ilə mübadilə)';b.style.cssText='margin-top:12px;color:#fff;background:#1d4ed8;border-color:#1d4ed8;font-weight:800'}}
+  else{b.textContent='▶ Əlaqəni başlat (1C ilə mübadilə üçün FTP)';b.style.cssText='margin-top:12px;color:#fff;background:#1d4ed8;border-color:#1d4ed8;font-weight:800'}}
 function ftpTogl(){if(_ftp&&_ftp.running)ftpDayan();else ftpBasla(true)}
 var _fg0=ftpGor;ftpGor=function(r){_fg0(r);ftpBtnUI()};
 function ftpAvtoBasla(){ftpBtnUI();if(CFG.ftpAvto!==false)ftpBasla(false)}
@@ -2115,6 +2116,28 @@ var _se9=scanEt,_lv='',_lt=0;scanEt=function(v){var n=Date.now();if(v===_lv&&n-_
   document.addEventListener('focusin',function(e){var t=e.target;if(t&&t.id!=='gsi'&&['INPUT','TEXTAREA','SELECT'].indexOf(t.tagName)>=0){setTimeout(function(){try{t.scrollIntoView({block:'center',behavior:'smooth'})}catch(x){}},350)}});
   if(window.visualViewport)window.visualViewport.addEventListener('resize',function(){var a=document.activeElement;if(a&&a.id!=='gsi'&&['INPUT','TEXTAREA'].indexOf(a.tagName)>=0){setTimeout(function(){try{a.scrollIntoView({block:'center'})}catch(x){}},120)}});
 })();
+// ═══ Oflayn: qaimə tarixçəsindən silmə; sənədin faylı «Silinenler» qovluğuna köçürülür ═══
+var _bt9=bitdi;bitdi=function(d,no){_bt9(d,no);try{var h=lj(QHK,[]);if(h.length&&h[0].id===d.id&&window._sonFayl){h[0].fayl=window._sonFayl;sj(QHK,h)}}catch(e){}window._sonFayl=''};
+async function faylSilinene(ad){var F=capFS();if(!F||!ad)return false;
+  for(var i=0;i<DIRS.length;i++){var dd=DIRS[i];
+    try{var r=await F.readFile({path:QOV+ad,directory:dd,encoding:'utf8'});
+      await F.writeFile({path:QOV+'Silinenler/'+ad,data:r.data,directory:dd,encoding:'utf8',recursive:true});
+      await F.deleteFile({path:QOV+ad,directory:dd});return true}catch(e){}}
+  return false}
+tarixLocalSil=async function(hid){
+  var h=lj(QHK,[]).filter(function(x){return x.id===hid})[0];
+  if(!confirm('Silinsin?'+(h&&h.fayl?'\nSənədin faylı «Silinenler» qovluğuna köçürüləcək.':'')))return;
+  modalBagla('mQaime');
+  if(h&&h.fayl){var ok=await faylSilinene(h.fayl);toast(ok?'Fayl «Silinenler» qovluğuna köçürüldü':'Fayl tapılmadı (artıq 1C-yə çəkilib?)',ok?'ok':'warn')}
+  draftSil(hid);outSil(hid);sj(QHK,lj(QHK,[]).filter(function(x){return x.id!==hid}));
+  try{homeStat()}catch(e){}
+  tarixYukle()};
+// ═══ Yuxarıdakı 💾 düyməsi: işlənən siyahını dərhal yaddaşa (qaralama) yazır ═══
+function yaddasaYaz(){var b=document.getElementById('btnSaxla');
+  if(!curOp||!siyahi.length){toast('Siyahı boşdur, yazılacaq heç nə yoxdur','info');return}
+  saxla();
+  if(b){b.textContent='✓';setTimeout(function(){b.textContent='💾'},1200)}
+  toast('💾 Yaddaşa yazıldı ('+siyahi.length+' mal) — qaralama kimi saxlanıldı','ok')}
 function basla(){var ilk=!CFG.hazir&&!localStorage.getItem('anbar_cfg');
   if(CFG.ekran===undefined)CFG.ekran=true;if(CFG.bat===undefined)CFG.bat=true;if(CFG.ehtiyat===undefined)CFG.ehtiyat=true;CFG.dubl=CFG.dubl||'sorus';CFG.sayQiy=CFG.sayQiy||'alis';CFG.dil=CFG.dil||'az';LNG=CFG.dil;
   lstTetbiq();modUI();init();homeStat();qovlugHazirla().then(function(){return autoFayl()}).then(function(){ftpAvtoBasla()});menuGor();trApply();durumYoxla();
