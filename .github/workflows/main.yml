@@ -1,0 +1,35 @@
+name: APK yigmaq (oflayn)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+      - run: npm install
+      - run: npx cap add android
+      - name: Ikon ve splash (assets/ qovluğundakı şəkillərdən)
+        run: npx @capacitor/assets generate --android
+      - name: Manifest duzelisleri (cleartext + kamera)
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i 's/<application/<application android:usesCleartextTraffic="true"/' $M
+          sed -i 's/<application/<application android:requestLegacyExternalStorage="true"/' $M
+          sed -i 's#</manifest>#<uses-permission android:name="android.permission.CAMERA" /><uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /><uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" /><queries><intent><action android:name="android.intent.action.SENDTO"/><data android:scheme="mailto"/></intent></queries></manifest>#' $M
+      - run: npx cap sync android
+      - name: APK yig
+        working-directory: android
+        run: ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: anbar-terminal-oflayn-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
