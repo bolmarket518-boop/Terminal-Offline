@@ -1,0 +1,6 @@
+1) github.com-da pulsuz hesab ac, "New repository" yarat (Private ola biler).
+2) Add file > Upload files: bu qovluqdakı hər şeyi (www, .github, package.json, capacitor.config.json) sürüşdürüb at. Commit et.
+   (.github qovluğu görünmürsə: Add file > Create new file, adına  .github/workflows/build.yml  yaz, build.yml içindəkini yapışdır.)
+3) Actions sekmesi > "APK yigmaq" > Run workflow. 5-8 deqiqe gozle.
+4) Bitəndə işə klik et, aşağıda "Artifacts" > anbar-terminal-apk yüklə (zip). İçində app-debug.apk var.
+5) APK-nı telefona at, "naməlum mənbələrdən quraşdırma"ya icazə ver, quraşdır.

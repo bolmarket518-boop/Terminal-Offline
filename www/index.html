@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Anbar Terminal</title>
+<style>
+html{font-size:14px;-webkit-text-size-adjust:100%}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --b1:#042C53;--b2:#185FA5;--b3:#378ADD;--b4:#85B7EB;--b5:#B5D4F4;--b6:#E6F1FB;
+  --g1:#0F6E56;--g2:#1D9E75;--g3:#5DCAA5;--g4:#E1F5EE;
+  --r1:#993C1D;--r2:#D85A30;--r3:#F0997B;--r4:#FAECE7;
+  --a1:#854F0B;--a2:#BA7517;--a3:#EF9F27;--a4:#FAEEDA;
+  --p1:#3C3489;--p2:#7F77DD;--p3:#AFA9EC;--p4:#EEEDFE;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidden}
+.app{max-width:480px;margin:0 auto}
+.screen{display:none}.screen.active{display:block}
+/* HOME */
+.home-header{background:var(--b2);padding:18px 14px 14px;text-align:center}
+.home-logo{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 8px}
+.home-title{color:#fff;font-size:18px;font-weight:700}
+.home-sub{color:rgba(255,255,255,0.75);font-size:12px;margin-top:3px}
+.home-body{padding:12px;display:flex;flex-direction:column;gap:8px}
+.home-lbl{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.6px}
+.op-card{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:2px solid transparent;cursor:pointer;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.op-card:active{transform:scale(0.98)}
+.op-card.qebul{border-color:var(--g3)}.op-card.qaytarma{border-color:var(--r3)}.op-card.sayim{border-color:var(--b5)}.op-card.tarix{border-color:var(--a3)}
+.op-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.op-card.qebul .op-icon{background:var(--g4)}.op-card.qaytarma .op-icon{background:var(--r4)}.op-card.sayim .op-icon{background:var(--b6)}.op-card.tarix .op-icon{background:var(--a4)}
+.op-info{flex:1}.op-title{font-size:14px;font-weight:700;color:#111}.op-desc{font-size:11px;color:#6b7280;margin-top:1px}
+.op-badge{font-size:10px;padding:1px 7px;border-radius:10px;margin-top:4px;display:inline-block;font-weight:600}
+.op-badge.ok{background:var(--g4);color:var(--g1)}.op-badge.no{background:#f1f1f0;color:#888}
+.hdiv{height:1px;background:#e5e7eb}
+.btn-home{width:100%;height:42px;background:#fff;border:1px solid #d1d5db;border-radius:10px;color:#374151;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;font-family:var(--font);font-weight:600}
+.sync-info{text-align:center;font-size:12px;color:#9ca3af;padding:2px 0}
+/* TOPBAR */
+.topbar{display:flex;align-items:center;gap:8px;padding:10px 12px}
+.topbar.qebul-bg{background:var(--g2)}.topbar.qaytarma-bg{background:var(--r2)}.topbar.sayim-bg{background:var(--b2)}.topbar.param-bg{background:#2d2b6e}.topbar.tarix-bg{background:var(--a2)}
+.btn-geri{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,0.2);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.topbar-mid{flex:1}.topbar-title{color:#fff;font-size:14px;font-weight:700}.topbar-sub{color:rgba(255,255,255,0.72);font-size:11px;margin-top:1px}
+.scan-dot-wrap{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border-radius:7px;padding:4px 8px;font-size:11px;color:rgba(255,255,255,.9);font-weight:600}
+.scan-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.btn-top{height:30px;padding:0 10px;background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font)}
+/* STATS */
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);padding:0 10px 10px;gap:6px}
+.stats-strip.qebul-bg{background:var(--g3)}.stats-strip.qaytarma-bg{background:var(--r3)}.stats-strip.sayim-bg{background:var(--b3)}
+.stat-pill{background:rgba(255,255,255,.25);border-radius:8px;padding:6px 4px;text-align:center}
+.spl{font-size:10px;color:rgba(255,255,255,.82);margin-bottom:1px;font-weight:600}
+.spv{font-size:16px;font-weight:700;color:#fff}.spv.sm{font-size:12px;font-weight:700}
+/* BODY */
+.body{padding:10px;display:flex;flex-direction:column;gap:8px;padding-bottom:80px}
+/* SCAN */
+.scan-card{background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:10px}
+.barkod-strip{display:flex;align-items:center;gap:8px;background:#f9fafb;border:2px solid #e5e7eb;border-radius:9px;padding:6px 10px;min-height:40px;margin-bottom:8px}
+.barkod-strip.scanning{border-color:var(--g3);background:var(--g4)}
+.bs-ico{font-size:16px;flex-shrink:0}.bs-txt{flex:1;font-size:14px;letter-spacing:1px;color:#374151;font-weight:600;font-family:monospace}.bs-hint{font-size:11px;color:#9ca3af;font-style:italic}
+/* EL İLƏ BARKOD */
+.el-input-row{display:flex;gap:6px;margin-bottom:8px}
+.el-input{flex:1;height:38px;font-size:14px;padding:0 10px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)}
+.el-input:focus{border-color:var(--b3);background:#fff}
+.btn-el-axtar{height:38px;padding:0 14px;background:var(--b3);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font)}
+/* MAL SEÇİM BUTTON */
+.btn-mal-sec{width:100%;height:36px;background:var(--b6);border:1.5px solid var(--b4);border-radius:8px;color:var(--b2);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--font);margin-bottom:0}
+/* TAPILDI */
+.result-found{border-radius:10px;padding:12px;display:none;border:2px solid}
+.result-found.qebul{background:var(--g4);border-color:var(--g3)}
+.result-found.qaytarma{background:var(--r4);border-color:var(--r3)}
+.result-found.sayim{background:var(--b6);border-color:var(--b5)}
+.rf-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;gap:6px}
+.rf-ad{font-size:14px;font-weight:700;color:#111;line-height:1.3}
+.rf-barkod{font-size:11px;color:#6b7280;margin-top:2px}
+.found-badge{font-size:11px;padding:3px 9px;border-radius:20px;color:#fff;white-space:nowrap;flex-shrink:0;font-weight:700}
+.found-badge.qebul{background:var(--g2)}.found-badge.qaytarma{background:var(--r2)}.found-badge.sayim{background:var(--b3)}
+.price-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.price-chip{border-radius:8px;padding:8px;text-align:center}
+.price-chip.alis{background:var(--a4)}.price-chip.satis{background:var(--g4)}
+.pcl{font-size:10px;font-weight:700;letter-spacing:.4px;margin-bottom:3px}
+.price-chip.alis .pcl{color:var(--a1)}.price-chip.satis .pcl{color:var(--g1)}
+.pcv{font-size:17px;font-weight:700}
+.price-chip.alis .pcv{color:var(--a2)}.price-chip.satis .pcv{color:var(--g2)}
+.qty-row{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.65);border-radius:8px;padding:8px 10px}
+.qty-lbl{font-size:13px;font-weight:700;flex:1;color:#374151}
+.qty-ctrl{display:flex;align-items:center;gap:5px}
+.qty-btn{width:34px;height:34px;border-radius:7px;border:2px solid var(--b4);background:#fff;color:var(--b2);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.qty-btn:active{transform:scale(.9)}
+.qty-inp{width:52px;height:34px;font-size:16px;font-weight:700;text-align:center;border:2px solid var(--b4);border-radius:7px;color:var(--b1);background:#fff;font-family:var(--font);outline:none}
+.qty-inp:focus{border-color:var(--b3)}
+.btn-elave{height:34px;padding:0 12px;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font);flex-shrink:0}
+.btn-elave.qebul{background:var(--g2)}.btn-elave.qaytarma{background:var(--r2)}.btn-elave.sayim{background:var(--b3)}
+.btn-elave:active{transform:scale(.97)}
+/* YENİLƏ (siyahıda var) */
+.result-update{border-radius:10px;padding:12px;display:none;border:2px solid var(--p3);background:var(--p4)}
+.ru-name{font-size:14px;font-weight:700;color:#111;margin-bottom:1px}
+.ru-barkod{font-size:11px;color:#6b7280;margin-bottom:10px}
+.ru-cur-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.6);border-radius:8px;padding:8px 12px;margin-bottom:8px}
+.ru-cur-lbl{font-size:12px;color:#6b7280;font-weight:600}
+.ru-cur-val{font-size:18px;font-weight:700;color:var(--p2)}
+.ru-add-lbl{font-size:11px;font-weight:700;color:var(--p2);text-align:center;margin-bottom:6px}
+.ru-say-disp{display:flex;align-items:center;background:#fff;border-radius:10px;padding:8px;margin-bottom:6px;gap:6px;border:2px solid var(--p3)}
+.ru-minus{width:44px;height:44px;border-radius:8px;background:var(--r4);border:2px solid var(--r3);color:var(--r2);font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.ru-minus:active{transform:scale(.9)}
+.ru-say-center{flex:1;text-align:center}
+.ru-say-inp{width:80px;height:44px;font-size:26px;font-weight:700;text-align:center;border:2px solid var(--p3);border-radius:8px;color:var(--p2);background:#fff;font-family:var(--font);outline:none;display:block;margin:0 auto}
+.ru-say-inp:focus{border-color:var(--p2)}
+.ru-say-unit{font-size:11px;color:var(--p2);margin-top:2px;font-weight:600}
+.ru-plus{width:44px;height:44px;border-radius:8px;background:var(--g4);border:2px solid var(--g3);color:var(--g2);font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.ru-plus:active{transform:scale(.9)}
+.ru-result{text-align:center;font-size:13px;font-weight:700;margin-bottom:8px;padding:6px;border-radius:7px;background:var(--g4);color:var(--g1)}
+.ru-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.btn-ru-s{height:40px;background:var(--p2);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.btn-ru-l{height:40px;background:#fff;border:2px solid #e5e7eb;border-radius:9px;font-size:13px;color:#6b7280;cursor:pointer;font-family:var(--font)}
+.btn-ru-s:active,.btn-ru-l:active{transform:scale(.97)}
+/* YENİ MAL */
+.new-card{display:none}
+.new-hdr{display:flex;align-items:center;gap:8px;background:var(--r2);border-radius:10px 10px 0 0;padding:10px 12px}
+.new-hdr-ico{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.new-hdr-t{color:#fff;font-size:13px;font-weight:700}
+.new-hdr-s{color:rgba(255,255,255,.78);font-size:11px;margin-top:1px}
+.new-body{background:var(--r4);border:2px solid var(--r3);border-top:none;border-radius:0 0 10px 10px;padding:12px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ffull{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:4px}
+.flbl{font-size:11px;font-weight:700;color:var(--r1)}
+.finput{width:100%;height:40px;font-size:14px;padding:0 10px;border:2px solid #f5c4b3;border-radius:7px;background:#fff;color:#111;outline:none;font-family:var(--font)}
+.finput:focus{border-color:var(--r2)}
+.btn-yarat{width:100%;height:42px;background:var(--r2);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)}
+/* TAPILMADI XƏBƏRDARLIQ */
+.nf-warn{background:var(--a4);border:2px solid var(--a3);border-radius:10px;padding:12px;display:none}
+.nfw-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.nfw-ico{width:36px;height:36px;border-radius:9px;background:var(--a3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.nfw-t{font-size:13px;font-weight:700;color:var(--a1)}.nfw-s{font-size:11px;color:var(--a2);margin-top:1px}
+.nfw-bc{font-size:13px;font-weight:700;color:var(--a1);background:rgba(255,255,255,.55);border-radius:7px;padding:6px 10px;font-family:monospace;margin-bottom:8px;letter-spacing:1px}
+.nfw-hint{font-size:12px;color:var(--a2);line-height:1.4}
+.btn-nfw{width:100%;height:38px;background:none;border:2px solid var(--a3);border-radius:8px;color:var(--a2);font-size:13px;font-weight:700;cursor:pointer;margin-top:8px;font-family:var(--font)}
+/* SİYAHI */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between}
+.sec-title{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px}
+.cnt-pill{font-size:12px;padding:2px 10px;border-radius:20px;font-weight:700}
+.cnt-pill.qebul{background:var(--g4);color:var(--g1)}.cnt-pill.qaytarma{background:var(--r4);color:var(--r2)}.cnt-pill.sayim{background:var(--b6);color:var(--b2)}
+.empty-box{text-align:center;padding:28px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:12px}
+.empty-ico{font-size:30px;display:block;margin-bottom:8px}
+.empty-txt{font-size:13px;color:#9ca3af;line-height:1.5}
+.mal-kart{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.mal-kart:active{background:#f9fafb}
+.mal-kart.yeni{border-color:#f5c4b3;background:#fffbf8}
+.mal-kart.editing{border:2px solid var(--p3);background:var(--p4);flex-direction:column;align-items:stretch;gap:8px;cursor:default}
+.mal-kart.editing.ye{border-color:var(--r3);background:var(--r4)}
+.mal-num{width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mal-num.qebul{background:var(--g4);color:var(--g2)}.mal-num.qaytarma{background:var(--r4);color:var(--r2)}.mal-num.sayim{background:var(--b6);color:var(--b2)}.mal-num.yeni{background:var(--r4);color:var(--r2)}
+.mal-info{flex:1;min-width:0}
+.mal-ad{font-size:13px;font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mal-meta{display:flex;gap:5px;margin-top:3px;flex-wrap:wrap}
+.chip{font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700}
+.chip-say{background:var(--b6);color:var(--b2)}.chip-alis{background:var(--a4);color:var(--a1)}.chip-satis{background:var(--g4);color:var(--g1)}.chip-yeni{background:var(--r4);color:var(--r2)}
+.mal-acts{display:flex;gap:5px;flex-shrink:0}
+.mal-edit{width:30px;height:30px;border-radius:7px;border:1px solid var(--b4);background:var(--b6);color:var(--b2);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.mal-del{width:30px;height:30px;border-radius:7px;border:1px solid #fca5a5;background:#fff;color:var(--r2);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.mal-edit:active,.mal-del:active{transform:scale(.92)}
+.mal-kart-trow{display:flex;align-items:center;gap:8px}
+.edit-panel{background:rgba(255,255,255,.75);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.ep-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ep-full{grid-column:1/-1}
+.ep-fld{display:flex;flex-direction:column;gap:3px}
+.ep-lbl{font-size:10px;font-weight:700;letter-spacing:.4px;color:#6b7280}
+.ep-inp{width:100%;height:38px;font-size:14px;padding:0 8px;border:2px solid #e5e7eb;border-radius:7px;background:#fff;color:#111;outline:none;font-family:var(--font)}
+.ep-inp:focus{border-color:var(--p2)}
+.ep-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.btn-ep-s{height:38px;background:var(--p2);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.btn-ep-l{height:38px;background:#fff;border:1px solid #e5e7eb;border-radius:7px;font-size:13px;color:#6b7280;cursor:pointer;font-family:var(--font)}
+/* TOTAL */
+.total-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;display:none}
+.total-hdr{padding:8px 12px;display:flex;align-items:center;gap:6px}
+.total-hdr.qebul{background:var(--g4)}.total-hdr.qaytarma{background:var(--r4)}.total-hdr.sayim{background:var(--b6)}
+.total-hdr-txt{font-size:13px;font-weight:700}
+.total-hdr.qebul .total-hdr-txt{color:var(--g1)}.total-hdr.qaytarma .total-hdr-txt{color:var(--r1)}.total-hdr.sayim .total-hdr-txt{color:var(--b2)}
+.total-rows{padding:8px 12px}
+.trow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6}
+.trow:last-child{border-bottom:none}
+.tl{font-size:12px;color:#6b7280}.tv{font-size:12px;font-weight:700;color:#111}
+.trow.big .tl{font-size:13px;font-weight:700;color:var(--b2)}.trow.big .tv{font-size:15px;font-weight:700;color:var(--b2)}
+.trow.big2 .tl{font-size:13px;font-weight:700;color:var(--g1)}.trow.big2 .tv{font-size:15px;font-weight:700;color:var(--g2)}
+/* ACTION BAR */
+.action-bar{display:none;grid-template-columns:1fr 1fr;gap:8px;flex-wrap:wrap}
+.btn-gonder{height:46px;color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.btn-gonder.qebul{background:var(--g2)}.btn-gonder.qaytarma{background:var(--r2)}.btn-gonder.sayim{background:var(--b3)}
+.btn-sifirla{height:46px;background:#fff;border:2px solid var(--r3);border-radius:11px;color:var(--r2);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.btn-gonder:active,.btn-sifirla:active{transform:scale(.97)}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:#fff;display:flex;align-items:stretch;justify-content:center;z-index:200;padding:0}
+.modal-box{background:#fff;width:100%;max-width:480px;display:flex;flex-direction:column;overflow:hidden;height:100vh;max-height:100vh}
+.modal-hdr{padding:14px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.kt-item,.mal-sec-item{touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,.1);cursor:pointer;padding:12px 14px;border-bottom:1px solid #f3f4f6;user-select:none;-webkit-user-select:none}
+.kt-item:active,.mal-sec-item:active{background:#f0f4f8}
+.modal-title{font-size:15px;font-weight:700;color:#111}
+.modal-close{width:30px;height:30px;border-radius:50%;background:#f3f4f6;border:none;color:#6b7280;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.modal-body{overflow:auto;flex:1;padding:14px}
+.modal-search{height:38px;width:100%;font-size:14px;padding:0 12px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font);margin-bottom:10px}
+.modal-search:focus{border-color:var(--b3)}
+.modal-item{padding:12px 14px;border-radius:8px;cursor:pointer;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:10px;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0.1);user-select:none;-webkit-user-select:none}
+.modal-item:active{background:#f9fafb}
+.modal-item:last-child{border-bottom:none}
+.mi-name{font-size:13px;font-weight:600;color:#111}
+.mi-sub{font-size:11px;color:#9ca3af;margin-top:1px}
+/* QRUP KARTLARI */
+.qrup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:0}
+.qrup-kart{background:#fff;border:2px solid #e5e7eb;border-radius:10px;padding:12px;cursor:pointer;text-align:center}
+.qrup-kart:active{transform:scale(.97)}
+.qrup-kart.sel{border-color:var(--b3);background:var(--b6)}
+.qrup-kart-ico{font-size:22px;margin-bottom:4px}
+.qrup-kart-ad{font-size:12px;font-weight:700;color:#111}
+.qrup-kart-say{font-size:11px;color:#9ca3af;margin-top:2px}
+/* QAİMƏLƏR */
+.qaime-kart{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;cursor:pointer}
+.qaime-kart:active{background:#f9fafb}
+.qk-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.qk-no{font-size:13px;font-weight:700;color:#111}
+.qk-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:700}
+.qk-badge.qebul{background:var(--g4);color:var(--g1)}.qk-badge.qaytarma{background:var(--r4);color:var(--r2)}.qk-badge.sayim{background:var(--b6);color:var(--b2)}
+.qk-row{display:flex;gap:12px;font-size:11px;color:#6b7280;flex-wrap:wrap}
+/* TƏSDİQ MODALİ */
+.tsd-row{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.tsd-lbl{font-size:11px;font-weight:700;color:#6b7280}
+.tsd-inp{height:40px;width:100%;font-size:14px;padding:0 12px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)}
+.tsd-inp:focus{border-color:var(--b3)}
+.tsd-sel{height:40px;width:100%;font-size:14px;padding:0 12px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)}
+.btn-tsd-ok{width:100%;height:46px;background:var(--g2);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:4px}
+.btn-tsd-ok:active{transform:scale(.97)}
+/* PARAM */
+.param-card{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:10px}
+.param-card-hdr{padding:10px 14px;border-bottom:1px solid #e5e7eb;font-size:13px;font-weight:700}
+.param-card-body{padding:14px;display:flex;flex-direction:column;gap:10px}
+.param-fld label{font-size:11px;font-weight:700;color:#6b7280;display:block;margin-bottom:4px}
+.param-inp{width:100%;height:42px;font-size:13px;padding:0 12px;border:2px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)}
+.param-inp:focus{border-color:var(--p2)}
+.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-ping{height:42px;background:var(--p2);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)}
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;color:#fff;transition:transform .25s ease;pointer-events:none;z-index:999;white-space:nowrap;font-family:var(--font)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.ok{background:var(--g2)}.toast.err{background:var(--r2)}.toast.info{background:var(--b3)}.toast.warn{background:var(--a2)}
+/* OFFLINE BADGE */
+.offline-badge{background:#FAEEDA;border:1px solid #EF9F27;border-radius:8px;padding:8px 12px;font-size:12px;color:var(--a1);font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:0}
+@supports(height:100dvh){.modal-box{height:100dvh;max-height:100dvh}}
+</style>
+<script src="html5-qrcode.min.js"></script>
+<style>
+#sHome,#sParam,#sMexfilik{background:#f1f5f9}
+.n-hd{background:#0f172a;padding:20px 16px;display:flex;justify-content:space-between;align-items:center}.n-t{font-size:20px;font-weight:800;color:#fff}.n-s{font-size:12.5px;color:#94a3b8;margin-top:2px}
+.n-pill{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;background:#1e293b;color:#cbd5e1}.n-pill i{width:8px;height:8px;border-radius:50%;background:#94a3b8}
+.n-pill.ok{background:#052e16;color:#4ade80}.n-pill.ok i{background:#4ade80}.n-pill.warn{background:#422006;color:#fbbf24}.n-pill.warn i{background:#fbbf24}.n-pill.bad{background:#450a0a;color:#f87171}.n-pill.bad i{background:#f87171}
+.n-body{padding:0 16px 24px;display:flex;flex-direction:column;gap:8px}.n-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.n-st{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px}.n-st b{display:block;font-size:22px;font-weight:800;color:#0f172a}.n-st span{font-size:11.5px;color:#64748b}
+.n-lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#64748b;margin:14px 0 0}
+.n-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.n-tile{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;min-height:92px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;cursor:pointer}
+.n-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}.n-tt{font-size:15px;font-weight:700;color:#0f172a}.n-td{font-size:12px;color:#64748b;margin-top:2px}
+.n-foot{text-align:center;font-size:12px;color:#64748b;margin-top:14px;line-height:1.5}
+.n-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden}.n-f{padding:10px 14px;border-top:1px solid #f1f5f9}.n-card>.n-f:first-child{border-top:0}
+.n-f label{display:block;font-size:11.5px;font-weight:600;color:#64748b;margin-bottom:4px}.n-in{width:100%;box-sizing:border-box;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:15px;color:#0f172a;background:#f8fafc}
+.n-url{font-size:12px;color:#15803d;font-weight:600;word-break:break-all;margin-bottom:10px}
+.n-btn{width:100%;min-height:44px;border-radius:12px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;font-size:14px;font-weight:700}
+.n-row{display:flex;width:100%;justify-content:space-between;align-items:center;border:0;border-top:1px solid #f1f5f9;background:#fff;padding:14px;font-size:14px;font-weight:600;color:#0f172a;text-align:left}.n-row:first-child{border-top:0}.n-row span{color:#94a3b8}
+.n-sw{position:relative;flex:none;width:44px;height:26px;border:0;border-radius:999px;background:#cbd5e1;padding:0}.n-sw.on{background:#1d4ed8}.n-sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s}.n-sw.on::after{left:20px}
+.n-stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.n-seg{display:flex;gap:4px;background:#e2e8f0;border-radius:12px;padding:4px}.n-seg button{flex:1;border:0;border-radius:9px;padding:9px 0;font-size:13px;font-weight:700;color:#475569;background:transparent}.n-seg button.on{background:#1d4ed8;color:#fff}.n-lab2{display:block;font-size:11.5px;font-weight:600;color:#64748b;margin-bottom:4px}.n-tb{width:100%;border-collapse:collapse;font-size:13px}.n-tb th,.n-tb td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left}.n-tb th{background:#f8fafc;color:#64748b;font-size:11.5px}#hesTar{display:flex}#secOd,#secHes,#modBtn,#pendBtn{display:none!important}@media (orientation:landscape){#spl img{object-fit:contain!important}}#sOp.sayim-mod .ep-pr{display:none}
+</style>
+</head>
+<body>
+<div id="spl" onclick="splBagla()" style="position:fixed;inset:0;z-index:20000;background:#021a24;display:flex;align-items:center;justify-content:center;transition:opacity .4s"><img src="splash_app.jpg" alt="BarkodPRO Terminal" style="width:100%;height:100%;object-fit:cover"></div>
+<div class="app">
+<input id="gsi" style="position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="none">
+
+<!-- ══ ANA EKRAN ══ -->
+<div class="screen active" id="sHome">
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" width="40" height="40" style="border-radius:10px;display:block" onerror="this.style.display='none'"><div><div class="n-t">Anbar Terminal</div><div class="n-s" id="homeSub">Mal bazası yüklənməyib</div></div></div><div class="n-pill" id="durPill"><i></i><span>Yoxlanılır</span></div></div>
+  <div class="n-body">
+    <div class="n-stats3"><div class="n-st"><b id="stGoz">0</b><span data-i="Gözləyən sənəd">Gözləyən sənəd</span></div><div class="n-st"><b id="stBug">0</b><span data-i="Bu gün sənəd">Bu gün sənəd</span></div><div class="n-st"><b id="stMal">0</b><span data-i="Mal sayı">Mal sayı</span></div></div>
+    <button class="btn-home" id="mailBtn" onclick="mailGonder()" style="margin-top:12px"></button>
+    <div class="n-lbl" data-i="Anbar əməliyyatları">Anbar əməliyyatları</div>
+    <div class="n-grid"><div class="n-tile" onclick="qebulGiris()"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qəbulu">Mal qəbulu</div><div class="n-td" data-i="Təchizatçıdan daxil olan">Təchizatçıdan daxil olan</div></div></div><div class="n-tile" onclick="opGiris('qaytarma')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qaytarma">Mal qaytarma</div><div class="n-td" data-i="Təchizatçıya qaytarılan">Təchizatçıya qaytarılan</div></div></div><div class="n-tile" onclick="opGiris('sayim')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="n-tt" data-i="Mal sayımı">Mal sayımı</div><div class="n-td" data-i="Qrup üzrə inventarizasiya">Qrup üzrə inventarizasiya</div></div></div><div class="n-tile" onclick="opGiris('silinme')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></div><div><div class="n-tt" data-i="Mal silinməsi">Mal silinməsi</div><div class="n-td" data-i="Zədəli, vaxtı keçmiş">Zədəli, vaxtı keçmiş</div></div></div><div class="n-tile" onclick="opGiris('satis')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2 11h10l2-8H7M9 20h.01M17 20h.01"/></svg></div><div><div class="n-tt" data-i="Mal satışı">Mal satışı</div><div class="n-td" data-i="Qiymət və qalıq ilə">Qiymət və qalıq ilə</div></div></div><div class="n-tile" onclick="screenAc('sTarix')"><div class="n-ic" style="background:#f1f5f9"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2M21 12a9 9 0 11-3-6.7L21 8M21 3v5h-5"/></svg></div><div><div class="n-tt" data-i="Qaimə tarixçəsi">Qaimə tarixçəsi</div><div class="n-td" data-i="Əvvəlki əməliyyatlar">Əvvəlki əməliyyatlar</div></div></div></div>
+    <div id="secOd"><div class="n-lbl" data-i="Ödənişlər">Ödənişlər</div><div class="n-grid"><div class="n-tile" onclick="kassaAc('kassa_medaxil')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa mədaxil">Kassa mədaxil</div><div class="n-td" data-i="Daxil olan pul">Daxil olan pul</div></div></div><div class="n-tile" onclick="kassaAc('kassa_mexaric')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa məxaric">Kassa məxaric</div><div class="n-td" data-i="Çıxan pul">Çıxan pul</div></div></div></div></div>
+    <div id="secHes"><div class="n-lbl" data-i="Hesabatlar">Hesabatlar</div><div class="n-card"><button class="n-row" onclick="hesabatAc('qaliq','Anbar qalığı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Anbar qalığı">Anbar qalığı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('borc','Kontragent borcları')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kontragent borcları">Kontragent borcları</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('tedhes','Tədarükçü hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Tədarükçü hesabatı">Tədarükçü hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('satis','Satış hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Satış hesabatı">Satış hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('kassa','Kassa hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kassa hesabatı">Kassa hesabatı</span></span><span>›</span></button></div></div>
+    <div class="n-lbl" data-i="Rejim və mal bazası">Rejim və mal bazası</div>
+    <button class="btn-home" id="modBtn" onclick="modDeyis()"></button>
+    <button class="btn-home" id="pendBtn" onclick="outboxGonder()" style="display:none;color:var(--a1);border-color:var(--a3);background:var(--a4)"></button>
+    <button class="btn-home" onclick="document.getElementById('idxFayl').click()" style="background:#eff6ff;border-color:#93c5fd;color:#1d4ed8;font-weight:800">📥 1C fayllarını idxal et (mal, kontragent)</button>
+    <button class="btn-home" onclick="kontFaylYukle()" style="">👥 Kontragent faylından yüklə (CSV)</button><button class="btn-home" onclick="malFaylYukle()" data-i="📄 Mal faylından yüklə (CSV)" style="">📄 Mal faylından yüklə (CSV)</button>
+    <div class="sync-info" id="syncSt">—</div>
+    <div class="n-lbl" data-i="Digər">Digər</div>
+    <button class="btn-home" onclick="screenAc('sParam')" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="diagGor()" data-i="🩺 Diaqnostika" style="color:#374151">🩺 Diaqnostika</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
+    <div class="n-foot">Anbar Terminal v3.2<br><span data-i="Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.">Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.</span></div>
+  </div>
+</div>
+
+<!-- ══ QEBUL QAİMƏ SİYAHISI ══ -->
+<div class="screen" id="sQaimeList">
+  <div class="topbar qebul-bg">
+    <button class="btn-geri" onclick="screenAc('sHome')">&#8249;</button>
+    <div class="topbar-mid">
+      <div class="topbar-title" id="qaimeListTitle">Mal Qəbulu</div>
+      <div class="topbar-sub" id="qaimeListSub">Cari gün qaimələri</div>
+    </div>
+    <button class="btn-top" onclick="qaimeListYukle()">&#128260;</button>
+  </div>
+  <div class="body">
+    <button id="btnYeniQaime" onclick="opSec(curGirisOp)" style="width:100%;height:50px;background:var(--g2);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font)">
+      &#43; Yeni Qaimə Aç
+    </button>
+    <div class="sec-hdr">
+      <span class="sec-title">Göndərilməmiş qaimələr</span>
+      <span class="cnt-pill qebul" id="qaimeListCnt">0</span>
+    </div>
+    <div id="qaimeListCont">
+      <div class="empty-box"><div class="empty-ico">&#128230;</div><div class="empty-txt">Bu gün qaimə yoxdur.<br>Yeni qaimə açın.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ƏMƏLIYYAT EKRANİ ══ -->
+<div class="screen" id="sOp">
+  <div class="topbar" id="opTopbar">
+    <button class="btn-geri" onclick="geriQayt()">‹</button>
+    <div class="topbar-mid">
+      <div class="topbar-title" id="opTitle">—</div>
+      <div class="topbar-sub" id="opSub">—</div>
+    </div>
+    <div class="scan-dot-wrap"><div class="scan-dot"></div><span>Skan</span></div>
+    <button class="btn-top" onclick="loadMallar()">🔄</button>
+  </div>
+  <div class="stats-strip" id="opStats">
+    <div class="stat-pill"><div class="spl">Mövqe</div><div class="spv" id="stMovqe">0</div></div>
+    <div class="stat-pill"><div class="spl">Yeni</div><div class="spv" id="stYeni">0</div></div>
+    <div class="stat-pill"><div class="spl">Alış cəmi</div><div class="spv sm" id="stAlis">0.00 ₼</div></div>
+  </div>
+  <div class="body">
+
+    <!-- Offline xəbərdarlıq -->
+    <div class="offline-badge" id="offlineBadge" style="display:none">
+      ⚠️ Offline rejimdə — siyahı lokal saxlanılır, sonra göndərilər
+    </div>
+
+    <!-- Qəbul üçün əlavə sahələr -->
+    <div id="qebulExtra" style="display:none;flex-direction:column;background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:12px;gap:8px">
+      <div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:2px">QEBULİYYAT</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:3px">TARİX</div>
+          <input id="qebulTarix" type="date" style="width:100%;height:38px;font-size:13px;padding:0 8px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)">
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:3px">KONTRAGENT</div>
+          <div style="display:flex;gap:4px">
+            <input id="qebulKontragent" readonly placeholder="Secin..." style="flex:1;height:38px;font-size:12px;padding:0 8px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;cursor:pointer;font-family:var(--font)" onclick="modalAc('mKontragent')">
+            <button onclick="modalAc('mKontragent')" style="width:36px;height:38px;background:var(--b6);border:1.5px solid var(--b4);border-radius:8px;color:var(--b2);cursor:pointer;font-size:16px">&#128100;</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:3px">QEYD</div>
+        <input id="qebulQeyd" type="text" placeholder="Isteyee gore qeyd..." style="width:100%;height:38px;font-size:13px;padding:0 10px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#111;outline:none;font-family:var(--font)">
+      </div>
+    </div>
+
+    <!-- Sayım qrup seçimi -->
+    <div id="sayimExtra" style="display:none;background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:12px">
+      <div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:8px">📂 QRUP SEÇİMİ</div>
+      <div class="qrup-grid" id="qrupGrid">
+        <div class="qrup-kart" onclick="qrupYukle('__hamisi__')">
+          <div class="qrup-kart-ico">📦</div>
+          <div class="qrup-kart-ad">Hamısı</div>
+          <div class="qrup-kart-say" id="qrHamisiSay">— mal</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px">
+        <button onclick="qrupYukle('__hamisi__')" style="flex:1;height:36px;background:var(--b3);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">
+          📥 Seçilən qrupu yüklə (say=0)
+        </button>
+      </div>
+    </div>
+
+    <div class="scan-card">
+      <!-- Barkod lenti -->
+      <div class="barkod-strip" id="barkodStrip">
+        <span class="bs-ico">📷</span>
+        <span class="bs-txt" id="barkodDisp"></span>
+        <span class="bs-hint" id="barkodHint">Barkod oxudun...</span>
+      </div>
+      <!-- Əl ilə barkod -->
+      <div class="el-input-row">
+        <input class="el-input" id="elBarkod" type="text" placeholder="🖊 Barkod əl ilə yazın..." inputmode="numeric" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter'){elAxtar();event.preventDefault()}">
+        <button class="btn-el-axtar" onclick="elAxtar()">Axtar</button>
+        <button class="btn-el-axtar" onclick="kamAc()" style="background:#0f766e">📷</button>
+      </div>
+      <!-- Siyahıdan seçim -->
+      <button class="btn-mal-sec" onclick="modalAc('mMalSec')">
+        📋 Siyahıdan mal seç (çəki mallar üçün)
+      </button>
+
+      <!-- Nəticə kartları -->
+      <div id="resultFound" class="result-found" style="margin-top:8px">
+        <div class="rf-top">
+          <div><div class="rf-ad" id="rAd"></div><div class="rf-barkod" id="rBarkod"></div></div>
+          <span class="found-badge" id="foundBadge">✓ Tapıldı</span>
+        </div>
+        <div class="price-row">
+          <div class="price-chip alis"><div class="pcl">ALIŞ</div><div class="pcv" id="rAlis">—</div></div>
+          <div class="price-chip satis"><div class="pcl">SATIŞ</div><div class="pcv" id="rSatis">—</div></div>
+        </div>
+        <div class="qty-row">
+          <span class="qty-lbl">Say</span>
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="qtyD(-1)">−</button>
+            <input class="qty-inp" id="qtyInp" type="text" value="1" inputmode="decimal" autocomplete="off">
+            <button class="qty-btn" onclick="qtyD(1)">+</button>
+          </div>
+          <button class="btn-elave" id="btnElave" onclick="siyahiyaElave()">＋ Əlavə</button>
+        </div>
+      </div>
+
+      <div id="resultUpdate" class="result-update" style="margin-top:8px">
+        <div class="ru-name" id="ruAd">—</div>
+        <div class="ru-barkod" id="ruBarkod">—</div>
+        <div class="ru-cur-row">
+          <span class="ru-cur-lbl">📋 Siyahıdakı say:</span>
+          <span class="ru-cur-val" id="ruCurSay">0</span>
+        </div>
+        <div class="ru-add-lbl">ƏLAVƏ EDİLƏCƏK SAY</div>
+        <div class="ru-say-disp">
+          <button class="ru-minus" onclick="ruD(-1)">−</button>
+          <div class="ru-say-center">
+            <input class="ru-say-inp" id="ruSayInp" type="text" value="1" inputmode="decimal" autocomplete="off" oninput="ruInpD()">
+            <div class="ru-say-unit">ədəd əlavə</div>
+          </div>
+          <button class="ru-plus" onclick="ruD(1)">+</button>
+        </div>
+        <div class="ru-result" id="ruResult">—</div>
+        <div class="ru-btns">
+          <button class="btn-ru-s" onclick="ruSaxla()">✓ Saxla</button>
+          <button class="btn-ru-l" onclick="ruLegv()">✕ Ləğv et</button>
+        </div>
+      </div>
+
+      <div id="newCard" class="new-card" style="margin-top:8px">
+        <div class="new-hdr">
+          <div class="new-hdr-ico">⚠️</div>
+          <div><div class="new-hdr-t">Mal tapılmadı</div><div class="new-hdr-s">Yeni mal məlumatlarını daxil edin</div></div>
+        </div>
+        <div class="new-body">
+          <div class="fgrid">
+            <div class="field ffull"><label class="flbl">MAL ADI</label><input class="finput" id="nAd" type="text" placeholder="Malın adını yazın..." autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false"></div>
+            <div class="field ffull"><label class="flbl">BARKOD</label><input class="finput" id="nBarkod" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
+            <div class="field"><label class="flbl">ALIŞ ₼</label><input class="finput" id="nAlis" type="number" step="0.01" placeholder="0.00" inputmode="decimal"></div>
+            <div class="field"><label class="flbl">SATIŞ ₼</label><input class="finput" id="nSatis" type="number" step="0.01" placeholder="0.00" inputmode="decimal"></div>
+            <div class="field"><label class="flbl">SAY</label><input class="finput" id="nSay" type="text" value="1" inputmode="decimal"></div>
+          </div>
+          <button class="btn-yarat" onclick="yeniMalElave()">✚ Yarat və siyahıya əlavə et</button>
+        </div>
+      </div>
+
+      <div id="nfWarn" class="nf-warn" style="margin-top:8px">
+        <div class="nfw-top">
+          <div class="nfw-ico">🔍</div>
+          <div><div class="nfw-t">Mal bazada tapılmadı</div><div class="nfw-s" id="nfwSub">Bu əməliyyatda yeni mal olmaz</div></div>
+        </div>
+        <div class="nfw-bc" id="nfwBc">—</div>
+        <div class="nfw-hint">Barkodu yoxlayın və ya <b>Mal Qəbulu</b> ilə sisteme əlavə edin.</div>
+        <button class="btn-nfw" onclick="warnBagla()">✕ Bağla, yeni barkod oxut</button>
+      </div>
+    </div>
+
+    <div class="sec-hdr">
+      <span class="sec-title">Siyahı</span>
+      <span class="cnt-pill" id="cntPill">0 mal</span>
+    </div>
+    <div id="listCont">
+      <div class="empty-box"><div class="empty-ico">📭</div><div class="empty-txt">Hələ heç nə yoxdur.<br>Barkod oxudun başlayın.</div></div>
+    </div>
+    <div class="total-card" id="totalCard">
+      <div class="total-hdr" id="totalHdr"><span>🧮</span><span class="total-hdr-txt">Yekun hesab</span></div>
+      <div class="total-rows" id="sayimTot" style="display:none"></div>
+      <div class="total-rows" id="normTot">
+        <div class="trow"><span class="tl">Ümumi mövqe</span><span class="tv" id="tMovqe">0</span></div>
+        <div class="trow"><span class="tl">Ümumi say</span><span class="tv" id="tSay">0</span></div>
+        <div class="trow"><span class="tl">Yeni mallar</span><span class="tv" id="tYeni">0</span></div>
+        <div class="trow big"><span class="tl">Alış cəmi</span><span class="tv" id="tAlis">0.00 ₼</span></div>
+        <div class="trow big2"><span class="tl">Satış cəmi</span><span class="tv" id="tSatis">0.00 ₼</span></div>
+      </div>
+    </div>
+    <div class="action-bar" id="actionBar">
+      <button class="btn-gonder" id="btnGonder" onclick="gondereHazirla()">&#128190; Sənədi saxla</button>
+      <button style="height:46px;background:#fff;border:2px solid var(--p3);border-radius:11px;color:var(--p2);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:5px" onclick="qaimeYaddaSaxla()">&#128190; Yadda saxla</button>
+      <button class="btn-sifirla" onclick="sifirla()" style="grid-column:1/-1;height:38px;font-size:13px">&#128465; Sıfırla</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ QAİMƏ TARİXÇƏSİ ══ -->
+<div class="screen" id="sTarix">
+  <div class="topbar tarix-bg">
+    <button class="btn-geri" onclick="screenAc('sHome')">‹</button>
+    <div class="topbar-mid">
+      <div class="topbar-title">Qaimə Tarixçəsi</div>
+      <div class="topbar-sub" id="tarixSub">—</div>
+    </div>
+    <button class="btn-top" onclick="tarixYukle()">🔄</button>
+  </div>
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:3px">BAŞLANĞIC</div>
+        <input id="tarixBas" type="date" style="width:100%;height:38px;font-size:13px;padding:0 8px;border:1.5px solid #e5e7eb;border-radius:8px;background:#fff;color:#111;outline:none;font-family:var(--font)">
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:3px">BİTİŞ</div>
+        <input id="tarixSon" type="date" style="width:100%;height:38px;font-size:13px;padding:0 8px;border:1.5px solid #e5e7eb;border-radius:8px;background:#fff;color:#111;outline:none;font-family:var(--font)">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+      <button onclick="tarixSur(0)" style="height:34px;background:var(--b6);border:1px solid var(--b4);border-radius:7px;color:var(--b2);font-size:11px;font-weight:700;cursor:pointer">Bu gün</button>
+      <button onclick="tarixSur(7)" style="height:34px;background:var(--b6);border:1px solid var(--b4);border-radius:7px;color:var(--b2);font-size:11px;font-weight:700;cursor:pointer">7 gün</button>
+      <button onclick="tarixSur(30)" style="height:34px;background:var(--b6);border:1px solid var(--b4);border-radius:7px;color:var(--b2);font-size:11px;font-weight:700;cursor:pointer">30 gün</button>
+    </div>
+    <button onclick="tarixYukle()" style="width:100%;height:40px;background:var(--a2);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">
+      📜 Qaimələri göstər
+    </button>
+    <div id="tarixCont">
+      <div class="empty-box"><div class="empty-ico">📜</div><div class="empty-txt">Tarix seçib yükləyin.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PARAMETRLƏR ══ -->
+<div class="screen" id="sParam">
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t" data-i="Ayarlar">Ayarlar</div><div class="n-s" data-i="Bağlantı, fayl və ehtiyat">Bağlantı, fayl və ehtiyat</div></div></div></div>
+  <div class="n-body" style="overflow:auto;padding-bottom:40px">
+    <div class="n-lbl" data-i="Terminal">Terminal</div><div class="n-card"><div class="n-f"><label for="cfgTerm" data-i="Terminal adı">Terminal adı</label><input class="n-in" id="cfgTerm" type="text" placeholder="T1" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgAnbar" data-i="Anbar adı (1C-yə göndəriləcək)">Anbar adı (1C-yə göndəriləcək)</label><input class="n-in" id="cfgAnbar" type="text" placeholder="Anbar-1" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgMail">Alıcı e-poçt (sənədlər bura göndərilir)</label><input class="n-in" id="cfgMail" type="email" placeholder="muhasib@firma.az" oninput="cfgSaxla()" autocomplete="off"></div></div>
+    <div class="n-lbl" data-i="Dil">Dil</div><div class="n-seg"><button type="button" data-k="dil" data-v="az" onclick="secim('dil','az')">AZ</button><button type="button" data-k="dil" data-v="ru" onclick="secim('dil','ru')">RU</button><button type="button" data-k="dil" data-v="tr" onclick="secim('dil','tr')">TR</button><button type="button" data-k="dil" data-v="en" onclick="secim('dil','en')">EN</button></div>
+    <div class="n-lbl" data-i="Cihaz">Cihaz</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Ekran sönməsin">Ekran sönməsin</div></div><button type="button" id="sw_ekran" class="n-sw" role="switch" aria-label="Ekran sönməsin" onclick="tgl('ekran')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Batareya xəbərdarlığı">Batareya xəbərdarlığı</div></div><button type="button" id="sw_bat" class="n-sw" role="switch" aria-label="Batareya xəbərdarlığı" onclick="tgl('bat')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Avtomatik ehtiyat nüsxə">Avtomatik ehtiyat nüsxə</div></div><button type="button" id="sw_ehtiyat" class="n-sw" role="switch" aria-label="Avtomatik ehtiyat nüsxə" onclick="tgl('ehtiyat')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a" data-i="Yan skan düyməsi">Yan skan düyməsi</div><button class="n-btn" style="width:auto;padding:0 14px" onclick="yanOgren()" data-i="Düyməni öyrət">Düyməni öyrət</button></div></div>
+    <div class="n-lbl" data-i="Eyni mal təkrar oxunanda">Eyni mal təkrar oxunanda</div><div class="n-seg"><button type="button" data-k="dubl" data-v="artir" onclick="secim('dubl','artir')" data-i="Sayı artır">Sayı artır</button><button type="button" data-k="dubl" data-v="sorus" onclick="secim('dubl','sorus')" data-i="Soruş">Soruş</button><button type="button" data-k="dubl" data-v="xeber" onclick="secim('dubl','xeber')" data-i="Xəbərdarlıq">Xəbərdarlıq</button></div>
+    <div class="n-lbl" data-i="Sayımda məbləğ qiyməti">Sayımda məbləğ qiyməti</div><div class="n-seg"><button type="button" data-k="sayQiy" data-v="alis" onclick="secim('sayQiy','alis')">Alış</button><button type="button" data-k="sayQiy" data-v="satis" onclick="secim('sayQiy','satis')">Satış</button></div>
+    <div class="n-lbl" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</div><div class="n-card"><div class="n-f"><label for="cfgPin" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</label><input class="n-in" id="cfgPin" type="password" placeholder="••••" oninput="" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="pinQur()" data-i="Saxla">Saxla</button></div></div>
+    <div class="n-lbl" data-i="Fayllar">Fayllar</div><div class="n-card"><div class="n-f" style="display:flex;flex-direction:column;gap:8px"><button class="n-btn" onclick="malFaylYukle()" data-i="📄 Mal faylını yüklə (CSV)">📄 Mal faylını yüklə (CSV)</button><button class="n-btn" onclick="kontFaylYukle()">👥 Kontragent faylını yüklə (CSV)</button><button class="n-btn" onclick="ayarSaxla()" data-i="💾 Ayarları fayla saxla">💾 Ayarları fayla saxla</button><button class="n-btn" onclick="ayarYukle()" data-i="♻️ Ayarları geri yüklə">♻️ Ayarları geri yüklə</button><button class="n-btn" onclick="document.getElementById('idxFayl').click()">📥 1C fayllarını idxal et (mal, kontragent)</button><button class="n-btn" onclick="ehtiyatFayl()" data-i="🗂 Ehtiyat fayl yarat (gözləyən sənədlər)">🗂 Ehtiyat fayl yarat (gözləyən sənədlər)</button></div><div class="n-f" id="fsYolGor" style="font-size:12px;color:#64748b;word-break:break-all"></div></div>
+    <input type="file" id="idxFayl" multiple accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="faylIdxal(this)">
+    <input type="file" id="kontFayl" accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="kontFaylSec(this)">
+    <input type="file" id="malFayl" accept=".csv,.txt,text/csv,text/plain" style="display:none" onchange="malFaylSec(this)">
+    <input type="file" id="ayarFayl" accept=".json,application/json" style="display:none" onchange="ayarSec(this)">
+    <div class="n-lbl" data-i="Digər">Digər</div><div class="n-card"><button class="n-row" onclick="screenAc('sHaqqinda')"><span data-i="ℹ️ Proqram haqqında">ℹ️ Proqram haqqında</span><span>›</span></button><button class="n-row" onclick="screenAc('sMexfilik')"><span data-i="🔒 Məxfilik siyasəti">🔒 Məxfilik siyasəti</span><span>›</span></button></div>
+    <div class="n-foot" data-i="Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.">Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.</div>
+  </div>
+</div>
+
+<div class="screen" id="sMexfilik">
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t">Məxfilik siyasəti</div><div class="n-s">Anbar Terminal</div></div></div></div>
+  <div class="n-body" style="overflow:auto;padding-bottom:40px"><div class="n-card" style="margin-top:14px;padding:14px;font-size:13.5px;line-height:1.6;color:#334155">
+    <p style="margin:0 0 10px">1. Oflayn terminal heç bir serverə qoşulmur. Sənədlər cihazda saxlanılır və yalnız siz e-poçtla göndərəndə cihazdan çıxır.</p>
+    <p style="margin:0 0 10px">2. Cihazda ayarlar, mal siyahısı, gözləyən sənədlər və qaralamalar saxlanılır. Bu məlumat üçüncü tərəflə paylaşılmır.</p>
+    <p style="margin:0 0 10px">3. Tətbiq reklam, izləmə və analitika xidmətlərindən istifadə etmir.</p>
+    <p style="margin:0 0 10px">4. Kamera yalnız barkod oxumaq üçün istifadə olunur, şəkil saxlanmır.</p>
+    <p style="margin:0 0 10px">5. 1C istifadəçi adı və parolu yalnız bu cihazda saxlanılır. Cihaz itərsə, 1C-də həmin istifadəçinin parolunu dəyişin.</p>
+    <p style="margin:0 0 10px">6. Ayarlar fayla saxlananda parol faylın içinə yazılmır.</p>
+    <p style="margin:0"><b>Əlaqə:</b> Xəyal Şıxalıyev, +994 51 678 28 78<br>Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.</p></div></div>
+</div>
+
+<div class="screen" id="sKassa">
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t" data-i="Kassa mədaxil">Kassa mədaxil</div><div class="n-s" data-i="Ödənişlər">Ödənişlər</div></div></div></div>
+  <div class="n-body" style="overflow:auto"><div class="n-card" style="margin-top:14px"><div class="n-f"><label for="kMeb" data-i="Məbləğ">Məbləğ</label><input class="n-in" id="kMeb" type="number" inputmode="decimal" step="0.01"></div><div class="n-f"><label for="kKont" data-i="Kontragent">Kontragent</label><input class="n-in" id="kKont" type="text"></div><div class="n-f"><label for="kOd" data-i="Ödəniş növü">Ödəniş növü</label><select class="n-in" id="kOd"><option value="nagd" data-i="Nağd">Nağd</option><option value="kart" data-i="Kart">Kart</option><option value="bank" data-i="Bank">Bank</option></select></div><div class="n-f"><label for="kQeyd" data-i="Qeyd">Qeyd</label><input class="n-in" id="kQeyd" type="text"></div><div class="n-f"><button class="n-btn" onclick="kassaGonder()" data-i="Göndər">Göndər</button></div></div></div>
+</div>
+
+<div class="screen" id="sHesab">
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div class="n-t" id="hesTitle">—</div></div></div>
+  <div class="n-body" style="overflow:auto"><div id="hesTar" style="display:none;gap:8px;margin-top:14px;align-items:flex-end"><div style="flex:1"><label class="n-lab2" data-i="Başlanğıc">Başlanğıc</label><input class="n-in" id="hesBas" type="date"></div><div style="flex:1"><label class="n-lab2" data-i="Son">Son</label><input class="n-in" id="hesSon" type="date"></div><button class="n-btn" style="width:auto;padding:0 14px" onclick="hesabatYukle()" data-i="Göstər">Göstər</button></div><div id="hesAxBox" style="display:none;margin-top:12px"><input class="n-in" id="hesAx" type="search" placeholder="Axtar..." oninput="hesAxtar()"></div><div id="hesSeg" class="n-seg" style="display:none;margin-top:12px"></div><div id="hesNet" style="margin-top:12px"></div></div>
+</div>
+
+<div class="screen" id="sJurnal">
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t" data-i="📋 Sinxronizasiya jurnalı">📋 Sinxronizasiya jurnalı</div><div class="n-s" data-i="Son əməliyyatlar">Son əməliyyatlar</div></div></div></div>
+  <div class="n-body" style="overflow:auto"><div class="n-card" id="jurList" style="margin-top:14px"></div><button class="n-btn" onclick="jurTemizle()" data-i="Təmizlə">Təmizlə</button></div>
+</div>
+
+<div class="screen" id="sDiag">
+  <div class="n-hd"><div style="display:flex;align-items:center;gap:10px"><button class="btn-geri" onclick="screenAc('sHome')">‹</button><div><div class="n-t" data-i="🩺 Diaqnostika">🩺 Diaqnostika</div><div class="n-s" data-i="Cihaz və bağlantı">Cihaz və bağlantı</div></div></div></div>
+  <div class="n-body" style="overflow:auto"><div class="n-card" id="diagList" style="margin-top:14px"></div></div>
+</div>
+
+<div class="screen" id="sWizard">
+  <div class="n-hd"><div><div class="n-t" data-i="Xoş gəlmisiniz">Xoş gəlmisiniz</div><div class="n-s" data-i="İlk quraşdırma">İlk quraşdırma</div></div></div>
+  <div class="n-body" style="overflow:auto;padding-bottom:40px"><div class="n-lbl" data-i="Dil">Dil</div><div class="n-seg"><button type="button" data-k="dil" data-v="az" onclick="secim('dil','az')">AZ</button><button type="button" data-k="dil" data-v="ru" onclick="secim('dil','ru')">RU</button><button type="button" data-k="dil" data-v="tr" onclick="secim('dil','tr')">TR</button><button type="button" data-k="dil" data-v="en" onclick="secim('dil','en')">EN</button></div><div class="n-lbl" data-i="Terminal">Terminal</div><div class="n-card"><div class="n-f"><label for="wTerm" data-i="Terminal adı">Terminal adı</label><input class="n-in" id="wTerm" type="text" placeholder="T1" autocomplete="off"></div><div class="n-f"><label for="wAnbar" data-i="Anbar adı (1C-yə göndəriləcək)">Anbar adı</label><input class="n-in" id="wAnbar" type="text" placeholder="Anbar-1" autocomplete="off"></div><div class="n-f"><label for="wMail">Alıcı e-poçt</label><input class="n-in" id="wMail" type="email" placeholder="muhasib@firma.az" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="wizSaxla()" data-i="Yoxla və başla">Başla</button></div></div></div>
+</div>
+
+<!-- ══ MODALLAR ══ -->
+<!-- Mal seçim modali -->
+<div class="screen" id="sHaqqinda">
+  <div class="topbar param-bg">
+    <button class="btn-geri" onclick="screenAc('sHome')">‹</button>
+    <div class="topbar-mid"><div class="topbar-title">Proqram haqqında</div><div class="topbar-sub">Anbar Terminal</div></div>
+  </div>
+  <div style="padding:14px;display:flex;flex-direction:column;gap:12px;overflow:auto">
+    <div style="background:#fff;border:1px solid #d1d5db;border-radius:12px;overflow:hidden">
+      <div style="padding:12px 14px;border-bottom:1px solid #e5e7eb">
+        <div style="font-size:11px;font-weight:700;color:#6b7280">TƏRTİBATÇI</div>
+        <div style="font-size:15px;font-weight:700;margin-top:2px">Şıxalıyev Xəyal</div>
+      </div>
+      <div style="padding:12px 14px;border-bottom:1px solid #e5e7eb">
+        <div style="font-size:11px;font-weight:700;color:#6b7280">LİSENZİYA</div>
+        <div style="font-size:14px;font-weight:600;margin-top:2px">Müəllifə məxsusdur (Bütün hüquqlar qorunur)</div>
+      </div>
+      <div style="padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:#6b7280">ƏLAQƏ</div>
+        <a href="tel:+994516782878" style="display:inline-block;font-size:15px;font-weight:700;margin-top:2px;color:var(--b3);text-decoration:none">+994 51 678 28 78</a>
+      </div>
+    </div>
+    <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.5;color:#78350f">
+      <b>QEYD:</b> Bu proqram təminatı və onun tərkib hissələri müəllif hüquqları ilə qorunur. İzinsiz nüsxələnməsi və ya paylanması qadağandır.
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="mMalSec" style="display:none" onclick="if(event.target===this)modalBagla('mMalSec')">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <span class="modal-title">📋 Mal Seç</span>
+      <button class="modal-close" onclick="modalBagla('mMalSec')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input class="modal-search" id="malSecAxt" type="text" placeholder="Ad ilə axtar..." oninput="malSecRender()" autocomplete="off" autocorrect="off" spellcheck="false">
+      <div id="malSecList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tədarükçü modali -->
+<div class="modal-bg" id="mKontragent" style="display:none" onclick="if(event.target===this)modalBagla('mKontragent')">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <span class="modal-title">👤 Tədarükçü Seç</span>
+      <button class="modal-close" onclick="modalBagla('mKontragent')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input class="modal-search" id="ktAxt" type="text" placeholder="Ad ilə axtar..." oninput="ktRender()" autocomplete="off">
+      <div id="ktList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Göndərmə təsdiq modali -->
+<div class="modal-bg" id="mGonder" style="display:none" onclick="if(event.target===this)modalBagla('mGonder')">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <span class="modal-title">📤 Göndərməyi Təsdiqlə</span>
+      <button class="modal-close" onclick="modalBagla('mGonder')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="gonderOzet" style="background:#f9fafb;border-radius:10px;padding:12px;margin-bottom:12px;font-size:13px;color:#374151;line-height:1.7"></div>
+      <button class="btn-tsd-ok" onclick="gonder()">✓ Təsdiq et və göndər</button>
+    </div>
+  </div>
+</div>
+
+<!-- Qaimə detalı modali -->
+<div class="modal-bg" id="mQaime" style="display:none" onclick="if(event.target===this)modalBagla('mQaime')">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <span class="modal-title" id="qaimeModalTitle">Qaimə</span>
+      <button class="modal-close" onclick="modalBagla('mQaime')">✕</button>
+    </div>
+    <div class="modal-body" id="qaimeModalBody"></div>
+  </div>
+</div>
+
+</div><!-- /app -->
+<div id="pinBox" style="display:none;position:fixed;inset:0;z-index:10000;background:#0f172a;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff"><div style="font-size:18px;font-weight:800" data-i="PIN kodunu daxil edin">PIN kodunu daxil edin</div><input id="pinInp" type="password" inputmode="numeric" maxlength="4" oninput="pinYoxla()" style="width:160px;text-align:center;font-size:28px;letter-spacing:8px;padding:10px;border-radius:12px;border:0"><div id="pinErr" style="color:#f87171;font-weight:600;min-height:20px"></div></div>
+<div id="kamBox" style="display:none;position:fixed;inset:0;z-index:9999;background:#000;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#111;color:#fff;font:700 14px sans-serif">
+    <span>📷 Kamera ilə barkod</span>
+    <span><button onclick="kamFener()" style="height:36px;padding:0 12px;border:none;border-radius:8px;background:#374151;color:#fff;font-size:16px">🔦</button>
+    <button onclick="kamBagla()" style="height:36px;padding:0 14px;border:none;border-radius:8px;background:#b91c1c;color:#fff;font-weight:700">✕ Bağla</button></span>
+  </div>
+  <div id="kamReader" style="flex:1;min-height:0;background:#000"></div>
+  <div style="padding:10px;text-align:center;color:#9ca3af;font:600 13px sans-serif;background:#111">Barkodu çərçivəyə gətirin — oxunan kimi bağlanır</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Android touch fix ──
+// Chrome Android-də bəzi elementlər touchend fire etmir onclick əvəzinə
+document.addEventListener('touchstart',function(){},{passive:true});
+
+// closest() polyfill — köhnə Android WebView üçün
+if(!Element.prototype.closest){
+  Element.prototype.closest=function(s){
+    var el=this;
+    while(el&&el.nodeType===1){
+      if(el.matches?el.matches(s):(el.msMatchesSelector?el.msMatchesSelector(s):false))return el;
+      el=el.parentElement;
+    }
+    return null;
+  };
+}
+if(!Element.prototype.matches){
+  Element.prototype.matches=Element.prototype.msMatchesSelector||Element.prototype.webkitMatchesSelector;
+}
+
+// ══════════════════════════════════════
+//  KONFİQURASİYA
+// ══════════════════════════════════════
+function lj(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function sj(k,v){var ok=false;try{localStorage.setItem(k,JSON.stringify(v));ok=true}catch(e){}if(MIR[k])idbPut(k,v);return ok}
+var MIR={anbar_mail_q:1,anbar_outbox:1,anbar_drafts:1,anbar_qaime_hist:1,anbar_mallar:1},_idb=null,_fyT=null;
+function idbOpen(){return new Promise(function(res){if(_idb)return res(_idb);try{var q=indexedDB.open('anbar_backup',1);q.onupgradeneeded=function(){q.result.createObjectStore('kv')};q.onsuccess=function(){_idb=q.result;res(_idb)};q.onerror=function(){res(null)}}catch(e){res(null)}})}
+function idbPut(k,v){idbOpen().then(function(db){if(!db)return;try{db.transaction('kv','readwrite').objectStore('kv').put(JSON.stringify(v),k)}catch(e){}});if(k==='anbar_outbox'||k==='anbar_drafts')fileYaz()}
+function idbGet(k){return idbOpen().then(function(db){return new Promise(function(res){if(!db)return res(null);try{var r=db.transaction('kv').objectStore('kv').get(k);r.onsuccess=function(){try{res(r.result?JSON.parse(r.result):null)}catch(e){res(null)}};r.onerror=function(){res(null)}}catch(e){res(null)}})})}
+function capFS(){var C=window.Capacitor;return C&&C.Plugins&&C.Plugins.Filesystem}
+function ehtiyatData(){return JSON.stringify({t:new Date().toISOString(),anbar:CFG.anbarAd,outbox:lj('anbar_outbox',[]),drafts:lj('anbar_drafts',[]),hist:lj('anbar_qaime_hist',[]).slice(0,100)})}
+function fileYaz(now){clearTimeout(_fyT);_fyT=setTimeout(function(){var F=capFS();if(!F)return;F.writeFile({path:'BarkodPRO/anbar_ehtiyat.json',data:ehtiyatData(),directory:'DOCUMENTS',encoding:'utf8',recursive:true}).catch(function(){})},now?0:1500)}
+function ehtiyatFayl(){var F=capFS(),d=ehtiyatData();
+  if(F){F.writeFile({path:'BarkodPRO/anbar_ehtiyat.json',data:d,directory:'DOCUMENTS',encoding:'utf8',recursive:true}).then(function(){toast('Fayl: Documents/BarkodPRO/anbar_ehtiyat.json','ok')}).catch(function(){toast('Fayl yazıla bilmədi','err')});return}
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([d],{type:'application/json'}));a.download='anbar_ehtiyat.json';document.body.appendChild(a);a.click();a.remove();toast('Ehtiyat fayl yükləndi','ok')}
+async function restoreBackup(){
+  for(var k in MIR){var c=localStorage.getItem(k);if(c&&c!=='[]')continue;var v=await idbGet(k);
+    if(v&&(!Array.isArray(v)||v.length)){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){if(k==='anbar_mallar')window._mIDB=v}}}
+  var F=capFS();
+  if(F&&!lj('anbar_outbox',[]).length&&!lj('anbar_drafts',[]).length){
+    try{var r=await F.readFile({path:'BarkodPRO/anbar_ehtiyat.json',directory:'DOCUMENTS',encoding:'utf8'});var j=JSON.parse(r.data);
+      if(j.outbox&&j.outbox.length)sj('anbar_outbox',j.outbox);if(j.drafts&&j.drafts.length)sj('anbar_drafts',j.drafts);}catch(e){}}
+}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function p2(n){return n<10?'0'+n:''+n}
+function dStr(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
+function bugunStr(){return dStr(new Date())}
+function pq(v,d){var x=parseFloat(String(v==null?'':v).replace(',','.'));return(isFinite(x)&&x>0)?Math.round(x*1000)/1000:d}
+function fq(v){return String(Math.round((parseFloat(v)||0)*1000)/1000)}
+function cl(v){return String(v==null?'':v).replace(/["\\]/g,"'").replace(/[\r\n\t]+/g,' ').trim()}
+function setV(id,v){var e=document.getElementById(id);if(e)e.value=v||''}
+function sat(l,v){return '<div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#6b7280;font-size:12px">'+l+'</span><span style="font-weight:700;font-size:12px;text-align:right">'+esc(v)+'</span></div>'}
+function bH(id,txt,css){return '<button id="'+id+'" style="height:44px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation;'+css+'">'+txt+'</button>'}
+function mallarHtml(a){if(!a||!a.length)return '';var h='<div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:6px">MALLAR ('+a.length+')</div>';a.forEach(function(m){h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6"><div><div style="font-size:13px;font-weight:600">'+esc(m.ad)+'</div><div style="font-size:11px;color:#9ca3af">'+esc(m.barkod)+'</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:700">'+fq(m.say)+' ed</div><div style="font-size:11px;color:var(--a2)">A:'+fp(m.alis)+'</div></div></div>'});return h}
+var _ac;
+function beep(ok){try{if(navigator.vibrate)navigator.vibrate(ok?40:[80,60,80]);var A=window.AudioContext||window.webkitAudioContext;if(!A)return;_ac=_ac||new A();var o=_ac.createOscillator(),g=_ac.createGain();o.frequency.value=ok?1400:300;g.gain.value=.08;o.connect(g);g.connect(_ac.destination);o.start();o.stop(_ac.currentTime+(ok?.08:.25))}catch(e){}}
+
+var CFG=Object.assign({apiUrl:'http://localhost/baza/hs/v2',apiUser:'',apiPass:'',anbarAd:'Anbar-1'},lj('anbar_cfg',{}));
+
+CFG.mode='offline';CFG.fayl=true;window.OFFLINE_APP=true;
+function apiBuild(){CFG.apiUrl=(CFG.sxema||'http')+'://'+CFG.srv+'/'+CFG.baza+'/hs/'+CFG.servis}
+(function(){if(!CFG.srv){var m=/^(?:(https?):\/\/)?([^\/]+)\/([^\/]+)\/hs\/([^\/?#]+)/.exec(CFG.apiUrl||'');if(m){CFG.sxema=m[1]||'http';CFG.srv=m[2];CFG.baza=m[3];CFG.servis=m[4]}else{CFG.sxema='http';CFG.srv='192.168.1.100';CFG.baza='baza';CFG.servis='terminal'}}
+CFG.termAd=CFG.termAd||'T1';CFG.fayl=!!CFG.fayl;apiBuild()})();
+function getUrl(ep){return CFG.apiUrl+ep}
+function ah(){var h={'Content-Type':'application/json'};if(CFG.apiUser)h['Authorization']='Basic '+btoa(CFG.apiUser+':'+CFG.apiPass);return h}
+async function aGet(ep){if(CFG.mode==='offline')return null;try{var r=await fetch(getUrl(ep),{headers:ah(),signal:tmo(8000)});if(!r.ok)return null;return await r.json()}catch(e){return null}}
+// Real xeta mesaji ile GET (mal yukleme ucun) - xetani gizlətmir
+async function aGetX(ep,ms){
+  if(CFG.mode==='offline')throw new Error('Oflayn rejim aktivdir');
+  var r;
+  try{r=await fetch(getUrl(ep),{headers:ah(),signal:tmo(ms||30000)});}
+  catch(e){
+    if(e&&e.name==='TimeoutError')throw new Error('Timeout (server gec cavab verir)');
+    throw new Error('Baglanti yoxdur: '+(e&&e.message?e.message:e));
+  }
+  var txt=await r.text();
+  if(!r.ok)throw new Error('HTTP '+r.status+' '+txt.slice(0,150));
+  try{return JSON.parse(txt);}
+  catch(e){throw new Error('JSON xetasi: '+e.message+' | '+txt.slice(0,80));}
+}
+async function aPost(ep,body){
+  if(CFG.mode==='offline'){var e0=new Error('Oflayn rejim');e0.net=true;throw e0;}
+  var r;
+  try{r=await fetch(getUrl(ep),{method:'POST',headers:await ahP(ep,body),body:JSON.stringify(body),signal:tmo(45000)});}
+  catch(e){var er=new Error(e&&e.name==='TimeoutError'?'Server gec cavab verdi':'Bağlantı yoxdur');er.net=true;throw er;}
+  var txt=await r.text(),j=null;
+  try{j=JSON.parse(txt);}catch(e){}
+  if(r.ok&&(!j||typeof j!=='object')){var er2=new Error('Server cavabı tanınmadı (1C deyil?)');er2.net=true;throw er2;}
+  if(!r.ok||(j&&j.ok===false))throw new Error((j&&j.error)||('HTTP '+r.status));
+  return j||{};
+}
+
+var MK='anbar_mallar',GRK='anbar_qruplar',KTK='anbar_kontragent',QHK='anbar_qaime_hist';
+var OPS={
+  qebul:{title:'Mal Qəbulu',sk:'anbar_qebul',tc:'qebul-bg',sc:'qebul-bg',yeni:true,ep:'/terminal'},
+  qaytarma:{title:'Mal Qaytarma',sk:'anbar_qaytarma',tc:'qaytarma-bg',sc:'qaytarma-bg',yeni:false,ep:'/terminal'},
+  sayim:{title:'Mal Sayımı',sk:'anbar_sayim',tc:'sayim-bg',sc:'sayim-bg',yeni:false,ep:'/terminal'},
+  silinme:{title:'Mal Silinməsi',sk:'anbar_silinme',tc:'qaytarma-bg',sc:'qaytarma-bg',yeni:false,ep:'/terminal'},
+  satis:{title:'Mal Satışı',sk:'anbar_satis',tc:'qebul-bg',sc:'qebul-bg',yeni:false,ep:'/terminal'},
+  kassa_medaxil:{title:'Kassa mədaxil',ep:'/terminal'},
+  kassa_mexaric:{title:'Kassa məxaric',ep:'/terminal'}
+};
+ 
+// ══════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════
+var mallar=[],qruplar=[],kontragentler=[];
+var curOp=null,siyahi=[],curMal=null,ruMal=null,ruOrig=0,ruAdd=1,qty=1,editB=null,secQrup=null,curDraftId=null,curGirisOp='qebul',curEditNo=null;
+
+// ══════════════════════════════════════
+//  AVTO-SKAN
+// ══════════════════════════════════════
+var sbuf='',stimer=null;
+document.addEventListener('keydown',function(e){
+  var f=document.activeElement;
+  var ui=f&&['INPUT','TEXTAREA'].includes(f.tagName)&&f.id!=='gsi'&&f.id!=='elBarkod';
+  if(ui)return;
+  if(['Tab','Shift','Control','Alt','Meta','CapsLock','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
+  if(e.key==='Enter'){
+    clearTimeout(stimer);
+    var v=sbuf.replace(/[\r\n\t]/g,'').trim();
+    sbuf='';updBS('','');
+    if(v.length>=4&&curOp)scanEt(v);
+    return;
+  }
+  if(e.key.length===1){
+    sbuf+=e.key;updBS(sbuf,'scanning');
+    clearTimeout(stimer);
+    stimer=setTimeout(function(){sbuf='';updBS('','')},1500);
+  }
+});
+
+function updBS(val,state){
+  var strip=document.getElementById('barkodStrip');
+  var disp=document.getElementById('barkodDisp');
+  var hint=document.getElementById('barkodHint');
+  if(!strip)return;
+  disp.textContent=val;
+  if(state==='scanning'){strip.className='barkod-strip scanning';hint.textContent='';}
+  else{strip.className='barkod-strip';hint.textContent='Barkod oxudun...';}
+}
+
+// ══════════════════════════════════════
+//  EKRAN IDARESI
+// ══════════════════════════════════════
+function screenAc(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.className='screen'});
+  document.getElementById(id).className='screen active';window.scrollTo(0,0);
+  if(id==='sParam')paramDoldur();
+  if(id==='sTarix'){tarixSur(7);setTimeout(function(){tarixYukle();},100);}
+}
+
+function modalAc(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.style.display='flex';
+  setTimeout(function(){
+    if(id==='mMalSec'){
+      var inp=document.getElementById('malSecAxt');
+      if(inp){inp.value='';inp.focus();}
+      malSecRender();
+    }
+    if(id==='mKontragent'){
+      var inp=document.getElementById('ktAxt');
+      if(inp){inp.value='';inp.focus();}
+      ktYukle();
+    }
+  },50);
+}
+function modalBagla(id){
+  var el=document.getElementById(id);
+  if(el)el.style.display='none';
+}
+
+// ══════════════════════════════════════
+//  EMELIYYAT SECIMI
+// ══════════════════════════════════════
+function opUI(op){
+  var c=OPS[op];
+  document.getElementById('opTitle').textContent=c.title;
+  document.getElementById('opSub').textContent=CFG.anbarAd+' - '+mallar.length+' mal yüklü';
+  [['opTopbar','topbar ',c.tc],['opStats','stats-strip ',c.sc],['btnElave','btn-elave ',op],['foundBadge','found-badge ',op],['cntPill','cnt-pill ',op],['totalHdr','total-hdr ',op],['btnGonder','btn-gonder ',op],['resultFound','result-found ',op]].forEach(function(a){document.getElementById(a[0]).className=a[1]+a[2];});
+  var qe=document.getElementById('qebulExtra');if(qe)qe.style.display=(op==='qebul')?'flex':'none';
+  var se=document.getElementById('sayimExtra');if(se)se.style.display=(op==='sayim')?'block':'none';
+  if(op==='qebul')ktYukle();
+  if(op==='sayim')qrupYukle2();
+  hideAll();updBS('','');
+  var eb=document.getElementById('elBarkod');if(eb)eb.value='';
+  screenAc('sOp');render();
+}
+function opSec(op){
+  curOp=op;curGirisOp=op;editB=null;qty=1;ruMal=null;sbuf='';secQrup=null;curDraftId=null;curEditNo=null;siyahi=[];
+  setV('qebulTarix',bugunStr());setV('qebulKontragent','');setV('qebulQeyd','');
+  opUI(op);
+}
+
+function geriQayt(){
+  var op=curOp||curGirisOp;
+  if(siyahi.length){saxla();toast('Qaralama saxlanıldı','info');}
+  curGirisOp=op;curOp=null;sbuf='';curDraftId=null;curEditNo=null;siyahi=[];
+  screenAc('sQaimeList');qaimeListYukle();
+}
+
+// ══════════════════════════════════════
+//  MAL YUKLEME
+// ══════════════════════════════════════
+async function loadMallar(){
+  toast('Yüklənilir...','info');
+  try{
+    var data=await aGetX('/products',60000);
+    if(!data)throw new Error('Cavab yoxdur');
+    if(data.error)throw new Error('1C: '+data.error);
+    try{localStorage.setItem('anbar_qrupMode',(data&&data.qrupMode)||'-');localStorage.setItem('anbar_qaliqInfo',(data&&data.qaliqInfo)||'köhnə funksiya')}catch(e){}
+    var arr=Array.isArray(data)?data:(data.products||[]);
+    mallar=arr.map(function(m){
+      return{
+        barkod:m.barkod||m.barcode||'',
+        ad:m.ad||m.name||'',
+        satis:parseFloat(m.satis||m.price||0),
+        alis:parseFloat(m.alis||0),
+        code:m.code||'',
+        unit:m.unit||'',
+        qrup:m.qrup||m.group||'',
+        qaliq:parseFloat(m.qaliq||0)
+      };
+    }).filter(function(m){return m.barkod||m.ad;});
+    sj(MK,mallar);try{localStorage.setItem('anbar_mallar_ts',Date.now())}catch(e){}
+    var qSet={};
+    mallar.forEach(function(m){if(m.qrup)qSet[m.qrup]=(qSet[m.qrup]||0)+1;});
+    qruplar=Object.keys(qSet).map(function(k){return{ad:k,say:qSet[k]};});
+    sj(GRK,qruplar);
+    setST(mallar.length+' mal yüklü');
+    toast(mallar.length+' mal, '+qruplar.length+' qrup yükləndi. Qalıq: '+((data&&data.qaliqInfo)||'1C-də köhnə funksiya'),'ok');
+    if(curOp==='sayim')qrupYukle2();
+    ktYukle(true);
+  }catch(e){
+    var saved=lj(MK,[]);
+    if(saved.length){mallar=saved;setST(mallar.length+' mal (lokal)');}
+    toast('1C xətası: '+e.message,'warn');
+  }
+}
+
+function setST(t){
+  document.getElementById('homeSub').textContent=t;
+  document.getElementById('syncSt').textContent=t;
+  if(curOp){
+    var el=document.getElementById('opSub');
+    if(el)el.textContent=CFG.anbarAd+' - '+t;
+  }
+}
+
+// ══════════════════════════════════════
+//  QRUPLAR (SAYIM)
+// ══════════════════════════════════════
+function qrupYukle2(){
+  var saved=lj(GRK,[]);
+  if(saved.length)qruplar=saved;
+  var grid=document.getElementById('qrupGrid');
+  if(!grid)return;
+  var hamisiSay=(mallar.length||lj(MK,[]).length);
+  var html='<div class="qrup-kart'+(secQrup===null?' sel':'')+'" onclick="qrupSec(null)">'+
+    '<div class="qrup-kart-ico">&#128230;</div>'+
+    '<div class="qrup-kart-ad">Hamisi</div>'+
+    '<div class="qrup-kart-say">'+hamisiSay+' mal</div></div>';
+  qruplar.forEach(function(q){
+    var qs=q.ad.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    html+='<div class="qrup-kart'+(secQrup===q.ad?' sel':'')+'" onclick="qrupSec(\''+qs+'\')">'+
+      '<div class="qrup-kart-ico">'+qrupIco(q.ad)+'</div>'+
+      '<div class="qrup-kart-ad">'+esc(q.ad)+'</div>'+
+      '<div class="qrup-kart-say">'+q.say+' mal</div></div>';
+  });
+  if(!qruplar.length)html+='<div class="n-foot" style="grid-column:1/-1;text-align:left">Qrup tapılmadı. 1C-də malların qrupu (Родитель) olmalıdır, sonra mal bazasını yenidən yükləyin.</div>';
+  grid.innerHTML=html;
+}
+
+function qrupIco(ad){
+  var a=(ad||'').toLowerCase();
+  if(a.indexOf('siqar')>=0||a.indexOf('tutun')>=0)return '&#128684;';
+  if(a.indexOf('su')>=0&&a.indexOf('sut')<0)return '&#128167;';
+  if(a.indexOf('icqi')>=0||a.indexOf('icecek')>=0)return '&#129380;';
+  if(a.indexOf('alko')>=0||a.indexOf('spirt')>=0)return '&#127870;';
+  if(a.indexOf('sud')>=0||a.indexOf('sut')>=0)return '&#129371;';
+  if(a.indexOf('cay')>=0||a.indexOf('qehve')>=0)return '&#9749;';
+  if(a.indexOf('et')>=0||a.indexOf('kolbas')>=0)return '&#129385;';
+  if(a.indexOf('sirin')>=0||a.indexOf('konfet')>=0)return '&#127852;';
+  if(a.indexOf('corek')>=0||a.indexOf('un')>=0)return '&#127838;';
+  return '&#128194;';
+}
+
+function qrupSec(q){
+  secQrup=q;
+  qrupYukle2();
+}
+
+function qrupYukle(qrup){
+  var src=mallar.length?mallar:lj(MK,[]);
+  var list=(secQrup===null)?src:src.filter(function(m){return m.qrup===secQrup;});
+  if(!list.length){toast('Seçilən qrupda mal tapılmadı','warn');return;}
+  list.forEach(function(m){
+    if(!siyahi.find(function(s){return s.barkod===m.barkod;})){
+      siyahi.push({barkod:m.barkod,ad:m.ad,say:0,alis:m.alis,satis:m.satis,yeni:false,code:m.code||'',sis:m.qaliq||0});
+    }
+  });
+  saxla();render();
+  toast(list.length+' mal yükləndi (say=0)','ok');
+}
+
+// ══════════════════════════════════════
+//  KONTRAGENT (kontragent + firma eyni)
+// ══════════════════════════════════════
+async function ktYukle(force){
+  var saved=lj(KTK,[]);
+  if(saved.length){kontragentler=saved;ktRender();if(!force)return;}
+  try{var data=await aGet('/kontragentler');if(data){kontragentler=Array.isArray(data)?data:(data.list||[]);sj(KTK,kontragentler);}}catch(e){}
+  ktRender();
+}
+
+function ktRender(){
+  var axtEl=document.getElementById('ktAxt');
+  var axt=axtEl?axtEl.value.toLowerCase():'';
+  var list=kontragentler.filter(function(t){
+    return !axt||(t.ad||'').toLowerCase().indexOf(axt)>=0;
+  });
+  var html='<div style="margin-bottom:10px">'+
+    '<div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:4px">EL ILE YAZ</div>'+
+    '<div style="display:flex;gap:6px">'+
+      '<input id="ktElYaz" type="text" placeholder="Kontragent adini yazin..." '+
+      'style="flex:1;height:42px;font-size:14px;padding:0 12px;border:2px solid var(--b4);border-radius:8px;background:#fff;color:#111;outline:none" '+
+      'autocomplete="off">'+
+      '<button id="ktElBtn" style="height:42px;padding:0 16px;background:var(--g2);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Sec</button>'+
+    '</div>'+
+  '</div>';
+  if(list.length){
+    html+='<div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:6px">YA 1C-DEN SEC</div>';
+    list.slice(0,60).forEach(function(t,i){
+      html+='<div class="modal-item kt-item" data-idx="'+i+'">'+
+        '<div class="mi-name">'+esc(t.ad)+'</div>'+
+        (t.kod?'<div class="mi-sub">'+esc(t.kod)+'</div>':'')+
+      '</div>';
+    });
+  }
+  var el=document.getElementById('ktList');
+  if(!el)return;
+  el.innerHTML=html;
+  el._ktList=list;
+  // Event delegation — onclick yerine
+  function ktListHandler(e){
+    var t=e.target||e.srcElement;
+    var cur=t;
+    while(cur&&cur!==el){
+      if(cur.getAttribute&&cur.getAttribute('data-idx')!==null&&cur.className&&cur.className.indexOf('kt-item')>=0){
+        var idx=parseInt(cur.getAttribute('data-idx'));
+        var kt=el._ktList[idx];
+        if(kt)ktSec(kt.ad);
+        return;
+      }
+      if(cur.id==='ktElBtn'){ktElSec();return;}
+      cur=cur.parentElement;
+    }
+  }
+  el.onclick=ktListHandler;
+  
+  // Enter ile de sec
+  var inp=document.getElementById('ktElYaz');
+  if(inp)inp.onkeydown=function(e){if(e.key==='Enter'){ktElSec();e.preventDefault();}};
+}
+
+function ktSec(ad){
+  var inp=document.getElementById('qebulKontragent');
+  if(inp){inp.value=ad;inp.style.borderColor='var(--g3)';}
+  modalBagla('mKontragent');
+  toast(ad+' seçildi','ok');saxla();
+}
+
+function ktElSec(){
+  var el=document.getElementById('ktElYaz');
+  var v=(el?el.value:'').trim();
+  if(v)ktSec(v);
+  else toast('Ad yazin!','warn');
+}
+
+
+
+
+// ══════════════════════════════════════
+//  SCAN / AXTAR
+// ══════════════════════════════════════
+function scanEt(v){
+  hideAll();qty=1;
+  var qi=document.getElementById('qtyInp');if(qi)qi.value='1';
+  var eb=document.getElementById('elBarkod');if(eb)eb.value='';
+  updBS(v,'');setTimeout(function(){updBS('','');},2000);
+  var inS=siyahi.find(function(s){return s.barkod===v;});
+  if(inS){dubl(inS);return;}
+  var m=mallar.find(function(x){return x.barkod===v;})||mallar.find(function(x){return x.code&&x.code===v;});
+  if(m){if(curOp==='sayim'){sayimOxu(m);return}beep(true);curMal=m;showFound(m);}
+  else{beep(false);curMal=null;if(OPS[curOp].yeni)showNew(v);else showNFW(v);}
+}
+
+function elAxtar(){
+  var eb=document.getElementById('elBarkod');
+  var v=(eb?eb.value:'').replace(/[\r\n\t]/g,'').trim();
+  if(!v||!curOp)return;
+  scanEt(v);
+}
+
+function showFound(m){
+  document.getElementById('rAd').textContent=m.ad;
+  document.getElementById('rBarkod').textContent=m.barkod+(m.unit?' - '+m.unit:'');
+  document.getElementById('rAlis').textContent=fp(m.alis);
+  document.getElementById('rSatis').textContent=fp(m.satis);
+  document.getElementById('resultFound').style.display='block';
+}
+
+function showUpdate(item){
+  ruMal=item;ruOrig=item.say;ruAdd=1;
+  document.getElementById('ruAd').textContent=item.ad;
+  document.getElementById('ruBarkod').textContent=item.barkod;
+  document.getElementById('ruCurSay').textContent=fq(ruOrig)+' ed';
+  document.getElementById('ruSayInp').value=1;
+  updRuDisp();
+  document.getElementById('resultUpdate').style.display='block';
+  setTimeout(function(){
+    var inp=document.getElementById('ruSayInp');
+    if(inp){inp.focus();inp.select();}
+  },80);
+}
+
+function showNew(b){
+  var nb=document.getElementById('nBarkod');
+  if(nb)nb.value=b;
+  ['nAd','nAlis','nSatis'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  var ns=document.getElementById('nSay');
+  if(ns)ns.value='1';
+  document.getElementById('newCard').style.display='block';
+  setTimeout(function(){var el=document.getElementById('nAd');if(el)el.focus();},80);
+}
+
+function showNFW(b){
+  var nm={qaytarma:'Mal Qaytarma',sayim:'Mal Sayımı',silinme:'Mal Silinməsi',satis:'Mal Satışı'};
+  document.getElementById('nfwBc').textContent=b;
+  document.getElementById('nfwSub').textContent=(nm[curOp]||'')+' əməliyyatında yeni mal olmaz';
+  document.getElementById('nfWarn').style.display='block';
+  toast('Mal bazada yoxdur!','warn');
+}
+
+function warnBagla(){
+  hideAll();updBS('','');
+  var eb=document.getElementById('elBarkod');
+  if(eb)eb.value='';
+}
+function hideAll(){
+  ['resultFound','resultUpdate','newCard','nfWarn'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.style.display='none';
+  });
+}
+
+// ══════════════════════════════════════
+//  MAL SECIM MODALI
+// ══════════════════════════════════════
+function malSecRender(){
+  var axtEl=document.getElementById('malSecAxt');
+  var axt=axtEl?axtEl.value.toLowerCase():'';
+  var src=mallar.length?mallar:lj(MK,[]);
+  var el=document.getElementById('malSecList');
+  if(!el)return;
+  if(!src.length){
+    el.innerHTML='<div style="text-align:center;padding:24px;color:#9ca3af;font-size:13px">'+
+      'Mal bazası yüklənməyib.<br>Ana səhifədən "Yüklə" basın.</div>';
+    return;
+  }
+  var list=src.filter(function(m){
+    if(!axt)return true;
+    return (m.ad||'').toLowerCase().indexOf(axt)>=0||(m.barkod||'').indexOf(axt)>=0;
+  }).slice(0,100);
+  var html='';
+  if(!list.length){
+    html='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:13px">Tapilmadi</div>';
+  } else {
+    list.forEach(function(m,i){
+      html+='<div class="modal-item mal-sec-item" data-idx="'+i+'">'+
+        '<div style="flex:1;min-width:0">'+
+          '<div class="mi-name">'+esc(m.ad)+'</div>'+
+          '<div class="mi-sub">'+esc((m.barkod||'')+(m.unit?' - '+m.unit:''))+'</div>'+
+        '</div>'+
+        '<div style="text-align:right;flex-shrink:0;margin-left:8px">'+
+          '<div style="font-size:12px;font-weight:700;color:var(--g1)">'+fp(m.satis)+'</div>'+
+          '<div style="font-size:11px;color:var(--a2)">A:'+fp(m.alis)+'</div>'+
+        '</div>'+
+      '</div>';
+    });
+  }
+  el.innerHTML=html;
+  el._malList=list;
+  function malListHandler(e){
+    var t=e.target||e.srcElement;
+    var cur=t;
+    while(cur&&cur!==el){
+      if(cur.getAttribute&&cur.getAttribute('data-idx')!==null&&cur.className&&cur.className.indexOf('mal-sec-item')>=0){
+        var idx=parseInt(cur.getAttribute('data-idx'));
+        var m=el._malList[idx];
+        if(m)malSecSec(m);
+        return;
+      }
+      cur=cur.parentElement;
+    }
+  }
+  el.onclick=malListHandler;
+  
+}
+
+function malSecSec(m){
+  modalBagla('mMalSec');
+  var axtEl=document.getElementById('malSecAxt');if(axtEl)axtEl.value='';
+  var inS=siyahi.find(function(x){return x.barkod===m.barkod&&x.ad===m.ad;});
+  if(inS)showUpdate(inS);else{curMal=m;showFound(m);}
+}
+
+// ══════════════════════════════════════
+//  SAY FUNKSIYALARI
+// ══════════════════════════════════════
+function qtyD(d){
+  var inp=document.getElementById('qtyInp');
+  if(inp)inp.value=Math.max(1,Math.round((pq(inp.value,1)+d)*1000)/1000);
+}
+
+function updRuDisp(){
+  var nt=Math.round((ruOrig+ruAdd)*1000)/1000;
+  var el=document.getElementById('ruResult');
+  if(el)el.textContent=fq(ruOrig)+' + '+fq(ruAdd)+' = '+fq(nt)+' ədəd olacaq';
+}
+function ruD(d){
+  ruAdd=Math.max(1,Math.round((pq(document.getElementById('ruSayInp').value,1)+d)*1000)/1000);
+  document.getElementById('ruSayInp').value=ruAdd;
+  updRuDisp();
+}
+function ruInpD(){
+  var v=pq(document.getElementById('ruSayInp').value,0);
+  if(v>0){ruAdd=v;updRuDisp();}
+}
+
+function ruSaxla(){
+  if(!ruMal)return;
+  var add=pq(document.getElementById('ruSayInp').value,1);
+  ruMal.say=Math.round((ruOrig+add)*1000)/1000;
+  saxla();hideAll();updBS('','');
+  var eb=document.getElementById('elBarkod');if(eb)eb.value='';
+  toast(ruMal.ad+': +'+fq(add)+' - cəmi '+fq(ruMal.say)+' ed','ok');
+  ruMal=null;render();
+}
+function ruLegv(){
+  ruMal=null;hideAll();updBS('','');
+  var eb=document.getElementById('elBarkod');if(eb)eb.value='';
+}
+
+function siyahiyaElave(){
+  if(!curMal)return;
+  var qi=document.getElementById('qtyInp');
+  qty=pq(qi?qi.value:'1',1);
+  siyahi.push({barkod:curMal.barkod,ad:curMal.ad,say:qty,alis:curMal.alis,satis:curMal.satis,yeni:false,code:curMal.code||''});
+  toast(curMal.ad+' - '+fq(qty)+' ed','ok');
+  saxla();hideAll();updBS('','');
+  var eb=document.getElementById('elBarkod');if(eb)eb.value='';
+  if(qi)qi.value='1';
+  render();
+}
+
+function yeniMalElave(){
+  function gv(id){var el=document.getElementById(id);return el?el.value:'';}
+  var ad=gv('nAd').trim();
+  var barkod=gv('nBarkod').trim();
+  var alis=parseFloat(gv('nAlis'))||0;
+  var satis=parseFloat(gv('nSatis'))||0;
+  var say=pq(gv('nSay'),1);
+  if(!ad||!barkod){toast('Ad və barkod mütləqdir!','err');return;}
+  mallar.push({barkod:barkod,ad:ad,alis:alis,satis:satis});
+  sj(MK,mallar);
+  siyahi.push({barkod:barkod,ad:ad,say:say,alis:alis,satis:satis,yeni:true});
+  saxla();hideAll();updBS('','');
+  var eb=document.getElementById('elBarkod');if(eb)eb.value='';
+  setST(mallar.length+' mal yüklü');
+  toast('Yeni mal: '+ad,'ok');
+  render();
+}
+
+// ══════════════════════════════════════
+//  SIYAHI REDAKTESI
+// ══════════════════════════════════════
+function malKartClick(barkod){
+  var item=siyahi.find(function(s){return s.barkod===barkod;});
+  if(item&&!editB)showUpdate(item);
+}
+
+function editAc(b){
+  editB=(editB===b)?null:b;
+  render();
+  if(editB){
+    setTimeout(function(){
+      var bid=b.replace(/[^a-zA-Z0-9]/g,'_');
+      var el=document.getElementById('ep_say_'+bid);
+      if(el){el.focus();el.select();}
+    },50);
+  }
+}
+
+function editSaxla(b){
+  var item=siyahi.find(function(s){return s.barkod===b;});
+  if(!item)return;
+  var bid=b.replace(/[^a-zA-Z0-9]/g,'_');
+  function gv(id){var el=document.getElementById(id);return el?el.value:'';}
+  item.say=Math.max(0,parseFloat(String(gv('ep_say_'+bid)).replace(',','.'))||0);
+  item.alis=parseFloat(gv('ep_alis_'+bid))||0;
+  item.satis=parseFloat(gv('ep_satis_'+bid))||0;
+  if(item.yeni){
+    var ad=gv('ep_ad_'+bid).trim();
+    var yb=gv('ep_barkod_'+bid).trim();
+    if(ad)item.ad=ad;
+    if(yb&&yb!==b){
+      item.barkod=yb;
+      var mi=mallar.findIndex(function(m){return m.barkod===b;});
+      if(mi>=0){mallar[mi].barkod=yb;mallar[mi].ad=item.ad;sj(MK,mallar);}
+    }
+  }
+  editB=null;saxla();toast('Saxlanıldı','ok');render();
+}
+
+function editLegv(){editB=null;render();}
+
+function silRow(b){
+  if(confirm('Silmək?')){
+    siyahi=siyahi.filter(function(s){return s.barkod!==b;});
+    if(editB===b)editB=null;
+    saxla();render();
+  }
+}
+
+function saxla(){
+  if(!curOp||sending)return;
+  var ds=lj('anbar_drafts',[]);
+  if(!siyahi.length){if(curDraftId)sj('anbar_drafts',ds.filter(function(d){return d.id!==curDraftId;}));return;}
+  var d=JSON.parse(JSON.stringify(docCur()));d.draft=true;d.upd=Date.now();
+  var i=ds.findIndex(function(x){return x.id===d.id;});
+  if(i>=0)ds[i]=d;else ds.unshift(d);
+  sj('anbar_drafts',ds.slice(0,50));
+}
+function fp(v){return parseFloat(v||0).toFixed(2)+' ₼';}
+
+// ══════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════
+function tots(){
+  return{
+    movqe:siyahi.length,
+    yeni:siyahi.filter(function(s){return s.yeni;}).length,
+    tSay:Math.round(siyahi.reduce(function(a,s){return a+s.say;},0)*1000)/1000,
+    alis:siyahi.reduce(function(a,s){return a+(parseFloat(s.alis||0)*s.say);},0),
+    satis:siyahi.reduce(function(a,s){return a+(parseFloat(s.satis||0)*s.say);},0)
+  };
+}
+
+function render(){
+  if(!curOp)return;
+  var t=tots();
+  document.getElementById('stMovqe').textContent=t.movqe;
+  document.getElementById('stYeni').textContent=t.yeni;
+  document.getElementById('stAlis').textContent=t.alis.toFixed(2)+' ₼';
+  sayimHook(t);
+  document.getElementById('cntPill').textContent=t.movqe+' mal';
+  var oqlen=lj('anbar_outbox',[]).length;
+  var ob=document.getElementById('offlineBadge');
+  if(ob)ob.style.display=oqlen?'flex':'none';
+  var ab=document.getElementById('actionBar');
+  var tc=document.getElementById('totalCard');
+  if(!siyahi.length){
+    document.getElementById('listCont').innerHTML='<div class="empty-box"><div class="empty-ico">&#128237;</div><div class="empty-txt">Hələ heç nə yoxdur.<br>Barkod oxudub başlayın.</div></div>';
+    if(ab)ab.style.display='none';
+    if(tc)tc.style.display='none';
+    return;
+  }
+  if(ab)ab.style.display='grid';
+  if(tc)tc.style.display='block';
+  document.getElementById('tMovqe').textContent=t.movqe;
+  document.getElementById('tSay').textContent=t.tSay;
+  document.getElementById('tYeni').textContent=t.yeni;
+  document.getElementById('tAlis').textContent=t.alis.toFixed(2)+' ₼';
+  document.getElementById('tSatis').textContent=t.satis.toFixed(2)+' ₼';
+  sayimYekun();
+  var html='';
+  siyahi.forEach(function(item,i){
+    var isE=(editB===item.barkod);
+    var isY=item.yeni;
+    var b=item.barkod;
+    var bid=b.replace(/[^a-zA-Z0-9]/g,'_');
+    var bs=b.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    if(!isE){
+      html+='<div class="mal-kart'+(isY?' yeni':'')+'" onclick="malKartClick(\''+bs+'\')">'+
+        '<div class="mal-num '+(isY?'yeni':curOp)+'">'+(i+1)+'</div>'+
+        '<div class="mal-info">'+
+          '<div class="mal-ad">'+esc(item.ad)+'</div>'+
+          '<div class="mal-meta">'+
+            (curOp==='sayim'?sayimChips(item):('<span class="chip chip-say">'+fq(item.say)+' ed</span>'+'<span class="chip chip-alis">A:'+fp(item.alis)+'</span>'+'<span class="chip chip-satis">S:'+fp(item.satis)+'</span>'))+
+            (isY?'<span class="chip chip-yeni">Yeni</span>':'')+
+          '</div>'+
+        '</div>'+
+        '<div class="mal-acts" onclick="event.stopPropagation()">'+
+          '<button class="mal-edit" onclick="editAc(\''+bs+'\')">&#9999;</button>'+
+          '<button class="mal-del" onclick="silRow(\''+bs+'\')">&#128465;</button>'+
+        '</div>'+
+      '</div>';
+    } else {
+      html+='<div class="mal-kart editing'+(isY?' ye':'')+'">'+
+        '<div class="mal-kart-trow">'+
+          '<div class="mal-num '+(isY?'yeni':curOp)+'">'+(i+1)+'</div>'+
+          '<div class="mal-info"><div class="mal-ad">'+esc(item.ad)+'</div></div>'+
+          '<div class="mal-acts">'+
+            '<button class="mal-edit" onclick="editAc(\''+bs+'\')">&#10005;</button>'+
+            '<button class="mal-del" onclick="silRow(\''+bs+'\')">&#128465;</button>'+
+          '</div>'+
+        '</div>'+
+        '<div class="edit-panel">';
+      if(isY){
+        html+=
+          '<div class="ep-grid">'+
+            '<div class="ep-fld ep-full"><label class="ep-lbl">AD</label>'+
+            '<input class="ep-inp" id="ep_ad_'+bid+'" type="text" value="'+esc(item.ad)+'" autocomplete="off"></div>'+
+            '<div class="ep-fld ep-full"><label class="ep-lbl">BARKOD</label>'+
+            '<input class="ep-inp" id="ep_barkod_'+bid+'" type="text" value="'+esc(b)+'" autocomplete="off"></div>'+
+          '</div>';
+      }
+      html+=
+        '<div class="ep-grid">'+
+          '<div class="ep-fld"><label class="ep-lbl">SAY</label>'+
+          '<input class="ep-inp" id="ep_say_'+bid+'" type="text" value="'+item.say+'" inputmode="decimal"></div>'+
+          '<div class="ep-fld ep-pr"><label class="ep-lbl">ALIŞ ₼</label>'+
+          '<input class="ep-inp" id="ep_alis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.alis).toFixed(2)+'" inputmode="decimal"></div>'+
+          '<div class="ep-fld ep-pr"><label class="ep-lbl">SATIŞ ₼</label>'+
+          '<input class="ep-inp" id="ep_satis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.satis).toFixed(2)+'" inputmode="decimal"></div>'+
+        '</div>'+
+        '<div class="ep-btns">'+
+          '<button class="btn-ep-s" onclick="editSaxla(\''+bs+'\')">&#10003; Saxla</button>'+
+          '<button class="btn-ep-l" onclick="editLegv()">&#10005; Legv</button>'+
+        '</div>'+
+      '</div></div>';
+    }
+  });
+  document.getElementById('listCont').innerHTML=html;
+}
+
+// ══════════════════════════════════════
+//  GONDER
+// ══════════════════════════════════════
+var sending=false;
+function secimOxu(){
+  function gv(id){var el=document.getElementById(id);return el?el.value:'';}
+  var q=(curOp==='qebul');
+  return{ted:q?gv('qebulKontragent'):'',tar:q?(gv('qebulTarix')||bugunStr()):bugunStr(),qeyd:q?gv('qebulQeyd'):''};
+}
+function docCur(){
+  var h=secimOxu();
+  return{id:curDraftId||(curDraftId=Date.now()),op:curOp,anbar:CFG.anbarAd,tarix:h.tar,kontragent:h.ted,qeyd:h.qeyd,siyahi:siyahi,editNo:curEditNo||'',movqe:siyahi.length,cemi:tots().alis.toFixed(2)};
+}
+function mkPayload(d){
+  var p={emeliyyat:d.op||d.emeliyyat,anbar:cl(d.anbar||d.anbarAd||CFG.anbarAd),tarix:d.tarix||bugunStr(),kontragent:cl(d.kontragent||d.ted),qeyd:cl(d.qeyd),
+    siyahi:(d.siyahi||[]).map(function(s){return{barkod:cl(s.barkod),ad:cl(s.ad),say:s.say,alis:Math.round((s.alis||0)*10000)/10000,satis:Math.round((s.satis||0)*10000)/10000,yeni:!!s.yeni,code:cl(s.code),sis:(s.sis!=null?s.sis:undefined)};}),
+    clientId:String(d.id),tarixYaz:new Date().toISOString()};
+  if(d.editNo)p.no=d.editNo;
+  if(d.mebleg!=null){p.mebleg=d.mebleg;p.odenis=d.odenis||'nagd'}
+  return p;
+}
+function draftSil(id){if(id)sj('anbar_drafts',lj('anbar_drafts',[]).filter(function(d){return d.id!==id;}));}
+function outAdd(d){var q=lj('anbar_outbox',[]).filter(function(x){return x.id!==d.id;});d.offline=true;d.draft=false;q.push(d);sj('anbar_outbox',q);homePend();}
+function outSil(id){sj('anbar_outbox',lj('anbar_outbox',[]).filter(function(x){return x.id!==id;}));homePend();}
+function homePend(){var b=document.getElementById('pendBtn');if(!b)return;var n=lj('anbar_outbox',[]).length;b.style.display=n?'flex':'none';b.textContent='📤 '+n+' qaimə göndərilməyi gözləyir — indi göndər';}
+function bitdi(d,no){
+  var h=lj(QHK,[]);
+  h.unshift({id:d.id,op:d.op||d.emeliyyat,anbar:d.anbar,tarix:d.tarix,ted:d.kontragent||d.ted||'',qeyd:d.qeyd||'',movqe:(d.siyahi||[]).length,cemi:d.cemi||'',no:no||d.editNo||'',siyahi:d.siyahi||[]});
+  sj(QHK,h.slice(0,200));draftSil(d.id);outSil(d.id);
+  toast('Uğurla göndərildi'+(no?' : #'+no:''),'ok');
+}
+function cixis(){var op=curOp||curGirisOp;siyahi=[];curDraftId=null;curEditNo=null;curOp=null;curGirisOp=op;screenAc('sQaimeList');qaimeListYukle();}
+function gondereHazirla(){
+  if(!siyahi.length)return;
+  var t=tots(),h=secimOxu();
+  var html='<div style="display:flex;flex-direction:column;gap:8px">'+sat('Əməliyyat',OPS[curOp].title)+(curEditNo?sat('Redaktə','#'+curEditNo):'')+sat('Anbar',CFG.anbarAd)+sat('Mövqe',t.movqe)+sat('Ümumi say',fq(t.tSay)+' ed')+sat('Alış cəmi',t.alis.toFixed(2)+' ₼');
+  if(curOp==='qebul'){html+=sat('Tarix',h.tar)+(h.ted?sat('Kontragent',h.ted):'')+(h.qeyd?sat('Qeyd',h.qeyd):'');
+    if(!h.ted)html+='<div style="background:var(--a4);border-radius:8px;padding:8px;font-size:12px;color:var(--a1);font-weight:600">⚠ Kontragent seçilməyib</div>';}
+  if(t.yeni)html+='<div style="background:var(--r4);border-radius:8px;padding:8px;font-size:12px;color:var(--r2);font-weight:600">⚠ '+t.yeni+' yeni mal 1C-də yaradılacaq</div>';
+  document.getElementById('gonderOzet').innerHTML=html+'</div>';
+  modalAc('mGonder');
+}
+async function gonder(){
+  if(sending)return;
+  modalBagla('mGonder');
+  var doc=JSON.parse(JSON.stringify(docCur()));
+  saxla();sending=true;toast('Göndərilir...','info');
+  try{
+    var res=await tPost(doc.editNo?'/update':OPS[doc.op].ep,mkPayload(doc));
+    sending=false;bitdi(doc,res&&res.no?res.no:'');cixis();
+  }catch(e){
+    sending=false;
+    if(e.net){outAdd(doc);draftSil(doc.id);toast('Offline saxlanıldı — bağlantı olanda göndəriləcək','warn');cixis();}
+    else toast('Xəta: '+e.message,'err');
+  }
+}
+async function outboxGonder(){
+  var q=lj('anbar_outbox',[]);
+  if(!q.length||sending||CFG.mode==='offline')return;
+  sending=true;var ok=0;
+  for(var i=0;i<q.length;i++){
+    var d=q[i];
+    try{var r=await tPost(d.editNo?'/update':OPS[d.op].ep,mkPayload(d));bitdi(d,r&&r.no?r.no:'');ok++;}
+    catch(e){if(e.net)break;d.err=e.message;sj('anbar_outbox',lj('anbar_outbox',[]).map(function(x){return x.id===d.id?d:x;}));}
+  }
+  sending=false;homePend();
+  if(ok)toast(ok+' qaimə göndərildi','ok');
+  else if(i<q.length&&q.length)toast('Bağlantı yoxdur','warn');
+}
+
+function sifirla(){
+  if(!siyahi.length)return;
+  if(!confirm('Sıfırlamaq?'))return;
+  siyahi=[];editB=null;saxla();render();toast('Sıfırlandı','info');
+}
+
+// ══════════════════════════════════════
+//  QAIME TARIXCESI
+// ══════════════════════════════════════
+function tarixSur(gun){
+  var son=new Date();
+  var bas=new Date();
+  bas.setDate(bas.getDate()-gun);
+  var bi=document.getElementById('tarixBas');
+  var si=document.getElementById('tarixSon');
+  if(gun===0){
+    if(bi)bi.value=dStr(son);
+  } else {
+    if(bi)bi.value=dStr(bas);
+  }
+  if(si)si.value=dStr(son);
+}
+
+async function tarixYukle(){
+  var bas=(document.getElementById('tarixBas')||{}).value||'',son=(document.getElementById('tarixSon')||{}).value||'';
+  var sub=document.getElementById('tarixSub');if(sub)sub.textContent=bas+' — '+son;
+  var cont=document.getElementById('tarixCont');if(!cont)return;
+  var inR=function(h){return (h.tarix||'')>=bas&&(h.tarix||'')<=son;};
+  var list=lj('anbar_drafts',[]).filter(inR).map(function(d){d.draft=true;return d;})
+    .concat(lj('anbar_outbox',[]).filter(inR).map(function(d){d.offline=true;d.draft=false;return d;}));
+  var loc={};lj(QHK,[]).forEach(function(h){if(h.no)loc[h.no]=h;});
+  var seen={};
+  try{
+    var data=await aGet('/list?bas='+bas+'&son='+son);
+    if(data&&data.list)data.list.forEach(function(h){
+      if(!inR(h)||seen[h.no])return;seen[h.no]=1;h.draft=false;
+      var l=loc[h.no];if(l){h.siyahi=l.siyahi;h.id=l.id;h.cemi=h.cemi||l.cemi;}
+      list.push(h);
+    });
+  }catch(e){}
+  Object.keys(loc).forEach(function(n){if(!seen[n]&&inR(loc[n])){var h=loc[n];h.draft=false;list.push(h);}});
+  if(!list.length){cont.innerHTML='<div class="empty-box"><div class="empty-ico">&#128220;</div><div class="empty-txt">Bu dövrdə qaimə yoxdur.</div></div>';return;}
+  cont.innerHTML=list.map(function(h,i){
+    var op=h.op||h.emeliyyat,ted=h.ted||h.kontragent||'';
+    var b=h.draft?['QARALAMA','var(--p4)','var(--p2)']:(h.offline?['GÖZLƏYİR','var(--a4)','var(--a1)']:['GÖNDƏRİLDİ','var(--g4)','var(--g1)']);
+    return '<div class="qaime-kart" data-tidx="'+i+'" style="cursor:pointer;touch-action:manipulation"><div class="qk-top"><span class="qk-no">'+esc(OPS[op]?OPS[op].title:'Qaimə')+(h.no?' #'+esc(h.no):'')+'</span><span style="background:'+b[1]+';color:'+b[2]+';font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700">'+b[0]+'</span></div><div class="qk-row"><span>📅 '+esc(h.tarix)+'</span><span>📦 '+(h.movqe||0)+' mövqe</span>'+(h.cemi?'<span>💰 '+esc(h.cemi)+' ₼</span>':'')+(ted?'<span>👤 '+esc(ted)+'</span>':'')+'</div></div>';
+  }).join('');
+  cont._tdata=list;
+  cont.onclick=function(e){var c=e.target;while(c&&c!==cont){if(c.getAttribute&&c.getAttribute('data-tidx')!==null){tarixDetalAc(parseInt(c.getAttribute('data-tidx')));return;}c=c.parentElement;}};
+}
+
+function tarixDetalAc(idx){
+  var cont=document.getElementById('tarixCont');
+  var h=cont&&cont._tdata?cont._tdata[idx]:null;if(!h)return;
+  var op=h.op||h.emeliyyat,pend=(h.draft===true||h.offline===true);
+  document.getElementById('qaimeModalTitle').textContent=(OPS[op]?OPS[op].title:'Qaimə')+(h.no?' #'+h.no:'');
+  var st=h.draft?'📌 Qaralama':(h.offline?'⏳ Göndərilməyi gözləyir':'✅ Göndərildi');
+  var html='<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">'+sat('Növ',OPS[op]?OPS[op].title:'-')+sat('Tarix',h.tarix||'-')+sat('Anbar',h.anbar||h.anbarAd||'-')+sat('Kontragent',h.ted||h.kontragent||'-')+(h.cemi?sat('Cəmi',h.cemi+' ₼'):'')+sat('Status',st)+(h.err?sat('Xəta',h.err):'')+'</div>'+mallarHtml(h.siyahi);
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">'+
+    (pend?bH('btnTxGonder','&#128228; 1C-yə göndər','background:var(--g2);color:#fff')+bH('btnTxSil','&#128465; Sil','background:#fff;border:2px solid var(--r3);color:var(--r2)')+(h.draft?'<div style="grid-column:1/-1">'+bH('btnTxDavam','&#9654; Davam et','width:100%;background:var(--p2);color:#fff')+'</div>':'')
+         :bH('btnTxRedakte','&#9998; Redaktə et','background:var(--p2);color:#fff')+bH('btnTxSil','&#128465; Sil (lokal)','background:#fff;border:2px solid var(--r3);color:var(--r2)'))+'</div>';
+  document.getElementById('qaimeModalBody').innerHTML=html;
+  modalAc('mQaime');
+  var hid=h.id,hc=JSON.parse(JSON.stringify(h));
+  var B=function(id,fn){var b=document.getElementById(id);if(b)b.onclick=fn;};
+  B('btnTxGonder',function(){tarixDraftGonder(hc);});
+  B('btnTxSil',function(){tarixLocalSil(hid);});
+  B('btnTxDavam',function(){qaimeListDetalDavamEt(hid);});
+  B('btnTxRedakte',function(){tarixRedakteAc(hc);});
+}
+
+async function tarixDraftGonder(h){
+  modalBagla('mQaime');
+  if(sending)return;
+  sending=true;toast('Göndərilir...','info');
+  try{
+    var r=await tPost(h.editNo?'/update':'/terminal',mkPayload(h));
+    sending=false;bitdi(h,r&&r.no?r.no:'');tarixYukle();
+  }catch(e){sending=false;toast('Xəta: '+e.message,'err');}
+}
+
+function tarixLocalSil(hid){
+  if(!confirm('Silmək?'))return;
+  modalBagla('mQaime');
+  draftSil(hid);outSil(hid);
+  sj(QHK,lj(QHK,[]).filter(function(h){return h.id!==hid;}));
+  toast('Silindi','info');tarixYukle();
+}
+
+async function tarixRedakteAc(h){
+  modalBagla('mQaime');toast('Mallar yüklənir...','info');
+  var arr=[];
+  try{
+    var data=await aGetX('/mallar?no='+encodeURIComponent(h.no),20000);
+    arr=((data&&data.list)||[]).map(function(m){return{barkod:m.barkod||'',ad:m.ad||'',say:parseFloat(m.say)||1,alis:parseFloat(m.alis)||0,satis:parseFloat(m.satis)||0,yeni:!!m.yeni};});
+  }catch(e){toast('1C: '+e.message,'err');return;}
+  if(!arr.length){toast('Mal tapılmadı','warn');return;}
+  curOp=h.op||h.emeliyyat||'qebul';curGirisOp=curOp;siyahi=arr;curDraftId=null;curEditNo=h.no;editB=null;ruMal=null;
+  setV('qebulTarix',h.tarix||bugunStr());setV('qebulKontragent',h.ted||h.kontragent);setV('qebulQeyd',h.qeyd);
+  opUI(curOp);saxla();toast('Redaktə rejimi: #'+h.no,'info');
+}
+
+// ══════════════════════════════════════
+//  PARAMETRLER
+// ══════════════════════════════════════
+function paramDoldur(){
+  function sv(id,v){var el=document.getElementById(id);if(el)el.value=v||'';}
+  sv('cfgUrl',CFG.apiUrl);
+  sv('cfgUser',CFG.apiUser);
+  sv('cfgPass',CFG.apiPass);
+  sv('cfgAnbar',CFG.anbarAd);
+  var pr=document.getElementById('pingRes');
+  if(pr)pr.textContent='';
+}
+function cfgSaxla(){
+  function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+  CFG.apiUrl=gv('cfgUrl');
+  CFG.apiUser=gv('cfgUser');
+  CFG.apiPass=gv('cfgPass');
+  CFG.anbarAd=gv('cfgAnbar')||'Anbar-1';
+  sj('anbar_cfg',CFG);
+}
+async function pingEt(){
+  var el=document.getElementById('pingRes');
+  if(el){el.style.color='#9ca3af';el.textContent='Yoxlanilir...';}
+  try{
+    var r=await fetch(CFG.apiUrl+'/products',{headers:ah(),signal:tmo(30000)});
+    if(el){
+      if(r.ok){el.style.color='var(--g2)';el.textContent='Baglanit ugurlu!';}
+      else{el.style.color='var(--r2)';el.textContent='HTTP '+r.status;}
+    }
+  }catch(e){
+    if(el){el.style.color='var(--r2)';el.textContent='Qosulmaq mumkun olmadi';}
+  }
+}
+
+// ══════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════
+var toastT;
+function toast(msg,type){
+  var el=document.getElementById('toast');
+  if(!el)return;
+  el.textContent=msg;
+  el.className='toast '+(type||'ok')+' show';
+  clearTimeout(toastT);
+  toastT=setTimeout(function(){el.className='toast '+(type||'ok');},2800);
+}
+
+
+// ══════════════════════════════════════
+//  QEBUL GİRİŞ (qaimə siyahısı)
+// ══════════════════════════════════════
+function qebulGiris(){
+  opGiris('qebul');
+}
+function opGiris(op){
+  curGirisOp=op;
+  screenAc('sQaimeList');
+  qaimeListYukle();
+}
+
+function qaimeListYukle(){
+  var op=curGirisOp,adlar={qebul:'Mal Qəbulu',qaytarma:'Mal Qaytarma',sayim:'Mal Sayımı',silinme:'Mal Silinməsi',satis:'Mal Satışı'};
+  var T=document.getElementById('qaimeListTitle');if(T)T.textContent=adlar[op];
+  var sub=document.getElementById('qaimeListSub');if(sub)sub.textContent='Göndərilməmiş qaimələr';
+  var tb=document.querySelector('#sQaimeList .topbar');if(tb)tb.className='topbar '+(OPS[op]&&OPS[op].tc||'qebul-bg');
+  var yb=document.getElementById('btnYeniQaime');
+  if(yb)yb.style.background={qebul:'var(--g2)',qaytarma:'var(--r2)',sayim:'var(--b3)',silinme:'var(--r2)',satis:'var(--g2)'}[op];
+  var list=lj('anbar_drafts',[]).filter(function(d){return d.op===op;}).map(function(d){d.draft=true;return d;})
+    .concat(lj('anbar_outbox',[]).filter(function(d){return d.op===op;}).map(function(d){d.offline=true;d.draft=false;return d;}));
+  var cnt=document.getElementById('qaimeListCnt');if(cnt)cnt.textContent=list.length;
+  var cont=document.getElementById('qaimeListCont');if(!cont)return;
+  if(!list.length){cont.innerHTML='<div class="empty-box"><div class="empty-ico">&#128230;</div><div class="empty-txt">Göndərilməmiş qaimə yoxdur.<br>Yeni qaimə açın.</div></div>';return;}
+  cont.innerHTML=list.map(function(h,i){
+    var ted=h.kontragent||h.ted||'';
+    var b=h.offline?['GÖZLƏYİR','var(--a4)','var(--a1)']:['QARALAMA','var(--p4)','var(--p2)'];
+    return '<div class="qaime-kart" data-qidx="'+i+'" style="cursor:pointer;touch-action:manipulation"><div class="qk-top"><span class="qk-no">'+(h.offline?'Gözləyən':'Qaralama')+' #'+(i+1)+'</span><span style="background:'+b[1]+';color:'+b[2]+';font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700">'+b[0]+'</span></div><div class="qk-row"><span>📅 '+esc(h.tarix)+'</span><span>📦 '+(h.movqe||0)+' mövqe</span>'+(h.cemi?'<span>💰 '+esc(h.cemi)+' ₼</span>':'')+(ted?'<span>👤 '+esc(ted)+'</span>':'')+'</div></div>';
+  }).join('');
+  cont._qaimeData=list;
+  cont.onclick=function(e){var c=e.target;while(c&&c!==cont){if(c.getAttribute&&c.getAttribute('data-qidx')!==null){qaimeListDetalAc(parseInt(c.getAttribute('data-qidx')));return;}c=c.parentElement;}};
+}
+
+function qaimeListDetalAc(idx){
+  var cont=document.getElementById('qaimeListCont');
+  var h=cont&&cont._qaimeData?cont._qaimeData[idx]:null;if(!h)return;
+  document.getElementById('qaimeModalTitle').textContent=(h.offline?'Gözləyən qaimə':'Qaralama')+' - '+(h.tarix||'');
+  var html='<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">'+sat('Anbar',h.anbar||'-')+sat('Kontragent',h.kontragent||h.ted||'-')+sat('Cəmi',(h.cemi||0)+' ₼')+(h.err?sat('Xəta',h.err):'')+'</div>'+mallarHtml(h.siyahi);
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">'+
+    (h.draft?bH('btnDE','&#9654; Davam et','background:var(--g2);color:#fff'):bH('btnTG','&#128260; Yenidən göndər','background:var(--b3);color:#fff'))+
+    bH('btnDS','&#128465; Sil','background:#fff;border:2px solid var(--r3);color:var(--r2)')+'</div>';
+  document.getElementById('qaimeModalBody').innerHTML=html;
+  modalAc('mQaime');
+  var hid=h.id,hc=JSON.parse(JSON.stringify(h));
+  var B=function(id,fn){var b=document.getElementById(id);if(b)b.onclick=fn;};
+  B('btnDE',function(){qaimeListDetalDavamEt(hid);});
+  B('btnTG',function(){tarixDraftGonder(hc);});
+  B('btnDS',function(){qaimeListDetalSil(hid);});
+}
+
+function qaimeYaddaSaxla(){
+  if(!siyahi.length){toast('Siyahı boşdur!','warn');return;}
+  saxla();toast('Qaralama saxlanıldı','ok');
+  curGirisOp=curOp||curGirisOp;curOp=null;curDraftId=null;curEditNo=null;siyahi=[];
+  screenAc('sQaimeList');qaimeListYukle();
+}
+
+function qaimeListDetalDavamEt(id){
+  var d=lj('anbar_drafts',[]).filter(function(x){return x.id===id;})[0];
+  if(!d){toast('Qaralama tapılmadı','err');return;}
+  modalBagla('mQaime');
+  curOp=d.op;curGirisOp=d.op;siyahi=JSON.parse(JSON.stringify(d.siyahi||[]));curDraftId=d.id;curEditNo=d.editNo||null;editB=null;ruMal=null;secQrup=null;
+  setV('qebulTarix',d.tarix||bugunStr());setV('qebulKontragent',d.kontragent||d.ted);setV('qebulQeyd',d.qeyd);
+  opUI(curOp);toast('Qaralama yükləndi — davam edin','ok');
+}
+
+function qaimeListDetalSil(id){
+  if(!confirm('Silmək?'))return;
+  draftSil(id);outSil(id);modalBagla('mQaime');qaimeListYukle();toast('Silindi','info');
+}
+
+// ══════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════
+function init(){
+  var m=lj(MK,[]);if(!m.length&&window._mIDB)m=window._mIDB;
+  if(m.length){mallar=m;setST(mallar.length+' mal (lokal)');}
+  var q=lj(GRK,[]);if(q.length)qruplar=q;
+  var old=lj('anbar_offline_q',[]);
+  if(old.length){var ob=lj('anbar_outbox',[]);old.forEach(function(o){var p=o.payload||{};ob.push({id:o.id,op:o.op,anbar:p.anbar,tarix:p.tarix,kontragent:p.kontragent,qeyd:p.qeyd,siyahi:p.siyahi||[],movqe:(p.siyahi||[]).length,cemi:'',offline:true});});sj('anbar_outbox',ob);sj('anbar_offline_q',[]);}
+  homePend();
+  ['qebulTarix','qebulQeyd'].forEach(function(id){var e=document.getElementById(id);if(e)e.addEventListener('change',function(){saxla();});});
+  window.addEventListener('online',function(){outboxGonder();});
+  setInterval(function(){if(navigator.onLine!==false)outboxGonder();},60000);
+  var ts=+localStorage.getItem('anbar_mallar_ts')||0;
+  if(!m.length||Date.now()-ts>12*3600*1000)loadMallar();
+  outboxGonder();
+}
+
+function modUI(){var b=document.getElementById('modBtn');if(!b)return;var off=CFG.mode==='offline';
+  b.textContent=off?'🔴 Rejim: OFLAYN — yaddaşa yazılır (dəyiş)':'🟢 Rejim: ONLINE — 1C ilə işləyir (dəyiş)';
+  b.style.cssText=off?'color:#b91c1c;border-color:#fca5a5;background:#fef2f2':'color:#15803d;border-color:#86efac;background:#f0fdf4'}
+function modDeyis(){CFG.mode=CFG.mode==='offline'?'online':'offline';sj('anbar_cfg',CFG);modUI();
+  if(CFG.mode==='online'){toast('Online rejim — gözləyənlər göndərilir','info');outboxGonder();}
+  else toast('Oflayn rejim — qaimələr yaddaşa yazılacaq','warn')}
+
+// ── Kamera skaneri ──
+var _kam=null,_fen=false;
+async function kamAc(mod){
+  if(!curOp&&mod!=='qr'){toast('Əvvəl əməliyyat seçin','warn');return;}
+  if(!window.Html5Qrcode){toast('Kamera modulu yüklənməyib','err');return;}
+  document.getElementById('kamBox').style.display='flex';_fen=false;
+  try{
+    var H=Html5QrcodeSupportedFormats;
+    _kam=new Html5Qrcode('kamReader',{formatsToSupport:[H.EAN_13,H.EAN_8,H.CODE_128,H.CODE_39,H.UPC_A,H.UPC_E,H.QR_CODE],verbose:false,useBarCodeDetectorIfSupported:true});
+    await _kam.start({facingMode:'environment'},{fps:10,qrbox:function(w,h){var s=Math.min(w,h);return{width:Math.floor(s*.85),height:Math.floor(s*.45)}}},
+      function(txt){var v=String(txt).trim();kamBagla().then(function(){if(mod==='qr')qrKurulum(v);else scanEt(v)})},function(){});
+  }catch(e){toast('Kamera açılmadı: '+(e&&e.message?e.message:e),'err');kamBagla();}
+}
+async function kamBagla(){
+  var k=_kam;_kam=null;
+  if(k){try{await k.stop()}catch(e){}try{k.clear()}catch(e){}}
+  document.getElementById('kamBox').style.display='none';
+}
+async function kamFener(){try{_fen=!_fen;await _kam.applyVideoConstraints({advanced:[{torch:_fen}]})}catch(e){_fen=false;toast('Fənər dəstəklənmir','warn')}}
+
+var _bkT=0;
+function geriBas(){
+  var kb=document.getElementById('kamBox');
+  if(kb&&kb.style.display==='flex'){kamBagla();return;}
+  var ms=document.querySelectorAll('.modal-bg');
+  for(var i=0;i<ms.length;i++){if(getComputedStyle(ms[i]).display!=='none'){modalBagla(ms[i].id);return;}}
+  var sc=document.querySelector('.screen.active'),id=sc?sc.id:'sHome';
+  if(id==='sOp'){geriQayt();return;}
+  if(id==='sWizard')return;
+  if(id!=='sHome'){screenAc('sHome');return;}
+  var n=Date.now(),A=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App;
+  if(n-_bkT<2000){if(A&&A.exitApp)A.exitApp();return;}
+  _bkT=n;toast('Çıxmaq üçün bir də geri basın','info');
+}
+(function(){var A=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App;if(A&&A.addListener)A.addListener('backButton',geriBas);})();
+
+
+// ════ v3: ayarlar, baglanti, fayl rejimi ════
+function paramDoldur(){function sv(i,v){var e=document.getElementById(i);if(e)e.value=v||''}
+  sv('cfgSrv',CFG.srv);sv('cfgBaza',CFG.baza);sv('cfgServis',CFG.servis);sv('cfgTerm',CFG.termAd);sv('cfgUser',CFG.apiUser);sv('cfgPass',CFG.apiPass);sv('cfgAnbar',CFG.anbarAd);
+  var w=document.getElementById('cfgFayl');if(w){w.className='n-sw'+(CFG.fayl?' on':'');w.setAttribute('aria-checked',CFG.fayl?'true':'false')}
+  urlGor();var pr=document.getElementById('pingRes');if(pr)pr.textContent=''}
+function urlGor(){var e=document.getElementById('cfgUrlGor');if(e)e.textContent=CFG.apiUrl}
+function cfgSaxla(){function gv(i){var e=document.getElementById(i);return e?e.value.trim():''}
+  var raw=gv('cfgSrv'),m=/^(?:(https?):\/\/)?([^\/]+)\/([^\/]+)\/hs\/([^\/?#]+)/.exec(raw);
+  if(m){CFG.sxema=m[1]||'http';CFG.srv=m[2];CFG.baza=m[3];CFG.servis=m[4]}
+  else{var m2=/^(https?):\/\/([^\/]+)(?:\/([^\/?#]+))?/.exec(raw);if(m2){CFG.sxema=m2[1];CFG.srv=m2[2];CFG.baza=m2[3]||gv('cfgBaza').replace(/\//g,'')}else{CFG.srv=raw.replace(/\/.*$/,'')||CFG.srv;CFG.baza=gv('cfgBaza').replace(/\//g,'')}CFG.servis=gv('cfgServis').replace(/\//g,'')||'terminal'}
+  CFG.termAd=gv('cfgTerm')||'T1';CFG.apiUser=gv('cfgUser');CFG.apiPass=gv('cfgPass');CFG.anbarAd=gv('cfgAnbar')||'Anbar-1';
+  apiBuild();sj('anbar_cfg',CFG);urlGor()}
+function faylDeyis(){CFG.fayl=!CFG.fayl;sj('anbar_cfg',CFG);paramDoldur();toast(CFG.fayl?'Fayl rejimi aktivdir':'Fayl rejimi söndürüldü','info')}
+
+var _dur='?',_sebeb='';
+function tmo(ms){if(window.AbortController){var c=new AbortController();setTimeout(function(){c.abort()},ms);return c.signal}return undefined}
+function durumUI(){var p=document.getElementById('durPill');if(!p)return;
+  var T={ok:['ok','Online'],auth:['warn','Giriş səhvdir'],err:['bad','Server xətası'],net:['bad','Server cavab vermir'],off:['','Oflayn rejim']}[_dur]||['','Yoxlanılır'];
+  p.className='n-pill '+T[0];p.querySelector('span').textContent=T[1]}
+async function durumYoxla(goster){var res;
+  if(CFG.mode==='offline')res='off';
+  else{try{var r=await fetch(CFG.apiUrl+'/ping',{headers:ah(),signal:tmo(6000)});
+    res=!r.status?'net':(r.status===401||r.status===403)?'auth':(r.status<500?'ok':'err')}catch(e){res='net';_sebeb=(e&&e.name?e.name+': ':'')+(e&&e.message?e.message:String(e))}}
+  if(_dur!==res)jurnal('info',CFG.srv+': '+res);_dur=res;durumUI();
+  if(goster===true){var el=document.getElementById('pingRes');if(el){var M={ok:['Bağlantı uğurludur','g2'],auth:['İstifadəçi və ya parol səhvdir','r2'],err:['Server xəta verdi','r2'],net:['Server cavab vermir. Ünvanı və şəbəkəni yoxlayın','r2'],off:['Oflayn rejimdir','a1']}[res];el.style.color='var(--'+M[1]+')';el.style.whiteSpace='pre-wrap';el.textContent=t(M[0])+(res==='net'?'\n'+CFG.apiUrl+'/ping\n'+_sebeb:'')}}
+  if(res==='ok'){if(lj('anbar_outbox',[]).length)outboxGonder();faylGozleyen()}
+  return res}
+var pingEt=function(){return durumYoxla(true)};
+var _hp0=homePend;homePend=function(){_hp0();homeStat()};
+function homeStat(){var a=document.getElementById('stGoz'),b=document.getElementById('stMal');if(a)a.textContent=lj('anbar_outbox',[]).length;if(b)b.textContent=(mallar||[]).length}
+var _md0=modDeyis;modDeyis=function(){_md0();durumYoxla()};
+
+// fayl yazma/oxuma (Capacitor); sira: Documents, Android/data, app daxili
+var DIRS=['DOCUMENTS','EXTERNAL','DATA'];
+async function fsYaz(p,data){var F=capFS();for(var i=0;i<DIRS.length;i++){try{await F.writeFile({path:p,data:data,directory:DIRS[i],encoding:'utf8',recursive:true});try{localStorage.setItem('anbar_fs_dir',DIRS[i])}catch(e2){}return DIRS[i]}catch(e){}}throw new Error('Fayl yazıla bilmədi — yaddaş icazəsini yoxlayın')}
+async function fsOxu(p){var F=capFS();if(!F)return null;for(var i=0;i<DIRS.length;i++){try{var r=await F.readFile({path:p,directory:DIRS[i],encoding:'utf8'});return r.data}catch(e){}}return null}
+async function faylYaz(ad,data,yol){var p=(yol||'BarkodPRO/Terminal1CFilesBarkodPRO/')+ad;
+  if(capFS())return await fsYaz(p,data);
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));a.download=ad;document.body.appendChild(a);a.click();a.remove();return 'brauzer'}
+function fileYaz(){clearTimeout(_fyT);_fyT=setTimeout(function(){if(capFS())fsYaz('BarkodPRO/anbar_ehtiyat.json',ehtiyatData()).catch(function(){})},1500)}
+function ehtiyatFayl(){faylYaz('anbar_ehtiyat.json',ehtiyatData(),'BarkodPRO/').then(function(d){toast(d==='brauzer'?'Ehtiyat fayl yükləndi':'Ehtiyat fayl yazıldı ('+d+')','ok')}).catch(function(){toast('Fayl yazıla bilmədi','err')})}
+function faylAdi(b){var t=String(b.tarixYaz||new Date().toISOString()).replace(/[-:]/g,'').replace('T','-').slice(0,15);
+  return (CFG.termAd+'_'+b.emeliyyat+'_'+t+'_'+String(b.clientId).slice(-4)+'.json').replace(/[^\w\-.]/g,'')}
+async function tPost(ep,body){
+  if(!CFG.fayl)return aPost(ep,body);
+  var ad=faylAdi(body),obj={v:1,terminal:CFG.termAd,ep:ep,fayl:ad,sened:body},yoxEp=false;
+  if(CFG.mode!=='offline'){try{await aPost('/fayl',{ad:ad,mezmun:obj});return{ok:true,no:'fayl'}}catch(e){if(e.net){}else if(/404/.test(e.message))yoxEp=true;else throw e}}
+  if(window.OFFLINE_APP){var js0=JSON.stringify(obj,null,1),mq=lj('anbar_mail_q',[]);mq.push({ad:ad,json:js0,t:Date.now()});sj('anbar_mail_q',mq);
+    try{await faylYaz(ad,js0)}catch(e0){}
+    try{homeStat()}catch(e1){}
+    return{ok:true,no:'e-poçt növbəsi'}}
+  await faylYaz(ad,JSON.stringify(obj,null,1));
+  if(!yoxEp&&!window.OFFLINE_APP){var g=lj('anbar_fayl_gozleyen',[]);g.push({ad:ad,mezmun:obj});sj('anbar_fayl_gozleyen',g)}
+  return{ok:true,no:'fayl (cihazda)'}}
+async function faylGozleyen(){var g=lj('anbar_fayl_gozleyen',[]);if(!g.length||CFG.mode==='offline'||!CFG.fayl)return;var kal=[];
+  for(var i=0;i<g.length;i++){try{await aPost('/fayl',{ad:g[i].ad,mezmun:g[i].mezmun})}catch(e){if(e.net){kal=kal.concat(g.slice(i));break}if(!/404/.test(e.message))kal.push(g[i])}}
+  sj('anbar_fayl_gozleyen',kal)}
+
+// mal faylı (CSV: barkod;ad;alis_qiymeti;satis_qiymeti;qaliq;kod;qrup)
+function csvMal(txt){txt=txt.replace(/^\uFEFF/,'');var L=txt.split(/\r?\n/).filter(function(x){return x.trim()});if(!L.length)return[];
+  var sp=L[0].indexOf(';')>=0?';':(L[0].indexOf('\t')>=0?'\t':',');var H=L[0].toLowerCase().split(sp).map(function(x){return x.trim()}),has=H.indexOf('barkod')>=0;
+  function ix(){for(var i=0;i<arguments.length;i++){var k=H.indexOf(arguments[i]);if(k>=0)return k}return -1}
+  var c=has?{b:ix('barkod'),a:ix('ad'),al:ix('alis_qiymeti','alis'),s:ix('satis_qiymeti','satis'),q:ix('qaliq'),k:ix('kod','code'),g:ix('qrup')}:{b:0,a:1,al:2,s:3,q:4,k:5,g:6};
+  return (has?L.slice(1):L).map(function(l){var p=l.split(sp);function g(i){return i>=0&&i<p.length?p[i].trim():''}function n(i){return parseFloat(g(i).replace(',','.'))||0}
+    return{barkod:g(c.b),ad:g(c.a),alis:n(c.al),satis:n(c.s),qaliq:n(c.q),code:g(c.k),unit:'',qrup:g(c.g)}}).filter(function(m){return m.barkod||m.ad})}
+function malTetbiq(arr,src){if(!arr.length){toast('Faylda mal tapılmadı','warn');return}
+  mallar=arr;sj(MK,mallar);try{localStorage.setItem('anbar_mallar_ts',Date.now())}catch(e){}
+  var qs={};mallar.forEach(function(m){if(m.qrup)qs[m.qrup]=(qs[m.qrup]||0)+1});qruplar=Object.keys(qs).map(function(k){return{ad:k,say:qs[k]}});sj(GRK,qruplar);
+  setST(mallar.length+' mal (fayl)');homeStat();toast(mallar.length+' mal faylından yükləndi ('+src+')','ok')}
+async function malFaylYukle(){var t=await fsOxu('BarkodPRO/Terminal1CFilesBarkodPRO/mallar.csv');if(t){malTetbiq(csvMal(t),'mallar.csv');return}document.getElementById('malFayl').click()}
+function malFaylSec(i){var f=i.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){malTetbiq(csvMal(String(rd.result)),f.name)};rd.readAsText(f,'utf-8');i.value=''}
+
+// ayarlar: fayla saxla / geri yukle (parol yazilmir)
+async function ayarSaxla(){var o=Object.assign({},CFG);delete o.apiPass;
+  try{var d=await faylYaz('ayarlar.json',JSON.stringify({v:1,ayar:o},null,1),'BarkodPRO/');toast(d==='brauzer'?'Ayarlar faylı yükləndi':'Ayarlar saxlandı ('+d+')','ok')}catch(e){toast('Fayl yazıla bilmədi','err')}}
+function ayarApply(t){try{var j=JSON.parse(t),a=j.ayar||j,ps=CFG.apiPass;Object.assign(CFG,a);if(!a.apiPass)CFG.apiPass=ps;apiBuild();sj('anbar_cfg',CFG);paramDoldur();durumYoxla();toast('Ayarlar bərpa olundu. Parolu yenidən yazın','ok')}catch(e){toast('Fayl oxunmadı','err')}}
+async function ayarYukle(){var t=await fsOxu('BarkodPRO/ayarlar.json');if(t){ayarApply(t);return}document.getElementById('ayarFayl').click()}
+function ayarSec(i){var f=i.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){ayarApply(String(rd.result))};rd.readAsText(f);i.value=''}
+
+
+// ════ v3.2: dillər, açar, ödənişlər, hesabatlar, cihaz, jurnal ════
+var _K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function sha256(m){var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19],l=m.length,n=((l+9+63)>>6)<<6,b=new Uint8Array(n);b.set(m);b[l]=0x80;var dv=new DataView(b.buffer);dv.setUint32(n-4,l*8>>>0);dv.setUint32(n-8,Math.floor(l/0x20000000));
+  var w=new Int32Array(64),i,o;
+  for(o=0;o<n;o+=64){for(i=0;i<16;i++)w[i]=dv.getInt32(o+i*4);
+    for(i=16;i<64;i++){var a=w[i-15],c=w[i-2];w[i]=(((a>>>7|a<<25)^(a>>>18|a<<14)^(a>>>3))+w[i-7]+((c>>>17|c<<15)^(c>>>19|c<<13)^(c>>>10))+w[i-16])|0}
+    var v=H.slice();
+    for(i=0;i<64;i++){var e=v[4],t1=(v[7]+((e>>>6|e<<26)^(e>>>11|e<<21)^(e>>>25|e<<7))+((e&v[5])^(~e&v[6]))+_K[i]+w[i])|0,a2=v[0],t2=(((a2>>>2|a2<<30)^(a2>>>13|a2<<19)^(a2>>>22|a2<<10))+((a2&v[1])^(a2&v[2])^(v[1]&v[2])))|0;
+      v=[(t1+t2)|0,v[0],v[1],v[2],(v[3]+t1)|0,v[4],v[5],v[6]]}
+    for(i=0;i<8;i++)H[i]=(H[i]+v[i])|0}
+  var out=new Uint8Array(32),d2=new DataView(out.buffer);for(i=0;i<8;i++)d2.setUint32(i*4,H[i]);return out}
+function hmac256(key,msg){if(key.length>64)key=sha256(key);var k=new Uint8Array(64);k.set(key);var ip=new Uint8Array(64+msg.length),op=new Uint8Array(96);for(var i=0;i<64;i++){ip[i]=k[i]^0x36;op[i]=k[i]^0x5c}ip.set(msg,64);op.set(sha256(ip),64);return sha256(op)}
+function hex(u){return Array.from(u).map(function(b){return('0'+b.toString(16)).slice(-2)}).join('')}
+function utf8(s){if(window.TextEncoder)return new TextEncoder().encode(s);var e=unescape(encodeURIComponent(s)),u=new Uint8Array(e.length);for(var i=0;i<e.length;i++)u[i]=e.charCodeAt(i);return u}
+
+var APPV='3.2',LNG='az',D={"Sayımda məbləğ qiyməti":["Цена для суммы при инвентаризации","Sayımda tutar fiyatı","Price used for count amounts"],"Tədarükçü hesabatı":["Отчёт по поставщикам","Tedarikçi raporu","Supplier report"],"Gözləyən sənəd": ["Ожидают отправки", "Bekleyen belge", "Pending documents"], "Bu gün sənəd": ["Документов сегодня", "Bugün belge", "Documents today"], "Mal sayı": ["Товаров", "Ürün sayısı", "Items"], "Anbar əməliyyatları": ["Складские операции", "Depo işlemleri", "Warehouse operations"], "Mal qəbulu": ["Приёмка товара", "Mal kabulü", "Goods receipt"], "Təchizatçıdan daxil olan": ["Поступление от поставщика", "Tedarikçiden gelen", "Incoming from supplier"], "Mal qaytarma": ["Возврат товара", "Mal iadesi", "Goods return"], "Təchizatçıya qaytarılan": ["Возврат поставщику", "Tedarikçiye iade", "Returned to supplier"], "Mal sayımı": ["Инвентаризация", "Mal sayımı", "Stock count"], "Qrup üzrə inventarizasiya": ["По группам", "Gruba göre sayım", "Count by group"], "Mal silinməsi": ["Списание товара", "Mal silme", "Write-off"], "Zədəli, vaxtı keçmiş": ["Брак, просрочка", "Hasarlı, süresi geçmiş", "Damaged, expired"], "Mal satışı": ["Продажа товара", "Mal satışı", "Goods sale"], "Qiymət və qalıq ilə": ["С ценой и остатком", "Fiyat ve stok ile", "With price and stock"], "Qaimə tarixçəsi": ["История накладных", "Fatura geçmişi", "Document history"], "Əvvəlki əməliyyatlar": ["Прошлые операции", "Önceki işlemler", "Previous operations"], "Ödənişlər": ["Платежи", "Ödemeler", "Payments"], "Kassa mədaxil": ["Приход в кассу", "Kasa girişi", "Cash in"], "Daxil olan pul": ["Поступившие деньги", "Giren para", "Money received"], "Kassa məxaric": ["Расход из кассы", "Kasa çıkışı", "Cash out"], "Çıxan pul": ["Выданные деньги", "Çıkan para", "Money paid out"], "Hesabatlar": ["Отчёты", "Raporlar", "Reports"], "Anbar qalığı": ["Остатки на складе", "Depo stoğu", "Stock balance"], "Kontragent borcları": ["Долги контрагентов", "Cari borçlar", "Counterparty debts"], "Satış hesabatı": ["Отчёт по продажам", "Satış raporu", "Sales report"], "Kassa hesabatı": ["Кассовый отчёт", "Kasa raporu", "Cash report"], "Rejim və mal bazası": ["Режим и база товаров", "Mod ve ürün tabanı", "Mode and product base"], "🔄 Mal bazasını 1C-dən yüklə": ["🔄 Загрузить базу из 1С", "🔄 Ürün tabanını 1C'den yükle", "🔄 Load products from 1C"], "📄 Mal faylından yüklə (CSV)": ["📄 Загрузить из файла (CSV)", "📄 Dosyadan yükle (CSV)", "📄 Load from file (CSV)"], "Digər": ["Прочее", "Diğer", "Other"], "⚙️ Ayarlar": ["⚙️ Настройки", "⚙️ Ayarlar", "⚙️ Settings"], "📋 Sinxronizasiya jurnalı": ["📋 Журнал синхронизации", "📋 Senkronizasyon günlüğü", "📋 Sync log"], "🩺 Diaqnostika": ["🩺 Диагностика", "🩺 Tanılama", "🩺 Diagnostics"], "ℹ️ Proqram haqqında": ["ℹ️ О программе", "ℹ️ Program hakkında", "ℹ️ About"], "🔒 Məxfilik siyasəti": ["🔒 Политика конфиденциальности", "🔒 Gizlilik politikası", "🔒 Privacy policy"], "Bütün hüquqlar Xəyal Şıxalıyev BarkodPRO-ya məxsusdur.": ["Все права принадлежат Хаялю Шыхалиеву, BarkodPRO.", "Tüm hakları Xəyal Şıxalıyev BarkodPRO'ya aittir.", "All rights belong to Xəyal Şıxalıyev, BarkodPRO."], "Online": ["Онлайн", "Çevrimiçi", "Online"], "Giriş səhvdir": ["Ошибка входа", "Giriş hatalı", "Login error"], "Server xətası": ["Ошибка сервера", "Sunucu hatası", "Server error"], "Server cavab vermir": ["Сервер не отвечает", "Sunucu yanıt vermiyor", "Server not responding"], "Oflayn rejim": ["Офлайн-режим", "Çevrimdışı mod", "Offline mode"], "Yoxlanılır": ["Проверка", "Kontrol ediliyor", "Checking"], "🟢 Rejim: ONLINE — 1C ilə işləyir (dəyiş)": ["🟢 Режим: ОНЛАЙН — работает с 1С (сменить)", "🟢 Mod: ÇEVRİMİÇİ — 1C ile çalışır (değiştir)", "🟢 Mode: ONLINE — works with 1C (change)"], "🔴 Rejim: OFLAYN — yaddaşa yazılır (dəyiş)": ["🔴 Режим: ОФЛАЙН — сохраняется в памяти (сменить)", "🔴 Mod: ÇEVRİMDIŞI — belleğe yazılır (değiştir)", "🔴 Mode: OFFLINE — saved to memory (change)"], "Bağlantı uğurludur": ["Связь установлена", "Bağlantı başarılı", "Connection OK"], "İstifadəçi və ya parol səhvdir": ["Неверный пользователь или пароль", "Kullanıcı veya parola hatalı", "Wrong user or password"], "Server xəta verdi": ["Сервер вернул ошибку", "Sunucu hata verdi", "Server returned an error"], "Server cavab vermir. Ünvanı və şəbəkəni yoxlayın": ["Сервер не отвечает. Проверьте адрес и сеть", "Sunucu yanıt vermiyor. Adresi ve ağı kontrol edin", "Server not responding. Check address and network"], "Oflayn rejimdir": ["Офлайн-режим", "Çevrimdışı moddasınız", "Offline mode"], "Ayarlar": ["Настройки", "Ayarlar", "Settings"], "Bağlantı, fayl və ehtiyat": ["Связь, файлы, резерв", "Bağlantı, dosya, yedek", "Connection, files, backup"], "Bağlantı": ["Подключение", "Bağlantı", "Connection"], "Server ünvanı": ["Адрес сервера", "Sunucu adresi", "Server address"], "Baza adı": ["Имя базы", "Veritabanı adı", "Database name"], "HTTP servis adı": ["Имя HTTP-сервиса", "HTTP servis adı", "HTTP service name"], "1C istifadəçi adı": ["Пользователь 1С", "1C kullanıcı adı", "1C username"], "1C parol": ["Пароль 1С", "1C parolası", "1C password"], "🔌 Bağlantını yoxla": ["🔌 Проверить связь", "🔌 Bağlantıyı kontrol et", "🔌 Test connection"], "Giriş açarı": ["Ключ доступа", "Erişim anahtarı", "Access key"], "Ödənişlər və hesabatlar yalnız açar daxil ediləndə görünür": ["Платежи и отчёты видны только при вводе ключа", "Ödemeler ve raporlar anahtar girilince görünür", "Payments and reports appear only with a key"], "Terminal": ["Терминал", "Terminal", "Terminal"], "Terminal adı": ["Имя терминала", "Terminal adı", "Terminal name"], "Anbar adı (1C-yə göndəriləcək)": ["Склад (передаётся в 1С)", "Depo adı (1C'ye gönderilir)", "Warehouse name (sent to 1C)"], "📷 QR ilə doldur": ["📷 Заполнить по QR", "📷 QR ile doldur", "📷 Fill from QR"], "Dil": ["Язык", "Dil", "Language"], "Cihaz": ["Устройство", "Cihaz", "Device"], "Ekran sönməsin": ["Не гасить экран", "Ekran kapanmasın", "Keep screen on"], "Batareya xəbərdarlığı": ["Предупреждение о батарее", "Pil uyarısı", "Battery warning"], "Avtomatik ehtiyat nüsxə": ["Автоматическая копия", "Otomatik yedek", "Automatic backup"], "Yan skan düyməsi": ["Боковая кнопка скана", "Yan tarama tuşu", "Side scan key"], "Düyməni öyrət": ["Назначить", "Tuşu öğret", "Assign"], "Eyni mal təkrar oxunanda": ["При повторном скане", "Aynı ürün tekrar okununca", "When the same item is rescanned"], "Sayı artır": ["Добавить кол-во", "Adedi artır", "Add quantity"], "Soruş": ["Спросить", "Sor", "Ask"], "Xəbərdarlıq": ["Предупредить", "Uyar", "Warn"], "PIN kod (4 rəqəm, boş = söndür)": ["PIN (4 цифры, пусто = выкл.)", "PIN (4 rakam, boş = kapalı)", "PIN (4 digits, empty = off)"], "Saxla": ["Сохранить", "Kaydet", "Save"], "Fayl rejimi": ["Файловый режим", "Dosya modu", "File mode"], "Sənədləri fayl kimi göndər": ["Отправлять документы файлами", "Belgeleri dosya olarak gönder", "Send documents as files"], "Fayllar": ["Файлы", "Dosyalar", "Files"], "📄 Mal faylını yüklə (CSV)": ["📄 Загрузить товары (CSV)", "📄 Ürün dosyasını yükle (CSV)", "📄 Load product file (CSV)"], "💾 Ayarları fayla saxla": ["💾 Сохранить настройки в файл", "💾 Ayarları dosyaya kaydet", "💾 Save settings to file"], "♻️ Ayarları geri yüklə": ["♻️ Восстановить настройки", "♻️ Ayarları geri yükle", "♻️ Restore settings"], "🗂 Ehtiyat fayl yarat (gözləyən sənədlər)": ["🗂 Создать резервный файл", "🗂 Yedek dosya oluştur", "🗂 Create backup file"], "Məbləğ": ["Сумма", "Tutar", "Amount"], "Kontragent": ["Контрагент", "Cari", "Counterparty"], "Ödəniş növü": ["Тип оплаты", "Ödeme türü", "Payment type"], "Nağd": ["Наличные", "Nakit", "Cash"], "Kart": ["Карта", "Kart", "Card"], "Bank": ["Банк", "Banka", "Bank"], "Qeyd": ["Примечание", "Not", "Note"], "Göndər": ["Отправить", "Gönder", "Send"], "Başlanğıc": ["С", "Başlangıç", "From"], "Son": ["По", "Bitiş", "To"], "Göstər": ["Показать", "Göster", "Show"], "Yüklənir...": ["Загрузка...", "Yükleniyor...", "Loading..."], "Məbləği yazın": ["Введите сумму", "Tutarı yazın", "Enter the amount"], "Şəbəkə yoxdur, yaddaşa yazıldı": ["Нет сети, сохранено в памяти", "Ağ yok, belleğe yazıldı", "No network, saved to memory"], "Giriş açarı yanlışdır": ["Неверный ключ доступа", "Erişim anahtarı hatalı", "Wrong access key"], "Jurnal boşdur": ["Журнал пуст", "Günlük boş", "Log is empty"], "Təmizlə": ["Очистить", "Temizle", "Clear"], "Son əməliyyatlar": ["Последние события", "Son işlemler", "Recent events"], "Cihaz və bağlantı": ["Устройство и связь", "Cihaz ve bağlantı", "Device and connection"], "Xoş gəlmisiniz": ["Добро пожаловать", "Hoş geldiniz", "Welcome"], "İlk quraşdırma": ["Первая настройка", "İlk kurulum", "First setup"], "Yoxla və başla": ["Проверить и начать", "Kontrol et ve başla", "Check and start"], "Server ünvanını yazın": ["Введите адрес сервера", "Sunucu adresini yazın", "Enter the server address"], "PIN kodunu daxil edin": ["Введите PIN-код", "PIN kodunu girin", "Enter PIN"], "PIN yanlışdır": ["Неверный PIN", "PIN hatalı", "Wrong PIN"], "PIN söndürüldü": ["PIN отключён", "PIN kapatıldı", "PIN disabled"], "PIN 4 rəqəm olmalıdır": ["PIN — 4 цифры", "PIN 4 rakam olmalı", "PIN must be 4 digits"], "PIN təyin olundu": ["PIN установлен", "PIN ayarlandı", "PIN set"], "Batareya zəifdir": ["Низкий заряд", "Pil zayıf", "Battery low"], "Skan düyməsinə basın": ["Нажмите кнопку скана", "Tarama tuşuna basın", "Press the scan key"], "Düymə yadda saxlandı": ["Кнопка сохранена", "Tuş kaydedildi", "Key saved"], "Bu mal artıq siyahıdadır": ["Товар уже в списке", "Bu ürün zaten listede", "Item is already in the list"]};
+function t(x){var d=D[x];if(!d||LNG==='az')return x;return d[{ru:0,tr:1,en:2}[LNG]]||x}
+function trApply(){document.querySelectorAll('[data-i]').forEach(function(e){if(!e._az)e._az=e.getAttribute('data-i');e.textContent=t(e._az)})}
+function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function jurnal(k,m){var j=lj('anbar_jurnal',[]);j.unshift({t:new Date().toISOString(),k:k,m:m});sj('anbar_jurnal',j.slice(0,150))}
+var _tp0=tPost;tPost=async function(ep,body){try{var r=await _tp0(ep,body);jurnal('ok',(body.emeliyyat||'')+' → '+((r&&r.no)||'OK'));return r}catch(e){jurnal(e.net?'wait':'err',(body.emeliyyat||'')+': '+e.message);throw e}};
+function durumUI(){var p=document.getElementById('durPill');if(!p)return;var T={ok:['ok','Online'],auth:['warn','Giriş səhvdir'],err:['bad','Server xətası'],net:['bad','Server cavab vermir'],off:['','Oflayn rejim']}[_dur]||['','Yoxlanılır'];p.className='n-pill '+T[0];p.querySelector('span').textContent=t(T[1])}
+function modUI(){var b=document.getElementById('modBtn');if(!b)return;var off=CFG.mode==='offline';b.textContent=t(off?'🔴 Rejim: OFLAYN — yaddaşa yazılır (dəyiş)':'🟢 Rejim: ONLINE — 1C ilə işləyir (dəyiş)');b.style.cssText=off?'color:#b91c1c;border-color:#fca5a5;background:#fef2f2':'color:#15803d;border-color:#86efac;background:#f0fdf4'}
+function homeStat(){function s(i,v){var e=document.getElementById(i);if(e)e.textContent=v}var b=bugunStr();s('stGoz',lj('anbar_outbox',[]).length);s('stMal',(mallar||[]).length);s('stBug',lj(QHK,[]).filter(function(x){return x.tarix===b}).length)}
+function menuGor(){['secOd','secHes'].forEach(function(i){var e=document.getElementById(i);if(e)e.style.display=CFG.acar?'':'none'})}
+var _pd0=paramDoldur;paramDoldur=function(){_pd0();var a=document.getElementById('cfgAcar');if(a)a.value=CFG.acar||'';
+  ['ekran','bat','ehtiyat','fayl'].forEach(function(k){var w=document.getElementById('sw_'+k);if(w){w.className='n-sw'+(CFG[k]?' on':'');w.setAttribute('aria-checked',CFG[k]?'true':'false')}});
+  document.querySelectorAll('[data-k]').forEach(function(b){b.className=CFG[b.getAttribute('data-k')]===b.getAttribute('data-v')?'on':''})};
+var _cs0=cfgSaxla;cfgSaxla=function(){_cs0();var e=document.getElementById('cfgAcar');if(e){CFG.acar=e.value.trim();sj('anbar_cfg',CFG);menuGor()}};
+function tgl(k){CFG[k]=!CFG[k];sj('anbar_cfg',CFG);paramDoldur();if(k==='ekran')wakeTetbiq();if(k==='bat')batIzle()}
+function faylDeyis(){tgl('fayl')}
+function secim(k,v){CFG[k]=v;sj('anbar_cfg',CFG);if(k==='dil'){LNG=v;trApply();durumUI();modUI()}paramDoldur()}
+function dubl(x){var r=CFG.dubl||'sorus';if(curOp==='sayim')r='artir';
+  if(r==='artir'){x.say=(x.say||0)+1;beep(true);saxla();render();toast(x.ad+': '+x.say,'ok');return}
+  if(r==='xeber'){beep(false);if(navigator.vibrate)navigator.vibrate(200);toast(t('Bu mal artıq siyahıdadır'),'warn');return}
+  beep(true);showUpdate(x)}
+// giriş açarı: HMAC-SHA256(açar, vaxt+yol)
+async function imza(path){var v=String(Math.floor(Date.now()/1000));return{'X-Vaxt':v,'X-Imza':hex(hmac256(utf8(CFG.acar),utf8(v+path)))}}
+async function ahP(ep,b){var h=ah();if(CFG.acar&&b&&b.mebleg!=null)Object.assign(h,await imza(ep));return h}
+// ödənişlər
+var _kop='';
+function kassaAc(op){_kop=op;document.querySelector('#sKassa .n-t').textContent=t(op==='kassa_medaxil'?'Kassa mədaxil':'Kassa məxaric');['kMeb','kKont','kQeyd'].forEach(function(i){document.getElementById(i).value=''});screenAc('sKassa')}
+async function kassaGonder(){var m=parseFloat(document.getElementById('kMeb').value.replace(',','.'));if(!(m>0)){toast(t('Məbləği yazın'),'warn');return}
+  var d={id:String(Date.now()),op:_kop,anbar:CFG.anbarAd,tarix:bugunStr(),kontragent:document.getElementById('kKont').value.trim(),qeyd:document.getElementById('kQeyd').value.trim(),mebleg:m,odenis:document.getElementById('kOd').value,siyahi:[]};
+  try{var r=await tPost('/terminal',mkPayload(d));bitdi(d,r&&r.no?r.no:'');screenAc('sHome')}
+  catch(e){if(e.net){outAdd(d);toast(t('Şəbəkə yoxdur, yaddaşa yazıldı'),'warn');screenAc('sHome')}else toast('1C: '+e.message,'err')}}
+// hesabatlar (1C cavabı: {kolonlar:[..],setirler:[[..]],cemi:".."})
+var _hes={tip:''};
+var _hat=null;
+function hesabatAc(tip,ad){_hes={tip:tip,nov:''};document.getElementById('hesTitle').textContent=t(ad);
+  var d=(tip==='borc'||tip==='tedhes'||tip==='satis'||tip==='kassa'),iso=new Date().toISOString().slice(0,10),sg=document.getElementById('hesSeg');
+  document.getElementById('hesTar').style.display=d?'flex':'none';document.getElementById('hesBas').parentNode.style.display=(tip==='tedhes')?'none':'';document.getElementById('hesBas').value=iso;document.getElementById('hesSon').value=iso;
+  document.getElementById('hesAxBox').style.display=(tip==='qaliq'||tip==='borc'||tip==='tedhes')?'block':'none';document.getElementById('hesAx').value='';
+  var S={borc:[['umumi','Ümumi'],['alici','Alıcı'],['tedarukcu','Tədarükçü']],kassa:[['xulase','Xülasə'],['etrafli','Ətraflı']]}[tip];
+  if(S){_hes.nov=S[0][0];sg.innerHTML=S.map(function(p,i){return'<button type="button" class="'+(i?'':'on')+'" onclick="hesNov(\''+p[0]+'\',this)">'+p[1]+'</button>'}).join('');sg.style.display='flex'}else sg.style.display='none';
+  document.getElementById('hesNet').innerHTML='';screenAc('sHesab');hesabatYukle()}
+function hesNov(v,btn){_hes.nov=v;[].forEach.call(btn.parentNode.children,function(b){b.className=b===btn?'on':''});hesabatYukle()}
+function hesAxtar(){clearTimeout(_hat);_hat=setTimeout(hesabatYukle,500)}
+function xt(m){return'<div class="n-card" style="padding:14px;color:#b91c1c;font-weight:600">'+esc(t(m))+'</div>'}
+async function hesabatYukle(){var el=document.getElementById('hesNet');el.innerHTML='<div class="n-foot">'+esc(t('Yüklənir...'))+'</div>';
+  var ep='/hesabat?tip='+_hes.tip+'&bas='+document.getElementById('hesBas').value+'&son='+document.getElementById('hesSon').value+'&anbar='+encodeURIComponent(CFG.anbarAd)+'&nov='+(_hes.nov||'')+'&axtar='+encodeURIComponent(document.getElementById('hesAx').value.trim());
+  try{var kan='/hesabat|'+_hes.tip+'|'+document.getElementById('hesBas').value+'|'+document.getElementById('hesSon').value+'|'+CFG.anbarAd,h=Object.assign(ah(),await imza(kan)),r=await fetch(getUrl(ep),{headers:h,signal:tmo(30000)});
+    if(r.status===401||r.status===403){var tx0=await r.text();var ms='';try{ms=JSON.parse(tx0).error||''}catch(e3){}el.innerHTML=xt(ms?ms:'Giriş açarı yanlışdır');return}
+    var tx=await r.text(),j;try{j=JSON.parse(tx)}catch(e2){el.innerHTML=xt('HTTP '+r.status+': '+tx.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,160));return}
+    if(j.error){el.innerHTML=xt('1C: '+j.error);return}
+    el.innerHTML='<div class="n-card" style="overflow:auto"><table class="n-tb"><tr>'+(j.kolonlar||[]).map(function(c){return'<th>'+esc(c)+'</th>'}).join('')+'</tr>'+(j.setirler||[]).map(function(r2){return'<tr>'+r2.map(function(c){return'<td>'+esc(c)+'</td>'}).join('')+'</tr>'}).join('')+'</table></div>'+(j.cemi?'<div style="margin-top:10px;font-weight:700;color:#0f172a">'+esc(j.cemi)+'</div>':'')}
+  catch(e){el.innerHTML=xt('Server cavab vermir ('+(e&&e.message?e.message:e)+')')}}
+// jurnal + diaqnostika
+function jurnalGor(){var j=lj('anbar_jurnal',[]),C={ok:'#15803d',err:'#b91c1c',wait:'#b45309',info:'#475569'};
+  document.getElementById('jurList').innerHTML=j.length?j.map(function(x){return'<div class="n-row" style="display:block"><div style="font-size:11.5px;color:#64748b">'+esc(x.t.slice(0,19).replace('T',' '))+'</div><div style="font-size:13.5px;color:'+(C[x.k]||'#0f172a')+'">'+esc(x.m)+'</div></div>'}).join(''):'<div class="n-foot">'+esc(t('Jurnal boşdur'))+'</div>';screenAc('sJurnal')}
+function jurTemizle(){sj('anbar_jurnal',[]);jurnalGor()}
+function diagGor(){var ts=localStorage.getItem('anbar_mallar_ts'),kv=[['Versiya',APPV],['Server',CFG.apiUrl],['Status',_dur],['Terminal',CFG.termAd],['Anbar',CFG.anbarAd],['Rejim',CFG.mode],['Fayl rejimi',CFG.fayl?'açıq':'bağlı'],['Gözləyən sənəd',lj('anbar_outbox',[]).length],['Gözləyən fayl',lj('anbar_fayl_gozleyen',[]).length],['Mal sayı',(mallar||[]).length],['Qrup sayı',(qruplar||[]).length],['Qrup rejimi (1C)',localStorage.getItem('anbar_qrupMode')||'-'],['Qalıq (1C)',localStorage.getItem('anbar_qaliqInfo')||'-'],['Qalığı olan mal',(mallar||[]).filter(function(m){return m.qaliq}).length],['Son mal yeniləmə',ts?new Date(+ts).toLocaleString():'-'],['Fayl yazma',capFS()?'Capacitor':'brauzer'],['Fayl qovluğu',fsYol()],['Giriş açarı',CFG.acar?'var':'yoxdur'],['Saat',new Date().toISOString().slice(0,19).replace('T',' ')]];
+  document.getElementById('diagList').innerHTML=kv.map(function(p){return'<div class="n-row" style="display:flex;gap:10px"><span style="color:#64748b;font-weight:600">'+esc(p[0])+'</span><span style="text-align:right;word-break:break-all">'+esc(p[1])+'</span></div>'}).join('');screenAc('sDiag')}
+// quraşdırma sehrbazı + QR
+function qrKurulum(x){try{var j=JSON.parse(x);if(j.srv)CFG.srv=String(j.srv).replace(/^https?:\/\//,'').replace(/\/.*$/,'');if(j.baza)CFG.baza=j.baza;if(j.servis)CFG.servis=j.servis;if(j.term)CFG.termAd=j.term;if(j.dil&&/^(az|ru|tr|en)$/.test(j.dil)){CFG.dil=j.dil;LNG=j.dil}if(j.acar)CFG.acar=j.acar;
+  apiBuild();sj('anbar_cfg',CFG);paramDoldur();menuGor();trApply();['wSrv','wBaza','wServis','wTerm','wAcar'].forEach(function(id,i){var e=document.getElementById(id);if(e)e.value=[CFG.srv,CFG.baza,CFG.servis,CFG.termAd,CFG.acar||''][i]});toast('QR OK','ok')}catch(e){toast('QR oxunmadı','err')}}
+function wizSaxla(){function g(i){return document.getElementById(i).value.trim()}var s0=g('wSrv');if(!s0){toast(t('Server ünvanını yazın'),'warn');return}
+  CFG.srv=s0.replace(/^https?:\/\//,'').replace(/\/.*$/,'');CFG.baza=g('wBaza').replace(/\//g,'');CFG.servis=g('wServis').replace(/\//g,'')||'terminal';CFG.termAd=g('wTerm')||'T1';CFG.acar=g('wAcar');CFG.hazir=true;
+  apiBuild();sj('anbar_cfg',CFG);menuGor();screenAc('sHome');durumYoxla()}
+// cihaz: ekran, batareya, yan düymə, ehtiyat, PIN
+var _wl=null;async function wakeTetbiq(){try{if(CFG.ekran&&navigator.wakeLock){_wl=await navigator.wakeLock.request('screen')}else if(_wl){_wl.release();_wl=null}}catch(e){}}
+var _bu=false;function batIzle(){if(!navigator.getBattery)return;navigator.getBattery().then(function(b){function k(){if(CFG.bat&&b.level<=0.2&&!b.charging){if(!_bu){_bu=true;toast(t('Batareya zəifdir')+': '+Math.round(b.level*100)+'%','warn');beep(false)}}else _bu=false}b.onlevelchange=k;b.onchargingchange=k;k()}).catch(function(){})}
+var _og=false;function yanOgren(){_og=true;toast(t('Skan düyməsinə basın'),'info')}
+document.addEventListener('keydown',function(e){if(_og){_og=false;CFG.yanKod=e.keyCode;sj('anbar_cfg',CFG);e.preventDefault();toast(t('Düymə yadda saxlandı')+': '+(e.key||e.keyCode),'ok');return}
+  if(CFG.yanKod&&e.keyCode===CFG.yanKod&&curOp&&document.getElementById('kamBox').style.display!=='flex'){e.preventDefault();kamAc()}},true);
+function ehtiyatDovr(){if(CFG.ehtiyat&&capFS())fsYaz('BarkodPRO/ehtiyat/anbar_'+new Date().toISOString().slice(0,10)+'.json',ehtiyatData()).catch(function(){})}
+async function sha(x){return hex(sha256(utf8('bp:'+x)))}
+function pinGoster(){if(!CFG.pinHash)return;document.getElementById('pinBox').style.display='flex';var i=document.getElementById('pinInp');i.value='';i.focus()}
+async function pinYoxla(){var i=document.getElementById('pinInp');if(i.value.length<4)return;if(await sha(i.value)===CFG.pinHash){document.getElementById('pinBox').style.display='none';document.getElementById('pinErr').textContent=''}else{i.value='';document.getElementById('pinErr').textContent=t('PIN yanlışdır')}}
+async function pinQur(){var v=document.getElementById('cfgPin').value.trim();if(!v){delete CFG.pinHash;sj('anbar_cfg',CFG);toast(t('PIN söndürüldü'),'info');return}if(!/^\d{4}$/.test(v)){toast(t('PIN 4 rəqəm olmalıdır'),'warn');return}CFG.pinHash=await sha(v);sj('anbar_cfg',CFG);document.getElementById('cfgPin').value='';toast(t('PIN təyin olundu'),'ok')}
+var _gz=0;document.addEventListener('visibilitychange',function(){if(document.hidden)_gz=Date.now();else{wakeTetbiq();if(CFG.pinHash&&Date.now()-_gz>300000)pinGoster()}});
+// ═══ Mal sayımı: hər oxumada +1, sistem/sayılan miqdar, məbləğ fərqi ═══
+function sayimQiy(){return CFG.sayQiy==='satis'?'satis':'alis'}
+function sayimOxu(m){var ex=siyahi.find(function(x){return x.barkod===m.barkod&&(x.code||'')===(m.code||'')});
+  if(ex){ex.say=(ex.say||0)+1;toast(ex.ad+': '+fq(ex.say),'ok')}
+  else{siyahi.unshift({barkod:m.barkod,ad:m.ad,say:1,alis:m.alis,satis:m.satis,yeni:false,code:m.code||'',sis:m.qaliq||0});toast(m.ad+': 1','ok')}
+  beep(true);saxla();render()}
+function sayimChips(it){if(it.sis==null){var mm=mallar.find(function(x){return x.barkod===it.barkod&&(x.code||'')===(it.code||'')})||mallar.find(function(x){return x.barkod===it.barkod});it.sis=mm?(mm.qaliq||0):0}
+  var f=Math.round(((it.say||0)-(it.sis||0))*1000)/1000,c=f===0?'#15803d':(f<0?'#b91c1c':'#b45309');
+  return '<span class="chip chip-say">Sayılan: '+fq(it.say)+'</span><span class="chip" style="background:#e2e8f0;color:#334155">Sistem: '+fq(it.sis||0)+'</span><span class="chip" style="background:#fff;border:1px solid '+c+';color:'+c+'">Fərq: '+(f>0?'+':'')+fq(f)+'</span>'}
+function sayimHook(t){var on=curOp==='sayim',so=document.getElementById('sOp');if(so)so.classList.toggle('sayim-mod',on);
+  var a=document.getElementById('stAlis');if(a){var l=a.previousElementSibling;if(l)l.textContent=on?'Sayılan ədəd':'Alış cəmi';if(on)a.textContent=fq(t.tSay)}
+  var s2=document.getElementById('sayimTot'),n=document.getElementById('normTot');if(s2)s2.style.display=on?'block':'none';if(n)n.style.display=on?'none':'block'}
+function sayimYekun(){if(curOp!=='sayim')return;var el=document.getElementById('sayimTot');if(!el)return;
+  var q=sayimQiy(),sq=0,sa=0;siyahi.forEach(function(s){sq+=s.say||0;sa+=(s.say||0)*parseFloat(s[q]||0)});
+  var src=(secQrup!==null&&secQrup!==undefined)?mallar.filter(function(m){return m.qrup===secQrup}):mallar,iq=0,ia=0;
+  src.forEach(function(m){var x=parseFloat(m.qaliq||0);iq+=x;ia+=x*parseFloat(m[q]||0)});
+  function r2(v){return Math.round(v*100)/100}
+  function fm(v){var c=v===0?'#15803d':(v<0?'#b91c1c':'#b45309');return '<b style="color:'+c+'">'+(v>0?'+':'')+r2(v).toFixed(2)+' ₼</b>'}
+  function row(l,v,b){return '<div class="trow'+(b?' big':'')+'"><span class="tl">'+l+'</span><span class="tv">'+v+'</span></div>'}
+  var dq=Math.round((sq-iq)*1000)/1000,da=sa-ia,nm=(q==='alis'?'alış':'satış');
+  el.innerHTML=row('Sayılan miqdar',fq(sq))+row('Sistemdə miqdar'+(src===mallar?'':' (qrup)'),fq(iq))+row('Miqdar fərqi',(dq>0?'+':'')+fq(dq))+
+    row('Sayılan məbləğ ('+nm+')',r2(sa).toFixed(2)+' ₼',1)+row('Sistem məbləği ('+nm+')',r2(ia).toFixed(2)+' ₼')+row('Məbləğ fərqi',fm(da),1)}
+function splBagla(){var e=document.getElementById('spl');if(!e)return;e.style.opacity=0;setTimeout(function(){if(e.parentNode)e.parentNode.removeChild(e)},450)}
+setTimeout(splBagla,1600);
+// ═══ OFLAYN TERMİNAL: şəbəkə yoxdur, sənədlər fayla yazılır ═══
+loadMallar=function(){return malFaylYukle()};
+durumYoxla=async function(){_dur='off';durumUI();return 'off'};
+pingEt=function(){return durumYoxla()};
+modDeyis=function(){};
+function csvKont(txt){txt=txt.replace(/^\uFEFF/,'');var L=txt.split(/\r?\n/).filter(function(x){return x.trim()});if(L.length&&/^(ad|kontragent|name)\b/i.test(L[0]))L=L.slice(1);
+  return L.map(function(l){var p=l.split(/[;\t]/);return{ad:(p[0]||'').trim(),kod:(p[1]||'').trim()}}).filter(function(k){return k.ad})}
+function kontTetbiq(arr,src){if(!arr.length){toast('Faylda kontragent tapılmadı','warn');return}kontragentler=arr;sj(KTK,kontragentler);ktRender();toast(arr.length+' kontragent yükləndi ('+src+')','ok')}
+async function kontFaylYukle(){var t=await fsOxu('BarkodPRO/Terminal1CFilesBarkodPRO/kontragentler.csv');if(t){kontTetbiq(csvKont(t),'kontragentler.csv');return}document.getElementById('kontFayl').click()}
+function kontFaylSec(i){var f=i.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){kontTetbiq(csvKont(String(rd.result)),f.name)};rd.readAsText(f,'utf-8');i.value=''}
+ktYukle=async function(force){var sv=lj(KTK,[]);if(sv.length)kontragentler=sv;ktRender()};
+wizSaxla=function(){function g(i){var e=document.getElementById(i);return e?e.value.trim():''}
+  CFG.termAd=g('wTerm')||'T1';CFG.anbarAd=g('wAnbar')||'Anbar-1';CFG.hazir=true;sj('anbar_cfg',CFG);screenAc('sHome')};
+// ═══ Oflayn: sənədləri e-poçtla göndərmək ═══
+function b64(x){return btoa(unescape(encodeURIComponent(x)))}
+function mailBtnUI(){var b=document.getElementById('mailBtn');if(!b)return;var n=lj('anbar_mail_q',[]).length;
+  b.textContent='📧 E-poçtla göndər ('+n+' sənəd)';
+  b.style.cssText=n?'margin-top:12px;color:#fff;background:#1d4ed8;border-color:#1d4ed8;font-weight:800':'margin-top:12px;color:#64748b'}
+var _hs1=homeStat;homeStat=function(){_hs1();var a=document.getElementById('stGoz');if(a)a.textContent=lj('anbar_mail_q',[]).length;mailBtnUI()};
+var _pd1=paramDoldur;paramDoldur=function(){_pd1();var m=document.getElementById('cfgMail');if(m)m.value=CFG.mailTo||''};
+var _cs1=cfgSaxla;cfgSaxla=function(){_cs1();var e=document.getElementById('cfgMail');if(e){CFG.mailTo=e.value.trim();sj('anbar_cfg',CFG)}};
+wizSaxla=function(){function g(i){var e=document.getElementById(i);return e?e.value.trim():''}
+  CFG.termAd=g('wTerm')||'T1';CFG.anbarAd=g('wAnbar')||'Anbar-1';CFG.mailTo=g('wMail');CFG.hazir=true;sj('anbar_cfg',CFG);screenAc('sHome');homeStat()};
+async function mailGonder(){
+  var q=lj('anbar_mail_q',[]);if(!q.length){toast('Göndəriləcək sənəd yoxdur','info');return}
+  var to=(CFG.mailTo||'').split(/[;,\s]+/).filter(function(x){return x});
+  if(!to.length){toast('Əvvəlcə ayarlarda alıcı e-poçtu yazın','warn');screenAc('sParam');return}
+  var sub='BarkodPRO Terminal '+CFG.termAd+' — '+q.length+' sənəd — '+new Date().toISOString().slice(0,10);
+  var body='Terminal: '+CFG.termAd+'\nAnbar: '+CFG.anbarAd+'\nSənəd sayı: '+q.length+'\n\n'+q.map(function(x,i){return (i+1)+'. '+x.ad}).join('\n');
+  var EC=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.EmailComposer;
+  try{
+    if(EC){await EC.open({to:to,subject:sub,body:body,isHtml:false,attachments:q.map(function(x){return{type:'base64',path:b64(x.json),name:x.ad}})})}
+    else{for(var i=0;i<q.length;i++){await faylYaz(q[i].ad,q[i].json)}
+      location.href='mailto:'+to.join(',')+'?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body)}
+  }catch(e){toast('E-poçt açılmadı: '+(e&&e.message?e.message:e),'err');return}
+  try{localStorage.setItem('anbar_mail_gozle',JSON.stringify(q.map(function(x){return x.ad})))}catch(e2){}
+}
+function mailTamam(names){var q=lj('anbar_mail_q',[]),qs={};names.forEach(function(n){qs[n]=1});
+  var sent=q.filter(function(x){return qs[x.ad]}),rest=q.filter(function(x){return !qs[x.ad]});
+  sj('anbar_mail_q',rest);var h=lj('anbar_mail_gonderilen',[]);sent.forEach(function(x){h.unshift({ad:x.ad,t:Date.now()})});sj('anbar_mail_gonderilen',h.slice(0,300));
+  try{localStorage.removeItem('anbar_mail_gozle')}catch(e){}homeStat();toast(sent.length+' sənəd göndərilmiş kimi işarələndi','ok')}
+document.addEventListener('visibilitychange',function(){if(document.hidden)return;var r=null;try{r=JSON.parse(localStorage.getItem('anbar_mail_gozle')||'null')}catch(e){}
+  if(!r||!r.length)return;setTimeout(function(){
+    if(confirm(r.length+' sənəd e-poçtla göndərildi?\n\nOK — "göndərilib" kimi işarələ (növbədən çıxar).\nLəğv — növbədə qalsın, sonra yenidən göndərə bilərsiniz.'))mailTamam(r);
+    else{try{localStorage.removeItem('anbar_mail_gozle')}catch(e){}}},400)});
+// ═══ Oflayn: 1C fayllarını idxal et, qovluq yolu ═══
+function fsYol(){var d=localStorage.getItem('anbar_fs_dir'),id='az.barkodpro.anbar.offline',b='BarkodPRO/Terminal1CFilesBarkodPRO';
+  return d==='DOCUMENTS'?'Documents/'+b:d==='EXTERNAL'?'Android/data/'+id+'/files/'+b:d==='DATA'?'proqramın daxili yaddaşı (kompüterə çəkilmir, e-poçt istifadə edin)':'hələ fayl yazılmayıb'}
+var _pd2=paramDoldur;paramDoldur=function(){_pd2();var y=document.getElementById('fsYolGor');if(y)y.textContent='📁 Fayl qovluğu: '+fsYol()};
+function oxuFayl(f){return new Promise(function(res,rej){var rd=new FileReader();rd.onload=function(){res(String(rd.result))};rd.onerror=function(){rej(rd.error)};rd.readAsText(f,'utf-8')})}
+async function faylIdxal(inp){var fs=[].slice.call(inp.files||[]);inp.value='';if(!fs.length)return;var m=0,k=0,bad=[];
+  for(var i=0;i<fs.length;i++){var f=fs[i],t;
+    try{t=await oxuFayl(f)}catch(e){bad.push(f.name);continue}
+    var low=f.name.toLowerCase(),head=(t.replace(/^\uFEFF/,'').split(/\r?\n/)[0]||'').toLowerCase();
+    try{
+      if(low.indexOf('kontragent')>=0||/^ad\s*[;\t]\s*kod/.test(head)){var ka=csvKont(t);if(ka.length){kontragentler=ka;sj(KTK,ka);k=ka.length;if(capFS())faylYaz('kontragentler.csv',t).catch(function(){})}else bad.push(f.name)}
+      else if(head.indexOf('barkod')>=0||low.indexOf('mal')>=0){var ma=csvMal(t);if(ma.length){malTetbiq(ma,f.name);m=ma.length;if(capFS())faylYaz('mallar.csv',t).catch(function(){})}else bad.push(f.name)}
+      else bad.push(f.name)
+    }catch(e2){bad.push(f.name)}}
+  try{ktRender()}catch(e3){}homeStat();
+  toast((m?m+' mal':'')+(m&&k?', ':'')+(k?k+' kontragent':'')+(m||k?' yükləndi':'')+(bad.length?(m||k?'. ':'')+'Tanınmadı: '+bad.join(', '):''),bad.length&&!m&&!k?'err':'ok')}
+async function autoFayl(){try{
+  if(!(mallar&&mallar.length)){var t=await fsOxu('BarkodPRO/Terminal1CFilesBarkodPRO/mallar.csv');if(t){var a=csvMal(t);if(a.length)malTetbiq(a,'mallar.csv')}}
+  if(!(kontragentler&&kontragentler.length)){var u=await fsOxu('BarkodPRO/Terminal1CFilesBarkodPRO/kontragentler.csv');if(u){var b=csvKont(u);if(b.length){kontragentler=b;sj(KTK,b)}}}
+  homeStat()}catch(e){}}
+function basla(){var ilk=!CFG.hazir&&!localStorage.getItem('anbar_cfg');
+  if(CFG.ekran===undefined)CFG.ekran=true;if(CFG.bat===undefined)CFG.bat=true;if(CFG.ehtiyat===undefined)CFG.ehtiyat=true;CFG.dubl=CFG.dubl||'sorus';CFG.sayQiy=CFG.sayQiy||'alis';CFG.dil=CFG.dil||'az';LNG=CFG.dil;
+  modUI();init();homeStat();mailBtnUI();autoFayl();menuGor();trApply();durumYoxla();
+  setInterval(durumYoxla,20000);setInterval(homeStat,15000);setInterval(ehtiyatDovr,600000);window.addEventListener('online',durumYoxla);wakeTetbiq();batIzle();
+  if(ilk){paramDoldur();screenAc('sWizard')}else pinGoster()}
+restoreBackup().then(basla,basla);
+</script>
+</body>
+</html>
