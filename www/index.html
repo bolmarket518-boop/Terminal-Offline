@@ -343,7 +343,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 
     <!-- Qəbul üçün əlavə sahələr -->
     <div id="qebulExtra" style="display:none;flex-direction:column;background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:12px;gap:8px">
-      <div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:2px">QEBULİYYAT</div>
+      <div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:2px">SƏNƏD MƏLUMATI</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
         <div>
           <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:3px">TARİX</div>
@@ -742,7 +742,7 @@ var CFG=Object.assign({apiUrl:'http://localhost/baza/hs/v2',apiUser:'',apiPass:'
 
 CFG.mode='offline';CFG.fayl=true;window.OFFLINE_APP=true;
 function apiBuild(){CFG.apiUrl=(CFG.sxema||'http')+'://'+CFG.srv+'/'+CFG.baza+'/hs/'+CFG.servis}
-(function(){if(!CFG.srv){var m=/^(?:(https?):\/\/)?([^\/]+)\/([^\/]+)\/hs\/([^\/?#]+)/.exec(CFG.apiUrl||'');if(m){CFG.sxema=m[1]||'http';CFG.srv=m[2];CFG.baza=m[3];CFG.servis=m[4]}else{CFG.sxema='http';CFG.srv='';CFG.baza='';CFG.servis=''}}
+(function(){if(!CFG.srv){var m=/^(?:(https?):\/\/)?([^\/]+)\/([^\/]+)\/hs\/([^\/?#]+)/.exec(CFG.apiUrl||'');if(m){CFG.sxema=m[1]||'http';CFG.srv=m[2];CFG.baza=m[3];CFG.servis=m[4]}else{CFG.sxema='http';CFG.srv='192.168.1.100';CFG.baza='baza';CFG.servis='terminal'}}
 CFG.termAd=CFG.termAd||'T1';CFG.fayl=!!CFG.fayl;apiBuild()})();
 function getUrl(ep){return CFG.apiUrl+ep}
 function ah(){var h={'Content-Type':'application/json'};if(CFG.apiUser)h['Authorization']='Basic '+btoa(CFG.apiUser+':'+CFG.apiPass);return h}
@@ -863,7 +863,7 @@ function opUI(op){
   document.getElementById('opTitle').textContent=c.title;
   document.getElementById('opSub').textContent=CFG.anbarAd+' - '+mallar.length+' mal yüklü';
   [['opTopbar','topbar ',c.tc],['opStats','stats-strip ',c.sc],['btnElave','btn-elave ',op],['foundBadge','found-badge ',op],['cntPill','cnt-pill ',op],['totalHdr','total-hdr ',op],['btnGonder','btn-gonder ',op],['resultFound','result-found ',op]].forEach(function(a){document.getElementById(a[0]).className=a[1]+a[2];});
-  var qe=document.getElementById('qebulExtra');if(qe)qe.style.display=(op==='qebul')?'flex':'none';
+  var qe=document.getElementById('qebulExtra');if(qe)qe.style.display=(op==='qebul'||op==='qaytarma'||op==='satis')?'flex':'none';
   var se=document.getElementById('sayimExtra');if(se)se.style.display=(op==='sayim')?'block':'none';
   if(op==='qebul')ktYukle();
   if(op==='sayim')qrupYukle2();
@@ -1436,7 +1436,7 @@ function render(){
 var sending=false;
 function secimOxu(){
   function gv(id){var el=document.getElementById(id);return el?el.value:'';}
-  var q=(curOp==='qebul');
+  var q=(curOp==='qebul'||curOp==='qaytarma'||curOp==='satis');
   return{ted:q?gv('qebulKontragent'):'',tar:q?(gv('qebulTarix')||bugunStr()):bugunStr(),qeyd:q?gv('qebulQeyd'):''};
 }
 function docCur(){
@@ -1466,7 +1466,7 @@ function gondereHazirla(){
   if(!siyahi.length)return;
   var t=tots(),h=secimOxu();
   var html='<div style="display:flex;flex-direction:column;gap:8px">'+sat('Əməliyyat',OPS[curOp].title)+(curEditNo?sat('Redaktə','#'+curEditNo):'')+sat('Anbar',CFG.anbarAd)+sat('Mövqe',t.movqe)+sat('Ümumi say',fq(t.tSay)+' ed')+sat('Alış cəmi',t.alis.toFixed(2)+' ₼');
-  if(curOp==='qebul'){html+=sat('Tarix',h.tar)+(h.ted?sat('Kontragent',h.ted):'')+(h.qeyd?sat('Qeyd',h.qeyd):'');
+  if(curOp==='qebul'||curOp==='qaytarma'||curOp==='satis'){html+=sat('Tarix',h.tar)+(h.ted?sat('Kontragent',h.ted):'')+(h.qeyd?sat('Qeyd',h.qeyd):'');
     if(!h.ted)html+='<div style="background:var(--a4);border-radius:8px;padding:8px;font-size:12px;color:var(--a1);font-weight:600">⚠ Kontragent seçilməyib</div>';}
   if(t.yeni)html+='<div style="background:var(--r4);border-radius:8px;padding:8px;font-size:12px;color:var(--r2);font-weight:600">⚠ '+t.yeni+' yeni mal 1C-də yaradılacaq</div>';
   document.getElementById('gonderOzet').innerHTML=html+'</div>';

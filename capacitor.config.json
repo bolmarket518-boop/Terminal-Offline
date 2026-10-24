@@ -1,5 +1,5 @@
 {
-  "appId": "az.barkodpro.Terminal.offline",
+  "appId": "az.barkodpro.terminal.offline",
   "appName": "Terminal Oflayn BarkodPRO",
   "webDir": "www",
   "server": {
