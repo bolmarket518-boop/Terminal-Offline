@@ -7,8 +7,8 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
       - uses: actions/setup-java@v5
@@ -27,7 +27,46 @@ jobs:
           sed -i 's#</manifest>#<uses-permission android:name="android.permission.CAMERA" /><uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /><uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" /><queries><intent><action android:name="android.intent.action.SENDTO"/><data android:scheme="mailto"/></intent></queries></manifest>#' $M
       - run: npx cap sync android
       - name: Səs düyməsi → kamera
-        run: python3 ses_duymesi_patch.py
+        run: |
+          python3 - <<'PY'
+          import glob, sys
+          fl = glob.glob('android/app/src/main/java/**/MainActivity.java', recursive=True)
+          if not fl:
+              sys.exit('MainActivity.java tapilmadi')
+          p = fl[0]
+          s = open(p, encoding='utf-8').read()
+          if 'volDuyme' in s:
+              print('Artiq elave olunub'); sys.exit(0)
+          i = s.index(';', s.index('package')) + 1
+          s = s[:i] + '\n\nimport android.view.KeyEvent;\nimport android.media.AudioManager;\n' + s[i:]
+          m = """
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+              int k = e.getKeyCode();
+              if ((k == KeyEvent.KEYCODE_VOLUME_DOWN || k == KeyEvent.KEYCODE_VOLUME_UP)
+                  && getBridge() != null && getBridge().getWebView() != null) {
+                if (e.getAction() == KeyEvent.ACTION_DOWN) {
+                  final boolean up = k == KeyEvent.KEYCODE_VOLUME_UP;
+                  String js = "(window.volDuyme?window.volDuyme('" + (up ? "up" : "down") + "'," + (e.getRepeatCount() > 0) + "):'0')";
+                  getBridge().getWebView().evaluateJavascript(js, v -> {
+                    if (v == null || !v.contains("1")) sesDeyis(up);
+                  });
+                }
+                return true;
+              }
+              return super.dispatchKeyEvent(e);
+            }
+            private void sesDeyis(boolean up) {
+              AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
+              if (am != null) am.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+                  up ? AudioManager.ADJUST_RAISE : AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+            }
+          """
+          j = s.rstrip().rfind('}')
+          s = s[:j] + m + '}\n'
+          open(p, 'w', encoding='utf-8').write(s)
+          print('Ses duymesi elave olundu:', p)
+          PY
       - name: APK yig
         working-directory: android
         run: ./gradlew assembleDebug
