@@ -543,6 +543,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-lbl" data-i="Cihaz">Cihaz</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Ekran sönməsin">Ekran sönməsin</div></div><button type="button" id="sw_ekran" class="n-sw" role="switch" aria-label="Ekran sönməsin" onclick="tgl('ekran')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Batareya xəbərdarlığı">Batareya xəbərdarlığı</div></div><button type="button" id="sw_bat" class="n-sw" role="switch" aria-label="Batareya xəbərdarlığı" onclick="tgl('bat')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a" data-i="Avtomatik ehtiyat nüsxə">Avtomatik ehtiyat nüsxə</div></div><button type="button" id="sw_ehtiyat" class="n-sw" role="switch" aria-label="Avtomatik ehtiyat nüsxə" onclick="tgl('ehtiyat')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Skandan sonra klaviatura açılsın</div><div style="font-size:12px;color:#64748b;margin-top:2px">Açıqdırsa, mal oxunanda say sahəsi seçilir, klaviatura açılır, Enter ilə əlavə olunur</div></div><button type="button" id="sw_klav" class="n-sw" role="switch" aria-label="Skandan sonra klaviatura" onclick="tgl('klav')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a" data-i="Yan skan düyməsi">Yan skan düyməsi</div><button class="n-btn" style="width:auto;padding:0 14px" onclick="yanOgren()" data-i="Düyməni öyrət">Düyməni öyrət</button></div><div class="n-f"><div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px" data-i="Kameranı səs düyməsi açsın">Kameranı səs düyməsi açsın</div><div class="n-seg"><button type="button" data-k="volKam" data-v="yox" onclick="secim('volKam','yox')" data-i="Söndür">Söndür</button><button type="button" data-k="volKam" data-v="down" onclick="secim('volKam','down')">🔉 Səs −</button><button type="button" data-k="volKam" data-v="up" onclick="secim('volKam','up')">🔊 Səs +</button></div></div></div>
     <div class="n-lbl" data-i="Eyni mal təkrar oxunanda">Eyni mal təkrar oxunanda</div><div class="n-seg"><button type="button" data-k="dubl" data-v="artir" onclick="secim('dubl','artir')" data-i="Sayı artır">Sayı artır</button><button type="button" data-k="dubl" data-v="sorus" onclick="secim('dubl','sorus')" data-i="Soruş">Soruş</button><button type="button" data-k="dubl" data-v="xeber" onclick="secim('dubl','xeber')" data-i="Xəbərdarlıq">Xəbərdarlıq</button></div>
     <div class="n-lbl" data-i="Siyahı ölçüsü">Siyahı ölçüsü</div><div class="n-seg"><button type="button" data-k="lst" data-v="k" onclick="secim('lst','k')">Kiçik</button><button type="button" data-k="lst" data-v="o" onclick="secim('lst','o')">Orta</button><button type="button" data-k="lst" data-v="b" onclick="secim('lst','b')">Böyük</button></div>
+    <div class="n-lbl" data-i="Təkrar skan olunan mal">Təkrar skan olunan mal</div><div class="n-seg"><button type="button" data-k="skanYer" data-v="yerinde" onclick="secim('skanYer','yerinde')" data-i="Yerində qalsın">Yerində qalsın</button><button type="button" data-k="skanYer" data-v="yuxari" onclick="secim('skanYer','yuxari')" data-i="Yuxarı qalxsın">Yuxarı qalxsın</button></div>
     <div class="n-lbl" data-i="Sayımda məbləğ qiyməti">Sayımda məbləğ qiyməti</div><div class="n-seg"><button type="button" data-k="sayQiy" data-v="alis" onclick="secim('sayQiy','alis')">Alış</button><button type="button" data-k="sayQiy" data-v="satis" onclick="secim('sayQiy','satis')">Satış</button></div>
     <div class="n-lbl" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</div><div class="n-card"><div class="n-f"><label for="cfgPin" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</label><input class="n-in" id="cfgPin" type="password" placeholder="••••" oninput="" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="pinQur()" data-i="Saxla">Saxla</button></div></div>
     <div class="n-lbl">FTP server (1C ilə avtomatik mübadilə)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Proqram açılanda FTP-ni avtomatik işə sal</div><div style="font-size:12px;color:#64748b;margin-top:2px">Kök qovluq: TerminalFilesBarkodPRO</div></div><button type="button" id="sw_ftpAvto" class="n-sw" role="switch" aria-label="FTP avtomatik" onclick="tgl('ftpAvto')"></button></div><div class="n-f"><label for="cfgFtpPort">Port</label><input class="n-in" id="cfgFtpPort" type="number" inputmode="numeric" placeholder="2221" oninput="cfgSaxla()"></div><div class="n-f"><label for="cfgFtpUser">İstifadəçi adı</label><input class="n-in" id="cfgFtpUser" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgFtpPass">Parol</label><input class="n-in" id="cfgFtpPass" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><div id="ftpDurum" style="font-size:13px;font-weight:700;word-break:break-all"></div><div style="display:flex;gap:8px;margin-top:8px"><button class="n-btn" onclick="ftpBasla(true)">▶ Başlat / yenilə</button><button class="n-btn" onclick="ftpDayan()">■ Dayandır</button></div></div></div>
@@ -2177,6 +2178,50 @@ function basla(){var ilk=!CFG.hazir&&!localStorage.getItem('anbar_cfg');
   setInterval(durumYoxla,20000);setInterval(homeStat,15000);setInterval(ehtiyatDovr,600000);window.addEventListener('online',durumYoxla);wakeTetbiq();batIzle();
   if(ilk){paramDoldur();screenAc('sWizard')}else pinGoster()}
 restoreBackup().then(basla,basla);
+
+// ═══ Təkrar skan: mal yerində qalır, siyahı ona sürüşüb fokuslanır (ayarla «Yuxarı qalxsın» seçilə bilər) ═══
+if(!CFG.skanYer)CFG.skanYer='yerinde';
+function malaFokus(it){try{var i=siyahi.indexOf(it);if(i<0)return;var c=document.getElementById('listCont');var el=c&&c.children[i];if(!el)return;
+  el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.remove('nflash');void el.offsetWidth;el.classList.add('nflash')}catch(e){}}
+var _uq9=ustuQaldir;ustuQaldir=function(it){if(CFG.skanYer==='yuxari'||!it)return _uq9(it);
+  var i=siyahi.indexOf(it);if(i<=0)return _uq9(it);saxla();render();setTimeout(function(){malaFokus(it)},40)};
+D['Təkrar skan olunan mal']=['Повторно отсканированный товар','Tekrar okunan ürün','Rescanned item'];D['Yerində qalsın']=['Остаётся на месте','Yerinde kalsın','Stay in place'];D['Yuxarı qalxsın']=['Поднять наверх','Yukarı çıksın','Move to top'];
+
+// ═══ Göndərilmiş, amma 1C-yə hələ çəkilməmiş sənədə düzəliş ═══
+// Sənədin faylı qovluqda hələ durursa düzəliş olar. Düzəlişli sənəd yazılanda köhnə fayl «Silinenler»-ə köçürülür.
+var curEvvel=null;
+async function faylVarmi(ad){var F=capFS();if(!F||!ad)return false;for(var i=0;i<DIRS.length;i++){try{await F.readFile({path:QOV+ad,directory:DIRS[i],encoding:'utf8'});return true}catch(e){}}return false}
+async function senedDuzelis(hid){
+  var h=lj(QHK,[]).filter(function(x){return x.id===hid})[0];if(!h){toast('Sənəd tapılmadı','err');return}
+  if(!h.fayl||!(await faylVarmi(h.fayl))){toast('Bu sənəd artıq 1C-yə çəkilib — düzəliş 1C-də edilməlidir','warn');return}
+  if(!h.siyahi||!h.siyahi.length){toast('Sənədin mal siyahısı yoxdur','warn');return}
+  modalBagla('mQaime');
+  var op=h.op||h.emeliyyat;curOp=op;curGirisOp=op;siyahi=JSON.parse(JSON.stringify(h.siyahi));curDraftId=null;curEditNo=null;editB=null;ruMal=null;secQrup=null;
+  curEvvel={fayl:h.fayl,id:h.id};
+  setV('qebulTarix',h.tarix||bugunStr());setV('qebulKontragent',h.ted||h.kontragent||'');setV('qebulQeyd',h.qeyd||'');
+  opUI(op);saxla();toast('Düzəliş rejimi — dəyişib yenidən göndərin','info')}
+function gozleyenDuzelis(id){var q=lj('anbar_outbox',[]),d=q.filter(function(x){return x.id===id})[0];if(!d){toast('Sənəd tapılmadı','err');return}
+  outSil(id);d.draft=true;d.offline=false;delete d.err;var ds=lj('anbar_drafts',[]).filter(function(x){return x.id!==id});ds.unshift(d);sj('anbar_drafts',ds);qaimeListDetalDavamEt(id)}
+var _dc9=docCur;docCur=function(){var d=_dc9();if(curEvvel){d.evvelFayl=curEvvel.fayl;d.evvelId=curEvvel.id;d.evvelKoc=!!curEvvel.koc}return d};
+var _dv9=qaimeListDetalDavamEt;qaimeListDetalDavamEt=function(id){var d=lj('anbar_drafts',[]).filter(function(x){return x.id===id})[0];
+  _dv9(id);curEvvel=(d&&d.evvelFayl)?{fayl:d.evvelFayl,id:d.evvelId,koc:!!d.evvelKoc}:null};
+var _os9=opSec;opSec=function(op){curEvvel=null;_os9(op)};
+var _cx9=cixis;cixis=function(){curEvvel=null;_cx9()};
+var _qy9=qaimeYaddaSaxla;qaimeYaddaSaxla=function(){_qy9();curEvvel=null};
+var _gh9=gondereHazirla;gondereHazirla=function(){_gh9();if(curEvvel){var o=document.getElementById('gonderOzet');if(o)o.insertAdjacentHTML('beforeend','<div style="margin-top:8px;background:#eff6ff;border-radius:8px;padding:8px;font-size:12px;color:#1d4ed8;font-weight:600">✏️ Düzəliş: köhnə sənəd bu sənədlə əvəz olunacaq</div>')}};
+var _gn9=gonder;gonder=async function(){if(sending)return;
+  if(curEvvel&&!curEvvel.koc){var ok=await faylSilinene(curEvvel.fayl);
+    if(!ok&&!confirm('Köhnə sənəd artıq 1C-yə çəkilib.\nDüzəlişli sənəd YENİ ayrıca sənəd kimi yazılsın?')){modalBagla('mGonder');return}
+    curEvvel.koc=true;saxla()}
+  return _gn9()};
+var _bt8=bitdi;bitdi=function(d,no){_bt8(d,no);if(d&&d.evvelId){sj(QHK,lj(QHK,[]).filter(function(x){return x.id!==d.evvelId}))}};
+var _td9=tarixDetalAc;tarixDetalAc=function(idx){_td9(idx);var cont=document.getElementById('tarixCont'),h=cont&&cont._tdata?cont._tdata[idx]:null;if(!h)return;
+  var g=document.querySelector('#qaimeModalBody > div:last-child');if(!g)return;
+  if(h.offline&&!h.draft){g.insertAdjacentHTML('beforeend','<div style="grid-column:1/-1">'+bH('btnTxDuz','✏️ Düzəliş et','width:100%;background:var(--b3);color:#fff')+'</div>');document.getElementById('btnTxDuz').onclick=function(){modalBagla('mQaime');gozleyenDuzelis(h.id)}}
+  else if(!h.draft&&h.fayl){g.insertAdjacentHTML('beforeend','<div style="grid-column:1/-1">'+bH('btnTxDuz','✏️ Düzəliş et (1C hələ çəkməyibsə)','width:100%;background:var(--b3);color:#fff')+'</div>');document.getElementById('btnTxDuz').onclick=function(){senedDuzelis(h.id)}}};
+var _ql9=qaimeListDetalAc;qaimeListDetalAc=function(idx){_ql9(idx);var cont=document.getElementById('qaimeListCont'),h=cont&&cont._qaimeData?cont._qaimeData[idx]:null;if(!h||!h.offline)return;
+  var g=document.querySelector('#qaimeModalBody > div:last-child');if(!g)return;
+  g.insertAdjacentHTML('beforeend','<div style="grid-column:1/-1">'+bH('btnQlDuz','✏️ Düzəliş et','width:100%;background:var(--b3);color:#fff')+'</div>');document.getElementById('btnQlDuz').onclick=function(){modalBagla('mQaime');gozleyenDuzelis(h.id)}};
 </script>
 </body>
 </html>
