@@ -420,6 +420,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
           </div>
           <button class="btn-elave" id="btnElave" onclick="siyahiyaElave()">＋ Əlavə</button>
         </div>
+        <button id="btnBarkodElave" onclick="barkodElaveAc()" style="width:100%;margin-top:8px;height:34px;background:#fff;border:1.5px dashed var(--b3);border-radius:8px;color:var(--b2);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">＋ Bu mala yeni barkod bağla</button>
       </div>
 
       <div id="resultUpdate" class="result-update" style="margin-top:8px">
@@ -631,6 +632,24 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="modal-body">
       <input class="modal-search" id="malSecAxt" type="text" placeholder="Ad ilə axtar..." oninput="malSecRender()" autocomplete="off" autocorrect="off" spellcheck="false">
       <div id="malSecList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Barkod bağlama modali -->
+<div class="modal-bg" id="mBarkod" style="display:none" onclick="if(event.target===this)modalBagla('mBarkod')">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <span class="modal-title">＋ Barkod bağla</span>
+      <button class="modal-close" onclick="modalBagla('mBarkod')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:12px;color:#6b7280;margin-bottom:6px">Mal:</div>
+      <div id="bkMalAd" style="font-size:14px;font-weight:700;color:#111;margin-bottom:12px">—</div>
+      <div style="font-size:12px;color:#6b7280;margin-bottom:6px">Yeni barkodu skan edin və ya yazın:</div>
+      <input class="modal-search" id="bkInput" type="text" placeholder="Yeni barkod..." autocomplete="off" autocorrect="off" spellcheck="false" inputmode="numeric">
+      <button onclick="barkodElaveTesdiq()" style="width:100%;margin-top:12px;height:42px;background:var(--b2);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Bağla</button>
+      <div id="bkList" style="margin-top:14px"></div>
     </div>
   </div>
 </div>
@@ -1212,6 +1231,69 @@ function malSecSec(m){
 }
 
 // ══════════════════════════════════════
+//  BARKOD BAĞLAMA (mövcud mala yeni barkod)
+// ══════════════════════════════════════
+var yeniBarkodlar=lj('anbar_yeni_barkodlar',[]);
+
+function barkodElaveAc(){
+  if(!curMal){toast('Əvvəlcə mal seçin','warn');return;}
+  document.getElementById('bkMalAd').textContent=curMal.ad;
+  var inp=document.getElementById('bkInput');if(inp)inp.value='';
+  barkodListRender();
+  modalAc('mBarkod');
+  setTimeout(function(){if(inp&&CFG.klav)inp.focus();},80);
+}
+
+function barkodElaveTesdiq(){
+  if(!curMal)return;
+  var inp=document.getElementById('bkInput');
+  var b=(inp?inp.value:'').replace(/[\r\n\t]/g,'').trim();
+  if(!b){toast('Barkod boşdur','warn');return;}
+  // Bu barkod artıq bazadadırmı?
+  var varMi=mallar.find(function(x){return x.barkod===b;});
+  if(varMi){toast('Bu barkod artıq var: '+varMi.ad,'warn');return;}
+  // Artıq əlavə olunubmu?
+  if(yeniBarkodlar.find(function(x){return x.barkod===b;})){toast('Bu barkod artıq əlavə edilib','warn');return;}
+  yeniBarkodlar.push({barkod:b,kod:curMal.code||'',malBarkod:curMal.barkod||'',malAd:curMal.ad||''});
+  sj('anbar_yeni_barkodlar',yeniBarkodlar);
+  // Dərhal yerli mal bazasına da əlavə et ki, skan edəndə tapılsın
+  mallar.push({barkod:b,ad:curMal.ad,satis:curMal.satis,alis:curMal.alis,code:curMal.code||'',unit:curMal.unit||'',qrup:curMal.qrup||'',qaliq:0});
+  sj(MK,mallar);
+  if(inp)inp.value='';
+  snd('tap');
+  toast('Barkod bağlandı: '+b,'ok');
+  barkodListRender();
+  setTimeout(function(){if(inp&&CFG.klav)inp.focus();},50);
+}
+
+function barkodListRender(){
+  var el=document.getElementById('bkList');if(!el)return;
+  if(!curMal){el.innerHTML='';return;}
+  var list=yeniBarkodlar.filter(function(x){
+    return x.kod===(curMal.code||'')&&x.malAd===curMal.ad;
+  });
+  if(!list.length){el.innerHTML='<div style="font-size:12px;color:#9ca3af;text-align:center;padding:8px">Hələ barkod bağlanmayıb</div>';return;}
+  var h='<div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:6px">BU MALA BAĞLANAN ('+list.length+')</div>';
+  list.forEach(function(x){
+    h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f3f4f6">'+
+       '<span style="font-family:monospace;font-size:13px;color:#374151">'+esc(x.barkod)+'</span>'+
+       '<button onclick="barkodSil(\''+x.barkod.replace(/'/g,"")+'\')" style="background:none;border:none;color:#dc2626;font-size:16px;cursor:pointer;padding:0 4px">✕</button>'+
+       '</div>';
+  });
+  el.innerHTML=h;
+}
+
+function barkodSil(b){
+  yeniBarkodlar=yeniBarkodlar.filter(function(x){return x.barkod!==b;});
+  sj('anbar_yeni_barkodlar',yeniBarkodlar);
+  // yerli mal bazasından da (yalnız bu yeni əlavəni) sil
+  mallar=mallar.filter(function(m){return m.barkod!==b;});
+  sj(MK,mallar);
+  barkodListRender();
+  toast('Silindi','info');
+}
+
+// ══════════════════════════════════════
 //  SAY FUNKSIYALARI
 // ══════════════════════════════════════
 function qtyD(d){
@@ -1460,6 +1542,11 @@ function mkPayload(d){
     clientId:String(d.id),tarixYaz:new Date().toISOString()};
   if(d.editNo)p.no=d.editNo;
   if(d.mebleg!=null){p.mebleg=d.mebleg;p.odenis=d.odenis||'nagd'}
+  // Mala bağlanacaq yeni barkodlar (varsa) — 1C ЕдиницыИзмерения-yə yazır
+  var yb=lj('anbar_yeni_barkodlar',[]);
+  if(yb.length){
+    p.yeniBarkodlar=yb.map(function(x){return{barkod:cl(x.barkod),kod:cl(x.kod),malBarkod:cl(x.malBarkod)};});
+  }
   return p;
 }
 function draftSil(id){if(id)sj('anbar_drafts',lj('anbar_drafts',[]).filter(function(d){return d.id!==id;}));}
@@ -1470,6 +1557,8 @@ function bitdi(d,no){
   var h=lj(QHK,[]);
   h.unshift({id:d.id,op:d.op||d.emeliyyat,anbar:d.anbar,tarix:d.tarix,ted:d.kontragent||d.ted||'',qeyd:d.qeyd||'',movqe:(d.siyahi||[]).length,cemi:d.cemi||'',no:no||d.editNo||'',siyahi:d.siyahi||[]});
   sj(QHK,h.slice(0,200));draftSil(d.id);outSil(d.id);
+  // Bu göndərişlə barkodlar da 1C-yə getdi — siyahını təmizlə
+  if(lj('anbar_yeni_barkodlar',[]).length){yeniBarkodlar=[];sj('anbar_yeni_barkodlar',[]);}
   toast('Uğurla göndərildi'+(no?' : #'+no:''),'ok');
 }
 function cixis(){var op=curOp||curGirisOp;siyahi=[];curDraftId=null;curEditNo=null;curOp=null;curGirisOp=op;screenAc('sQaimeList');qaimeListYukle();}
