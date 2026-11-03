@@ -26,6 +26,8 @@ jobs:
           sed -i 's/<application/<application android:requestLegacyExternalStorage="true"/' $M
           sed -i 's#</manifest>#<uses-permission android:name="android.permission.CAMERA" /><uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /><uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" /><queries><intent><action android:name="android.intent.action.SENDTO"/><data android:scheme="mailto"/></intent></queries></manifest>#' $M
       - run: npx cap sync android
+      - name: Səs düyməsi → kamera
+        run: python3 ses_duymesi_patch.py
       - name: APK yig
         working-directory: android
         run: ./gradlew assembleDebug
