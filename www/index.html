@@ -410,6 +410,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
           <div class="price-chip alis"><div class="pcl">ALIŞ</div><div class="pcv" id="rAlis">—</div></div>
           <div class="price-chip satis"><div class="pcl">SATIŞ</div><div class="pcv" id="rSatis">—</div></div>
         </div>
+        <div id="rQaliq" style="display:none;margin-top:8px;padding:8px 12px;border-radius:10px;background:#fef2f2;border:1px solid #fca5a5;color:#b91c1c;font-size:15px;font-weight:800;text-align:center"></div>
         <div class="qty-row">
           <span class="qty-lbl">Say</span>
           <div class="qty-ctrl">
@@ -741,6 +742,10 @@ function bH(id,txt,css){return '<button id="'+id+'" style="height:44px;border:no
 function mallarHtml(a){if(!a||!a.length)return '';var h='<div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:6px">MALLAR ('+a.length+')</div>';a.forEach(function(m){h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6"><div><div style="font-size:13px;font-weight:600">'+esc(m.ad)+'</div><div style="font-size:11px;color:#9ca3af">'+esc(m.barkod)+'</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:700">'+fq(m.say)+' ed</div><div style="font-size:11px;color:var(--a2)">A:'+fp(m.alis)+'</div></div></div>'});return h}
 var _ac;
 function beep(ok){try{if(navigator.vibrate)navigator.vibrate(ok?40:[80,60,80]);var A=window.AudioContext||window.webkitAudioContext;if(!A)return;_ac=_ac||new A();var o=_ac.createOscillator(),g=_ac.createGain();o.frequency.value=ok?1400:300;g.gain.value=.08;o.connect(g);g.connect(_ac.destination);o.start();o.stop(_ac.currentTime+(ok?.08:.25))}catch(e){}}
+// Fərqli səslər: tap = mal siyahıya vuruldu, tekrar = eyni mal təkrar, yeni = bazada olmayan yeni mal
+function snd(tip){try{var P={tap:{v:50,n:[[1500,.08]]},tekrar:{v:[40,50,40],n:[[1000,.06],[1000,.06]]},yeni:{v:[60,40,60,40,60],n:[[700,.09],[1000,.09],[1400,.12]]}}[tip]||{v:40,n:[[1400,.08]]};
+  if(navigator.vibrate)navigator.vibrate(P.v);var A=window.AudioContext||window.webkitAudioContext;if(!A)return;_ac=_ac||new A();if(_ac.state==='suspended')_ac.resume();
+  var t0=_ac.currentTime;P.n.forEach(function(x){var o=_ac.createOscillator(),g=_ac.createGain();o.type=tip==='tekrar'?'square':'sine';o.frequency.value=x[0];g.gain.value=tip==='tekrar'?.05:.1;o.connect(g);g.connect(_ac.destination);o.start(t0);o.stop(t0+x[1]);t0+=x[1]+.04})}catch(e){}}
 
 var CFG=Object.assign({apiUrl:'http://localhost/baza/hs/v2',apiUser:'',apiPass:'',anbarAd:'Anbar-1'},lj('anbar_cfg',{}));
 
@@ -1080,8 +1085,8 @@ function scanEt(v){
   var inS=siyahi.find(function(s){return s.barkod===v;});
   if(inS){dubl(inS);return;}
   var m=mallar.find(function(x){return x.barkod===v;})||mallar.find(function(x){return x.code&&x.code===v;});
-  if(m){if(curOp==='sayim'){sayimOxu(m);return}beep(true);curMal=m;showFound(m);}
-  else{beep(false);curMal=null;if(OPS[curOp].yeni)showNew(v);else showNFW(v);}
+  if(m){if(curOp==='sayim'){sayimOxu(m);return}snd('tap');curMal=m;showFound(m);}
+  else{curMal=null;if(OPS[curOp].yeni){snd('yeni');showNew(v);}else{beep(false);showNFW(v);}}
 }
 
 function elAxtar(){
@@ -1096,6 +1101,7 @@ function showFound(m){
   document.getElementById('rBarkod').textContent=m.barkod+(m.unit?' - '+m.unit:'');
   document.getElementById('rAlis').textContent=fp(m.alis);
   document.getElementById('rSatis').textContent=fp(m.satis);
+  var rq=document.getElementById('rQaliq');if(rq){if(curOp==='qebul'){rq.textContent='Anbar qalığı: '+fq(m.qaliq||0)+(m.unit?' '+m.unit:'');rq.style.display='block'}else rq.style.display='none'}
   document.getElementById('resultFound').style.display='block';
 }
 
@@ -1386,7 +1392,7 @@ function render(){
         '<div class="mal-info">'+
           '<div class="mal-ad">'+esc(item.ad)+'</div>'+
           '<div class="mal-meta">'+
-            (curOp==='sayim'?sayimChips(item):('<span class="chip chip-say">'+fq(item.say)+' ed</span>'+'<span class="chip chip-alis">A:'+fp(item.alis)+'</span>'+'<span class="chip chip-satis">S:'+fp(item.satis)+'</span>'))+
+            (curOp==='sayim'?sayimChips(item):('<span class="chip chip-say">'+fq(item.say)+' ed</span>'+'<span class="chip chip-alis">A:'+fp(item.alis)+'</span>'+'<span class="chip chip-satis">S:'+fp(item.satis)+'</span>'+((curOp==='qebul'&&!isY)?qebulQaliqChip(item):'')))+
             (isY?'<span class="chip chip-yeni">Yeni</span>':'')+
           '</div>'+
         '</div>'+
@@ -1897,9 +1903,9 @@ function tgl(k){CFG[k]=!CFG[k];sj('anbar_cfg',CFG);paramDoldur();if(k==='ekran')
 function faylDeyis(){tgl('fayl')}
 function secim(k,v){CFG[k]=v;sj('anbar_cfg',CFG);if(k==='dil'){LNG=v;trApply();durumUI();modUI()}paramDoldur()}
 function dubl(x){var r=CFG.dubl||'sorus';if(curOp==='sayim')r='artir';
-  if(r==='artir'){x.say=(x.say||0)+1;beep(true);toast(x.ad+': '+x.say,'ok');ustuQaldir(x);return}
-  if(r==='xeber'){beep(false);if(navigator.vibrate)navigator.vibrate(200);toast(t('Bu mal artıq siyahıdadır'),'warn');return}
-  beep(true);showUpdate(x)}
+  if(r==='artir'){x.say=(x.say||0)+1;snd('tekrar');toast(x.ad+': '+x.say,'ok');ustuQaldir(x);return}
+  if(r==='xeber'){snd('tekrar');toast(t('Bu mal artıq siyahıdadır'),'warn');return}
+  snd('tekrar');showUpdate(x)}
 // giriş açarı: HMAC-SHA256(açar, vaxt+yol)
 async function imza(path){var v=String(Math.floor(Date.now()/1000));return{'X-Vaxt':v,'X-Imza':hex(hmac256(utf8(CFG.acar),utf8(v+path)))}}
 async function ahP(ep,b){var h=ah();if(CFG.acar&&b&&b.mebleg!=null)Object.assign(h,await imza(ep));return h}
@@ -1956,11 +1962,13 @@ async function pinYoxla(){var i=document.getElementById('pinInp');if(i.value.len
 async function pinQur(){var v=document.getElementById('cfgPin').value.trim();if(!v){delete CFG.pinHash;sj('anbar_cfg',CFG);toast(t('PIN söndürüldü'),'info');return}if(!/^\d{4}$/.test(v)){toast(t('PIN 4 rəqəm olmalıdır'),'warn');return}CFG.pinHash=await sha(v);sj('anbar_cfg',CFG);document.getElementById('cfgPin').value='';toast(t('PIN təyin olundu'),'ok')}
 var _gz=0;document.addEventListener('visibilitychange',function(){if(document.hidden)_gz=Date.now();else{wakeTetbiq();if(CFG.pinHash&&Date.now()-_gz>300000)pinGoster()}});
 // ═══ Mal sayımı: hər oxumada +1, sistem/sayılan miqdar, məbləğ fərqi ═══
+function qebulQaliqChip(it){var mm=mallar.find(function(x){return x.barkod===it.barkod&&(x.code||'')===(it.code||'')})||mallar.find(function(x){return x.barkod===it.barkod});
+  return '<span class="chip" style="background:#fef2f2;border:1px solid #fca5a5;color:#b91c1c;font-weight:700">Qalıq: '+fq(mm?(mm.qaliq||0):0)+'</span>'}
 function sayimQiy(){return CFG.sayQiy==='satis'?'satis':'alis'}
 function sayimOxu(m){var ex=siyahi.find(function(x){return x.barkod===m.barkod&&(x.code||'')===(m.code||'')});
   if(ex){ex.say=(ex.say||0)+1;toast(ex.ad+': '+fq(ex.say),'ok')}
   else{siyahi.unshift({barkod:m.barkod,ad:m.ad,say:1,alis:m.alis,satis:m.satis,yeni:false,code:m.code||'',sis:m.qaliq||0});toast(m.ad+': 1','ok')}
-  beep(true);ustuQaldir(ex||siyahi[0])}
+  snd(ex?'tekrar':'tap');ustuQaldir(ex||siyahi[0])}
 function sayimChips(it){if(it.sis==null){var mm=mallar.find(function(x){return x.barkod===it.barkod&&(x.code||'')===(it.code||'')})||mallar.find(function(x){return x.barkod===it.barkod});it.sis=mm?(mm.qaliq||0):0}
   var f=Math.round(((it.say||0)-(it.sis||0))*1000)/1000,c=f===0?'#15803d':(f<0?'#b91c1c':'#b45309');
   return '<span class="chip chip-say">Sayılan: '+fq(it.say)+'</span><span class="chip" style="background:#e2e8f0;color:#334155">Sistem: '+fq(it.sis||0)+'</span><span class="chip" style="background:#fff;border:1px solid '+c+';color:'+c+'">Fərq: '+(f>0?'+':'')+fq(f)+'</span>'}
