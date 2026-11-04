@@ -647,7 +647,10 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
       <div style="font-size:12px;color:#6b7280;margin-bottom:6px">Mal:</div>
       <div id="bkMalAd" style="font-size:14px;font-weight:700;color:#111;margin-bottom:12px">—</div>
       <div style="font-size:12px;color:#6b7280;margin-bottom:6px">Yeni barkodu skan edin və ya yazın:</div>
-      <input class="modal-search" id="bkInput" type="text" placeholder="Yeni barkod..." autocomplete="off" autocorrect="off" spellcheck="false" inputmode="numeric">
+      <div style="display:flex;gap:8px">
+        <input class="modal-search" id="bkInput" type="text" placeholder="Yeni barkod..." autocomplete="off" autocorrect="off" spellcheck="false" inputmode="numeric" style="flex:1;margin:0">
+        <button onclick="kamAc('bk')" title="Kamera ilə oxu" style="flex-shrink:0;width:48px;height:auto;background:var(--b2);border:none;border-radius:9px;color:#fff;font-size:22px;cursor:pointer">📷</button>
+      </div>
       <button onclick="barkodElaveTesdiq()" style="width:100%;margin-top:12px;height:42px;background:var(--b2);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Bağla</button>
       <div id="bkList" style="margin-top:14px"></div>
     </div>
@@ -1242,6 +1245,16 @@ function barkodElaveAc(){
   barkodListRender();
   modalAc('mBarkod');
   setTimeout(function(){if(inp&&CFG.klav)inp.focus();},80);
+}
+
+function bkKameraOxundu(v){
+  // Kamera modalı bağlayır — barkod bağlama modalını yenidən aç və xananı doldur
+  modalAc('mBarkod');
+  var inp=document.getElementById('bkInput');
+  if(inp)inp.value=v;
+  snd('tap');
+  // Avtomatik təsdiq (istəsən bu sətri silib əl ilə "Bağla" basdıra bilərsən)
+  barkodElaveTesdiq();
 }
 
 function barkodElaveTesdiq(){
@@ -1849,7 +1862,7 @@ function modDeyis(){CFG.mode=CFG.mode==='offline'?'online':'offline';sj('anbar_c
 // ── Kamera skaneri ──
 var _kam=null,_fen=false;
 async function kamAc(mod){
-  if(!curOp&&mod!=='qr'){toast('Əvvəl əməliyyat seçin','warn');return;}
+  if(!curOp&&mod!=='qr'&&mod!=='bk'){toast('Əvvəl əməliyyat seçin','warn');return;}
   if(!window.Html5Qrcode){toast('Kamera modulu yüklənməyib','err');return;}
   document.getElementById('kamBox').style.display='flex';_fen=false;
   try{
@@ -1857,7 +1870,7 @@ async function kamAc(mod){
     _kam=new Html5Qrcode('kamReader',{formatsToSupport:[H.EAN_13,H.EAN_8,H.CODE_128,H.CODE_39,H.UPC_A,H.UPC_E,H.QR_CODE],verbose:false,useBarCodeDetectorIfSupported:true});
     var _oxundu=false;
     await _kam.start({facingMode:'environment'},{fps:10,qrbox:function(w,h){var s=Math.min(w,h);return{width:Math.floor(s*.85),height:Math.floor(s*.45)}}},
-      function(txt){if(_oxundu)return;_oxundu=true;var v=String(txt).trim();kamBagla().then(function(){if(mod==='qr')qrKurulum(v);else scanEt(v)})},function(){});
+      function(txt){if(_oxundu)return;_oxundu=true;var v=String(txt).trim();kamBagla().then(function(){if(mod==='qr')qrKurulum(v);else if(mod==='bk')bkKameraOxundu(v);else scanEt(v)})},function(){});
   }catch(e){toast('Kamera açılmadı: '+(e&&e.message?e.message:e),'err');kamBagla();}
 }
 var _kamT=0;
