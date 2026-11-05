@@ -294,7 +294,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="sync-info" id="syncSt">—</div>
     <div class="n-lbl" data-i="Digər">Digər</div>
     <button class="btn-home" onclick="screenAc('sParam')" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
-    <div class="n-foot">Anbar Terminal v3.2.0<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
+    <div class="n-foot">Anbar Terminal v3.9.2<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
   </div>
 </div>
 
@@ -398,6 +398,8 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
         <button class="btn-el-axtar" onclick="elAxtar()">Axtar</button>
         <button class="btn-el-axtar kam-btn" onclick="kamAc()" style="background:#0f766e">📷</button>
       </div>
+      <!-- Barkodsuz yeni mal (çəki malı və s.) -->
+      <button id="btnBarkodsuzMal" class="btn-mal-sec" onclick="barkodsuzMalAc()" style="background:#fffbeb;border:1.5px dashed #f59e0b;color:#b45309">⚖️ Barkodsuz mal yarat (çəki malı)</button>
       <!-- Siyahıdan seçim -->
       <button class="btn-mal-sec" onclick="modalAc('mMalSec')">
         📋 Siyahıdan mal seç (barkodsuz mallar üçün)
@@ -461,13 +463,16 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
         <div class="new-body">
           <div class="fgrid">
             <div class="field ffull"><label class="flbl">MAL ADI</label><input class="finput" id="nAd" type="text" placeholder="Malın adını yazın..." autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false"></div>
+
             <div class="field ffull"><label class="flbl">BARKOD</label>
               <div style="display:flex;gap:8px">
                 <input class="finput" id="nBarkod" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="flex:1">
                 <button type="button" class="kam-btn" onclick="kamAc('yenibarkod')" title="Kamera ilə oxu" style="flex-shrink:0;width:46px;background:var(--b2);border:none;border-radius:9px;color:#fff;font-size:20px;cursor:pointer">📷</button>
               </div>
             </div>
-            <div class="field"><label class="flbl">ALIŞ ₼</label><input class="finput" id="nAlis" type="number" step="0.01" placeholder="0.00" inputmode="decimal"></div>
+            <div class="field"><label class="flbl">ALIŞ ₼</label><input class="finput" id="nAlis" type="number" step="0.01" placeholder="0.00" inputmode="decimal" onblur="alisBitdi()"></div>
+            <div class="field"><label class="flbl">ENDİRİM %</label><input class="finput" id="nEndirim" type="number" step="0.1" placeholder="boş" inputmode="decimal" onblur="yeniQiymetHesabla()"></div>
+            <div class="field"><label class="flbl">QAZANC %</label><input class="finput" id="nQazanc" type="number" step="0.1" placeholder="25" inputmode="decimal" onblur="yeniQiymetHesabla()"></div>
             <div class="field"><label class="flbl">SATIŞ ₼</label><input class="finput" id="nSatis" type="number" step="0.01" placeholder="0.00" inputmode="decimal"></div>
             <div class="field"><label class="flbl">SAY</label><input class="finput" id="nSay" type="text" value="1" inputmode="decimal"></div>
           </div>
@@ -582,6 +587,8 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-lbl" data-i="Siyahı ölçüsü">Siyahı ölçüsü</div><div class="n-seg"><button type="button" data-k="lst" data-v="k" onclick="secim('lst','k')">Kiçik</button><button type="button" data-k="lst" data-v="o" onclick="secim('lst','o')">Orta</button><button type="button" data-k="lst" data-v="b" onclick="secim('lst','b')">Böyük</button></div>
     <div class="n-lbl" data-i="Təkrar skan olunan mal">Təkrar skan olunan mal</div><div class="n-seg"><button type="button" data-k="skanYer" data-v="yerinde" onclick="secim('skanYer','yerinde')" data-i="Yerində qalsın">Yerində qalsın</button><button type="button" data-k="skanYer" data-v="yuxari" onclick="secim('skanYer','yuxari')" data-i="Yuxarı qalxsın">Yuxarı qalxsın</button></div>
     <div class="n-lbl" data-i="Sayımda məbləğ qiyməti">Sayımda məbləğ qiyməti</div><div class="n-seg"><button type="button" data-k="sayQiy" data-v="alis" onclick="secim('sayQiy','alis')">Alış</button><button type="button" data-k="sayQiy" data-v="satis" onclick="secim('sayQiy','satis')">Satış</button></div>
+    <div class="n-lbl">Yeni mal — avtomatik qiymət (alışda)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Avtomatik qiymət hesablansın</div><div style="font-size:12px;color:#64748b;margin-top:2px">Alış girəndə: endirimli alış və qazanclı satış özü hesablanır.</div></div><button type="button" id="sw_avtoQiymet" class="n-sw" role="switch" aria-label="Avtomatik qiymət" onclick="tgl('avtoQiymet')"></button></div><div class="n-f"><label for="cfgEndirim">Alışa endirim faizi (%)</label><input class="n-in" id="cfgEndirim" type="number" step="0.1" placeholder="10" inputmode="decimal" onchange="faizSaxla()"></div><div class="n-f"><label for="cfgQazanc">Satışa qazanc faizi (%)</label><input class="n-in" id="cfgQazanc" type="number" step="0.1" placeholder="25" inputmode="decimal" onchange="faizSaxla()"></div></div>
+
     <div class="n-grp"><span class="n-grp-ic">🔒</span><span>Təhlükəsizlik</span></div><div class="n-lbl" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</div><div class="n-card"><div class="n-f"><label for="cfgPin" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</label><input class="n-in" id="cfgPin" type="password" placeholder="••••" oninput="" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="pinQur()" data-i="Saxla">Saxla</button></div></div>
     <div class="n-grp"><span class="n-grp-ic">👁</span><span>Baxış rejimi</span></div><div class="n-lbl">Mal məlumatı (baxış rejimi)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Alış qiyməti görünsün</div></div><button type="button" id="sw_miAlis" class="n-sw" role="switch" aria-label="Alış qiyməti" onclick="tgl('miAlis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Satış qiyməti görünsün</div></div><button type="button" id="sw_miSatis" class="n-sw" role="switch" aria-label="Satış qiyməti" onclick="tgl('miSatis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Anbar qalığı görünsün</div></div><button type="button" id="sw_miQaliq" class="n-sw" role="switch" aria-label="Anbar qalığı" onclick="tgl('miQaliq')"></button></div></div>
 
@@ -605,7 +612,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <p style="margin:0 0 10px">4. Kamera yalnız barkod oxumaq üçün istifadə olunur, şəkil saxlanmır.</p>
     <p style="margin:0 0 10px">5. 1C istifadəçi adı və parolu yalnız bu cihazda saxlanılır. Cihaz itərsə, 1C-də həmin istifadəçinin parolunu dəyişin.</p>
     <p style="margin:0 0 10px">6. Ayarlar fayla saxlananda parol faylın içinə yazılmır.</p>
-    <p style="margin:0"><b>Əlaqə:</b> Problem yarandığda, +994 55 823 67 32 (Bahadur)<br>Bütün hüquqlar BarkodPRO-ya məxsusdur.</p></div></div>
+    <p style="margin:0"><b>Əlaqə:</b> Problem yarandığda, +994 51 215 99 60 (Zaur)<br>Bütün hüquqlar BarkodPRO-ya məxsusdur.</p></div></div>
 </div>
 
 <div class="screen" id="sKassa">
@@ -652,7 +659,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
       </div>
       <div style="padding:12px 14px">
         <div style="font-size:11px;font-weight:700;color:#6b7280">ƏLAQƏ</div>
-        <a href="tel:+994558236732" style="display:inline-block;font-size:15px;font-weight:700;margin-top:2px;color:var(--b3);text-decoration:none">+994 55 823 67 32 (Bahadur)</a>
+        <a href="tel:+994512159960" style="display:inline-block;font-size:15px;font-weight:700;margin-top:2px;color:var(--b3);text-decoration:none">+994 51 215 99 60 (Zaur)</a>
       </div>
     </div>
     <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.5;color:#78350f">
@@ -935,6 +942,7 @@ function opUI(op){
   [['opTopbar','topbar ',c.tc],['opStats','stats-strip ',c.sc],['btnElave','btn-elave ',op],['foundBadge','found-badge ',op],['cntPill','cnt-pill ',op],['totalHdr','total-hdr ',op],['btnGonder','btn-gonder ',op],['resultFound','result-found ',op]].forEach(function(a){document.getElementById(a[0]).className=a[1]+a[2];});
   var qe=document.getElementById('qebulExtra');if(qe)qe.style.display=(op==='qebul'||op==='qaytarma'||op==='satis')?'flex':'none';
   var se=document.getElementById('sayimExtra');if(se)se.style.display=(op==='sayim')?'block':'none';
+  var bbm=document.getElementById('btnBarkodsuzMal');if(bbm)bbm.style.display=(OPS[op]&&OPS[op].yeni)?'':'none';
   if(op==='qebul')ktYukle();
   if(op==='sayim')qrupYukle2();
   hideAll();updBS('','');
@@ -1223,6 +1231,10 @@ function showNew(b){
   ['nAd','nAlis','nSatis'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
   var ns=document.getElementById('nSay');
   if(ns)ns.value='1';
+  _ilkinAlis=null;_sonAlis=null; // yeni mal üçün ilkin alışı sıfırla
+  // faiz xanaları ayardakı default ilə dolsun (dəyişilə bilər)
+  var ne=document.getElementById('nEndirim');if(ne)ne.value=(CFG.endirimFaiz!=null&&CFG.endirimFaiz!==0?CFG.endirimFaiz:'');
+  var nq=document.getElementById('nQazanc');if(nq)nq.value=(CFG.qazancFaiz!=null?CFG.qazancFaiz:25);
   document.getElementById('newCard').style.display='block';
   setTimeout(function(){var el=document.getElementById('nAd');if(el)el.focus();},80);
 }
@@ -1442,6 +1454,59 @@ function siyahiyaElave(){
   render();
 }
 
+// ══════════════════════════════════════
+//  ÇƏKİ MALI + AVTOMATİK QİYMƏT
+// ══════════════════════════════════════
+function cekiBarkod(){
+  var r='';for(var i=0;i<6;i++){r+=Math.floor(Math.random()*10);}
+  return 'ceki'+r;
+}
+// Alış ekranında "barkodsuz mal" düyməsi: yeni mal panelini açır, barkodu avtomatik doldurur
+function barkodsuzMalAc(){
+  if(!curOp){toast('Əvvəl əməliyyat seçin','warn');return;}
+  if(!OPS[curOp]||!OPS[curOp].yeni){toast('Bu əməliyyatda yeni mal olmaz','warn');return;}
+  hideAll();
+  snd('yeni');
+  showNew(cekiBarkod());
+  toast('Barkodsuz mal — adı və qiyməti yazın','ok');
+}
+// Default faizlər (ayardan): endirim boş = 0, qazanc default 25
+function endirimFaizDef(){var v=parseFloat(CFG.endirimFaiz);return isNaN(v)?0:v;}
+function qazancFaizDef(){var v=parseFloat(CFG.qazancFaiz);return isNaN(v)?25:v;}
+function faizSaxla(){
+  var e=document.getElementById('cfgEndirim'),q=document.getElementById('cfgQazanc');
+  if(e)CFG.endirimFaiz=(e.value===''?0:(parseFloat(e.value)||0));
+  if(q)CFG.qazancFaiz=(q.value===''?0:(parseFloat(q.value)||0));
+  sj('anbar_cfg',CFG);
+  toast('Yadda saxlanıldı','ok');
+}
+// Yeni mal panelindəki ilkin alış (endirim tətbiq olunmazdan əvvəl)
+var _ilkinAlis=null;
+var _sonAlis=null; // hesablanmış endirimli alış (bu dəyər blur-da ilkin sayılmır)
+// Alış xanasından fokus çıxanda
+function alisBitdi(){
+  var el=document.getElementById('nAlis');if(!el)return;
+  var v=parseFloat(el.value)||0;
+  // İstifadəçi əl ilə yeni rəqəm yazıbsa (hesablanmış nəticə deyilsə) → yeni ilkin alış
+  if(v>0 && (_sonAlis===null || Math.abs(v-_sonAlis)>0.001))_ilkinAlis=v;
+  yeniQiymetHesabla();
+}
+// Hesablama: ilkin alış × endirim → endirimli alış × qazanc → satış
+function yeniQiymetHesabla(){
+  if(CFG.avtoQiymet===false)return;
+  var nAlisEl=document.getElementById('nAlis'),nSatisEl=document.getElementById('nSatis');
+  var nEnd=document.getElementById('nEndirim'),nQaz=document.getElementById('nQazanc');
+  if(!nAlisEl)return;
+  if(_ilkinAlis===null||_ilkinAlis<=0)_ilkinAlis=parseFloat(nAlisEl.value)||0;
+  if(_ilkinAlis<=0)return;
+  var endF=(nEnd&&nEnd.value!=='')?(parseFloat(nEnd.value)||0):0;
+  var qazF=(nQaz&&nQaz.value!=='')?(parseFloat(nQaz.value)||0):qazancFaizDef();
+  var endAlis=_ilkinAlis*(1-endF/100);
+  _sonAlis=parseFloat(endAlis.toFixed(2));
+  nAlisEl.value=endAlis.toFixed(2);
+  if(nSatisEl)nSatisEl.value=(endAlis*(1+qazF/100)).toFixed(2);
+}
+
 function yeniMalElave(){
   function gv(id){var el=document.getElementById(id);return el?el.value:'';}
   var ad=gv('nAd').trim();
@@ -1478,6 +1543,24 @@ function editAc(b){
       if(el){el.focus();el.select();}
     },50);
   }
+}
+
+// Mənfəət faizi və məbləği (bir vahid üçün)
+function menfeetHTML(alis,satis){
+  alis=parseFloat(alis)||0;satis=parseFloat(satis)||0;
+  var mebleg=satis-alis;
+  var faiz=alis>0?(mebleg/alis*100):0;
+  var reng=mebleg>=0?'#15803d':'#dc2626';
+  return '<span style="color:#64748b;font-weight:600">Mənfəət</span>'+
+    '<span style="color:'+reng+';font-weight:800">'+(mebleg>=0?'+':'')+fp(mebleg)+'  ('+(faiz>=0?'+':'')+faiz.toFixed(1)+'%)</span>';
+}
+function menfeetYenile(bs){
+  var b=bs.replace(/\\'/g,"'");
+  var bid=b.replace(/[^a-zA-Z0-9]/g,'_');
+  var box=document.getElementById('ep_menfeet_'+bid);
+  if(!box)return;
+  var a=document.getElementById('ep_alis_'+bid),s=document.getElementById('ep_satis_'+bid);
+  box.innerHTML=menfeetHTML(a?a.value:0,s?s.value:0);
 }
 
 function editSaxla(b){
@@ -1609,10 +1692,11 @@ function render(){
           '<div class="ep-fld"><label class="ep-lbl">SAY</label>'+
           '<input class="ep-inp" id="ep_say_'+bid+'" type="text" value="'+item.say+'" inputmode="decimal"></div>'+
           '<div class="ep-fld ep-pr"><label class="ep-lbl">ALIŞ ₼</label>'+
-          '<input class="ep-inp" id="ep_alis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.alis).toFixed(2)+'" inputmode="decimal"></div>'+
+          '<input class="ep-inp" id="ep_alis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.alis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'+
           '<div class="ep-fld ep-pr"><label class="ep-lbl">SATIŞ ₼</label>'+
-          '<input class="ep-inp" id="ep_satis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.satis).toFixed(2)+'" inputmode="decimal"></div>'+
+          '<input class="ep-inp" id="ep_satis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.satis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'+
         '</div>'+
+        (curOp==='qebul'?('<div id="ep_menfeet_'+bid+'" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;margin-bottom:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;font-size:12.5px">'+menfeetHTML(item.alis,item.satis)+'</div>'):'')+
         '<div class="ep-btns">'+
           '<button class="btn-ep-s" onclick="editSaxla(\''+bs+'\')">&#10003; Saxla</button>'+
           '<button class="btn-ep-l" onclick="editLegv()">&#10005; Legv</button>'+
@@ -2079,7 +2163,7 @@ function hmac256(key,msg){if(key.length>64)key=sha256(key);var k=new Uint8Array(
 function hex(u){return Array.from(u).map(function(b){return('0'+b.toString(16)).slice(-2)}).join('')}
 function utf8(s){if(window.TextEncoder)return new TextEncoder().encode(s);var e=unescape(encodeURIComponent(s)),u=new Uint8Array(e.length);for(var i=0;i<e.length;i++)u[i]=e.charCodeAt(i);return u}
 
-var APPV='3.2',LNG='az',D={"Qovluqda sənəd":["Документов в папке","Klasördeki belge","Documents in folder"],"Sayımda məbləğ qiyməti":["Цена для суммы при инвентаризации","Sayımda tutar fiyatı","Price used for count amounts"],"Tədarükçü hesabatı":["Отчёт по поставщикам","Tedarikçi raporu","Supplier report"],"Gözləyən sənəd": ["Ожидают отправки", "Bekleyen belge", "Pending documents"], "Bu gün sənəd": ["Документов сегодня", "Bugün belge", "Documents today"], "Mal sayı": ["Товаров", "Ürün sayısı", "Items"], "Anbar əməliyyatları": ["Складские операции", "Depo işlemleri", "Warehouse operations"], "Mal qəbulu": ["Приёмка товара", "Mal kabulü", "Goods receipt"], "Təchizatçıdan daxil olan": ["Поступление от поставщика", "Tedarikçiden gelen", "Incoming from supplier"], "Mal qaytarma": ["Возврат товара", "Mal iadesi", "Goods return"], "Təchizatçıya qaytarılan": ["Возврат поставщику", "Tedarikçiye iade", "Returned to supplier"], "Mal sayımı": ["Инвентаризация", "Mal sayımı", "Stock count"], "Qrup üzrə inventarizasiya": ["По группам", "Gruba göre sayım", "Count by group"], "Mal silinməsi": ["Списание товара", "Mal silme", "Write-off"], "Zədəli, vaxtı keçmiş": ["Брак, просрочка", "Hasarlı, süresi geçmiş", "Damaged, expired"], "Mal satışı": ["Продажа товара", "Mal satışı", "Goods sale"], "Qiymət və qalıq ilə": ["С ценой и остатком", "Fiyat ve stok ile", "With price and stock"], "Qaimə tarixçəsi": ["История накладных", "Fatura geçmişi", "Document history"], "Əvvəlki əməliyyatlar": ["Прошлые операции", "Önceki işlemler", "Previous operations"], "Ödənişlər": ["Платежи", "Ödemeler", "Payments"], "Kassa mədaxil": ["Приход в кассу", "Kasa girişi", "Cash in"], "Daxil olan pul": ["Поступившие деньги", "Giren para", "Money received"], "Kassa məxaric": ["Расход из кассы", "Kasa çıkışı", "Cash out"], "Çıxan pul": ["Выданные деньги", "Çıkan para", "Money paid out"], "Hesabatlar": ["Отчёты", "Raporlar", "Reports"], "Anbar qalığı": ["Остатки на складе", "Depo stoğu", "Stock balance"], "Kontragent borcları": ["Долги контрагентов", "Cari borçlar", "Counterparty debts"], "Satış hesabatı": ["Отчёт по продажам", "Satış raporu", "Sales report"], "Kassa hesabatı": ["Кассовый отчёт", "Kasa raporu", "Cash report"], "Rejim və mal bazası": ["Режим и база товаров", "Mod ve ürün tabanı", "Mode and product base"], "🔄 Mal bazasını 1C-dən yüklə": ["🔄 Загрузить базу из 1С", "🔄 Ürün tabanını 1C'den yükle", "🔄 Load products from 1C"], "📄 Mal faylından yüklə (CSV)": ["📄 Загрузить из файла (CSV)", "📄 Dosyadan yükle (CSV)", "📄 Load from file (CSV)"], "Digər": ["Прочее", "Diğer", "Other"], "⚙️ Ayarlar": ["⚙️ Настройки", "⚙️ Ayarlar", "⚙️ Settings"], "📋 Sinxronizasiya jurnalı": ["📋 Журнал синхронизации", "📋 Senkronizasyon günlüğü", "📋 Sync log"], "🩺 Diaqnostika": ["🩺 Диагностика", "🩺 Tanılama", "🩺 Diagnostics"], "ℹ️ Proqram haqqında": ["ℹ️ О программе", "ℹ️ Program hakkında", "ℹ️ About"], "🔒 Məxfilik siyasəti": ["🔒 Политика конфиденциальности", "🔒 Gizlilik politikası", "🔒 Privacy policy"], "Bütün hüquqlar BarkodPRO-ya məxsusdur.": ["Все права принадлежат Хаялю Шыхалиеву, BarkodPRO.", "Tüm hakları BarkodPRO'ya aittir.", "All rights belong to, BarkodPRO."], "Online": ["Онлайн", "Çevrimiçi", "Online"], "Giriş səhvdir": ["Ошибка входа", "Giriş hatalı", "Login error"], "Server xətası": ["Ошибка сервера", "Sunucu hatası", "Server error"], "Server cavab vermir": ["Сервер не отвечает", "Sunucu yanıt vermiyor", "Server not responding"], "Oflayn rejim": ["Офлайн-режим", "Çevrimdışı mod", "Offline mode"], "Yoxlanılır": ["Проверка", "Kontrol ediliyor", "Checking"], "🟢 Rejim: ONLINE — 1C ilə işləyir (dəyiş)": ["🟢 Режим: ОНЛАЙН — работает с 1С (сменить)", "🟢 Mod: ÇEVRİMİÇİ — 1C ile çalışır (değiştir)", "🟢 Mode: ONLINE — works with 1C (change)"], "🔴 Rejim: OFLAYN — yaddaşa yazılır (dəyiş)": ["🔴 Режим: ОФЛАЙН — сохраняется в памяти (сменить)", "🔴 Mod: ÇEVRİMDIŞI — belleğe yazılır (değiştir)", "🔴 Mode: OFFLINE — saved to memory (change)"], "Bağlantı uğurludur": ["Связь установлена", "Bağlantı başarılı", "Connection OK"], "İstifadəçi və ya parol səhvdir": ["Неверный пользователь или пароль", "Kullanıcı veya parola hatalı", "Wrong user or password"], "Server xəta verdi": ["Сервер вернул ошибку", "Sunucu hata verdi", "Server returned an error"], "Server cavab vermir. Ünvanı və şəbəkəni yoxlayın": ["Сервер не отвечает. Проверьте адрес и сеть", "Sunucu yanıt vermiyor. Adresi ve ağı kontrol edin", "Server not responding. Check address and network"], "Oflayn rejimdir": ["Офлайн-режим", "Çevrimdışı moddasınız", "Offline mode"], "Ayarlar": ["Настройки", "Ayarlar", "Settings"], "Bağlantı, fayl və ehtiyat": ["Связь, файлы, резерв", "Bağlantı, dosya, yedek", "Connection, files, backup"], "Bağlantı": ["Подключение", "Bağlantı", "Connection"], "Server ünvanı": ["Адрес сервера", "Sunucu adresi", "Server address"], "Baza adı": ["Имя базы", "Veritabanı adı", "Database name"], "HTTP servis adı": ["Имя HTTP-сервиса", "HTTP servis adı", "HTTP service name"], "1C istifadəçi adı": ["Пользователь 1С", "1C kullanıcı adı", "1C username"], "1C parol": ["Пароль 1С", "1C parolası", "1C password"], "🔌 Bağlantını yoxla": ["🔌 Проверить связь", "🔌 Bağlantıyı kontrol et", "🔌 Test connection"], "Giriş açarı": ["Ключ доступа", "Erişim anahtarı", "Access key"], "Ödənişlər və hesabatlar yalnız açar daxil ediləndə görünür": ["Платежи и отчёты видны только при вводе ключа", "Ödemeler ve raporlar anahtar girilince görünür", "Payments and reports appear only with a key"], "Terminal": ["Терминал", "Terminal", "Terminal"], "Terminal adı": ["Имя терминала", "Terminal adı", "Terminal name"], "Anbar adı (1C-yə göndəriləcək)": ["Склад (передаётся в 1С)", "Depo adı (1C'ye gönderilir)", "Warehouse name (sent to 1C)"], "📷 QR ilə doldur": ["📷 Заполнить по QR", "📷 QR ile doldur", "📷 Fill from QR"], "Dil": ["Язык", "Dil", "Language"], "Cihaz": ["Устройство", "Cihaz", "Device"], "Ekran sönməsin": ["Не гасить экран", "Ekran kapanmasın", "Keep screen on"], "Batareya xəbərdarlığı": ["Предупреждение о батарее", "Pil uyarısı", "Battery warning"], "Avtomatik ehtiyat nüsxə": ["Автоматическая копия", "Otomatik yedek", "Automatic backup"], "Yan skan düyməsi": ["Боковая кнопка скана", "Yan tarama tuşu", "Side scan key"], "Düyməni öyrət": ["Назначить", "Tuşu öğret", "Assign"], "Eyni mal təkrar oxunanda": ["При повторном скане", "Aynı ürün tekrar okununca", "When the same item is rescanned"], "Sayı artır": ["Добавить кол-во", "Adedi artır", "Add quantity"], "Soruş": ["Спросить", "Sor", "Ask"], "Xəbərdarlıq": ["Предупредить", "Uyar", "Warn"], "PIN kod (4 rəqəm, boş = söndür)": ["PIN (4 цифры, пусто = выкл.)", "PIN (4 rakam, boş = kapalı)", "PIN (4 digits, empty = off)"], "Saxla": ["Сохранить", "Kaydet", "Save"], "Fayl rejimi": ["Файловый режим", "Dosya modu", "File mode"], "Sənədləri fayl kimi göndər": ["Отправлять документы файлами", "Belgeleri dosya olarak gönder", "Send documents as files"], "Fayllar": ["Файлы", "Dosyalar", "Files"], "📄 Mal faylını yüklə (CSV)": ["📄 Загрузить товары (CSV)", "📄 Ürün dosyasını yükle (CSV)", "📄 Load product file (CSV)"], "💾 Ayarları fayla saxla": ["💾 Сохранить настройки в файл", "💾 Ayarları dosyaya kaydet", "💾 Save settings to file"], "♻️ Ayarları geri yüklə": ["♻️ Восстановить настройки", "♻️ Ayarları geri yükle", "♻️ Restore settings"], "🗂 Ehtiyat fayl yarat (gözləyən sənədlər)": ["🗂 Создать резервный файл", "🗂 Yedek dosya oluştur", "🗂 Create backup file"], "Məbləğ": ["Сумма", "Tutar", "Amount"], "Kontragent": ["Контрагент", "Cari", "Counterparty"], "Ödəniş növü": ["Тип оплаты", "Ödeme türü", "Payment type"], "Nağd": ["Наличные", "Nakit", "Cash"], "Kart": ["Карта", "Kart", "Card"], "Bank": ["Банк", "Banka", "Bank"], "Qeyd": ["Примечание", "Not", "Note"], "Göndər": ["Отправить", "Gönder", "Send"], "Başlanğıc": ["С", "Başlangıç", "From"], "Son": ["По", "Bitiş", "To"], "Göstər": ["Показать", "Göster", "Show"], "Yüklənir...": ["Загрузка...", "Yükleniyor...", "Loading..."], "Məbləği yazın": ["Введите сумму", "Tutarı yazın", "Enter the amount"], "Şəbəkə yoxdur, yaddaşa yazıldı": ["Нет сети, сохранено в памяти", "Ağ yok, belleğe yazıldı", "No network, saved to memory"], "Giriş açarı yanlışdır": ["Неверный ключ доступа", "Erişim anahtarı hatalı", "Wrong access key"], "Jurnal boşdur": ["Журнал пуст", "Günlük boş", "Log is empty"], "Təmizlə": ["Очистить", "Temizle", "Clear"], "Son əməliyyatlar": ["Последние события", "Son işlemler", "Recent events"], "Cihaz və bağlantı": ["Устройство и связь", "Cihaz ve bağlantı", "Device and connection"], "Xoş gəlmisiniz": ["Добро пожаловать", "Hoş geldiniz", "Welcome"], "İlk quraşdırma": ["Первая настройка", "İlk kurulum", "First setup"], "Yoxla və başla": ["Проверить и начать", "Kontrol et ve başla", "Check and start"], "Server ünvanını yazın": ["Введите адрес сервера", "Sunucu adresini yazın", "Enter the server address"], "PIN kodunu daxil edin": ["Введите PIN-код", "PIN kodunu girin", "Enter PIN"], "PIN yanlışdır": ["Неверный PIN", "PIN hatalı", "Wrong PIN"], "PIN söndürüldü": ["PIN отключён", "PIN kapatıldı", "PIN disabled"], "PIN 4 rəqəm olmalıdır": ["PIN — 4 цифры", "PIN 4 rakam olmalı", "PIN must be 4 digits"], "PIN təyin olundu": ["PIN установлен", "PIN ayarlandı", "PIN set"], "Batareya zəifdir": ["Низкий заряд", "Pil zayıf", "Battery low"], "Skan düyməsinə basın": ["Нажмите кнопку скана", "Tarama tuşuna basın", "Press the scan key"], "Düymə yadda saxlandı": ["Кнопка сохранена", "Tuş kaydedildi", "Key saved"], "Bu mal artıq siyahıdadır": ["Товар уже в списке", "Bu ürün zaten listede", "Item is already in the list"]};
+var APPV='3.9.2',LNG='az',D={"Qovluqda sənəd":["Документов в папке","Klasördeki belge","Documents in folder"],"Sayımda məbləğ qiyməti":["Цена для суммы при инвентаризации","Sayımda tutar fiyatı","Price used for count amounts"],"Tədarükçü hesabatı":["Отчёт по поставщикам","Tedarikçi raporu","Supplier report"],"Gözləyən sənəd": ["Ожидают отправки", "Bekleyen belge", "Pending documents"], "Bu gün sənəd": ["Документов сегодня", "Bugün belge", "Documents today"], "Mal sayı": ["Товаров", "Ürün sayısı", "Items"], "Anbar əməliyyatları": ["Складские операции", "Depo işlemleri", "Warehouse operations"], "Mal qəbulu": ["Приёмка товара", "Mal kabulü", "Goods receipt"], "Təchizatçıdan daxil olan": ["Поступление от поставщика", "Tedarikçiden gelen", "Incoming from supplier"], "Mal qaytarma": ["Возврат товара", "Mal iadesi", "Goods return"], "Təchizatçıya qaytarılan": ["Возврат поставщику", "Tedarikçiye iade", "Returned to supplier"], "Mal sayımı": ["Инвентаризация", "Mal sayımı", "Stock count"], "Qrup üzrə inventarizasiya": ["По группам", "Gruba göre sayım", "Count by group"], "Mal silinməsi": ["Списание товара", "Mal silme", "Write-off"], "Zədəli, vaxtı keçmiş": ["Брак, просрочка", "Hasarlı, süresi geçmiş", "Damaged, expired"], "Mal satışı": ["Продажа товара", "Mal satışı", "Goods sale"], "Qiymət və qalıq ilə": ["С ценой и остатком", "Fiyat ve stok ile", "With price and stock"], "Qaimə tarixçəsi": ["История накладных", "Fatura geçmişi", "Document history"], "Əvvəlki əməliyyatlar": ["Прошлые операции", "Önceki işlemler", "Previous operations"], "Ödənişlər": ["Платежи", "Ödemeler", "Payments"], "Kassa mədaxil": ["Приход в кассу", "Kasa girişi", "Cash in"], "Daxil olan pul": ["Поступившие деньги", "Giren para", "Money received"], "Kassa məxaric": ["Расход из кассы", "Kasa çıkışı", "Cash out"], "Çıxan pul": ["Выданные деньги", "Çıkan para", "Money paid out"], "Hesabatlar": ["Отчёты", "Raporlar", "Reports"], "Anbar qalığı": ["Остатки на складе", "Depo stoğu", "Stock balance"], "Kontragent borcları": ["Долги контрагентов", "Cari borçlar", "Counterparty debts"], "Satış hesabatı": ["Отчёт по продажам", "Satış raporu", "Sales report"], "Kassa hesabatı": ["Кассовый отчёт", "Kasa raporu", "Cash report"], "Rejim və mal bazası": ["Режим и база товаров", "Mod ve ürün tabanı", "Mode and product base"], "🔄 Mal bazasını 1C-dən yüklə": ["🔄 Загрузить базу из 1С", "🔄 Ürün tabanını 1C'den yükle", "🔄 Load products from 1C"], "📄 Mal faylından yüklə (CSV)": ["📄 Загрузить из файла (CSV)", "📄 Dosyadan yükle (CSV)", "📄 Load from file (CSV)"], "Digər": ["Прочее", "Diğer", "Other"], "⚙️ Ayarlar": ["⚙️ Настройки", "⚙️ Ayarlar", "⚙️ Settings"], "📋 Sinxronizasiya jurnalı": ["📋 Журнал синхронизации", "📋 Senkronizasyon günlüğü", "📋 Sync log"], "🩺 Diaqnostika": ["🩺 Диагностика", "🩺 Tanılama", "🩺 Diagnostics"], "ℹ️ Proqram haqqında": ["ℹ️ О программе", "ℹ️ Program hakkında", "ℹ️ About"], "🔒 Məxfilik siyasəti": ["🔒 Политика конфиденциальности", "🔒 Gizlilik politikası", "🔒 Privacy policy"], "Bütün hüquqlar BarkodPRO-ya məxsusdur.": ["Все права принадлежат Хаялю Шыхалиеву, BarkodPRO.", "Tüm hakları BarkodPRO'ya aittir.", "All rights belong to, BarkodPRO."], "Online": ["Онлайн", "Çevrimiçi", "Online"], "Giriş səhvdir": ["Ошибка входа", "Giriş hatalı", "Login error"], "Server xətası": ["Ошибка сервера", "Sunucu hatası", "Server error"], "Server cavab vermir": ["Сервер не отвечает", "Sunucu yanıt vermiyor", "Server not responding"], "Oflayn rejim": ["Офлайн-режим", "Çevrimdışı mod", "Offline mode"], "Yoxlanılır": ["Проверка", "Kontrol ediliyor", "Checking"], "🟢 Rejim: ONLINE — 1C ilə işləyir (dəyiş)": ["🟢 Режим: ОНЛАЙН — работает с 1С (сменить)", "🟢 Mod: ÇEVRİMİÇİ — 1C ile çalışır (değiştir)", "🟢 Mode: ONLINE — works with 1C (change)"], "🔴 Rejim: OFLAYN — yaddaşa yazılır (dəyiş)": ["🔴 Режим: ОФЛАЙН — сохраняется в памяти (сменить)", "🔴 Mod: ÇEVRİMDIŞI — belleğe yazılır (değiştir)", "🔴 Mode: OFFLINE — saved to memory (change)"], "Bağlantı uğurludur": ["Связь установлена", "Bağlantı başarılı", "Connection OK"], "İstifadəçi və ya parol səhvdir": ["Неверный пользователь или пароль", "Kullanıcı veya parola hatalı", "Wrong user or password"], "Server xəta verdi": ["Сервер вернул ошибку", "Sunucu hata verdi", "Server returned an error"], "Server cavab vermir. Ünvanı və şəbəkəni yoxlayın": ["Сервер не отвечает. Проверьте адрес и сеть", "Sunucu yanıt vermiyor. Adresi ve ağı kontrol edin", "Server not responding. Check address and network"], "Oflayn rejimdir": ["Офлайн-режим", "Çevrimdışı moddasınız", "Offline mode"], "Ayarlar": ["Настройки", "Ayarlar", "Settings"], "Bağlantı, fayl və ehtiyat": ["Связь, файлы, резерв", "Bağlantı, dosya, yedek", "Connection, files, backup"], "Bağlantı": ["Подключение", "Bağlantı", "Connection"], "Server ünvanı": ["Адрес сервера", "Sunucu adresi", "Server address"], "Baza adı": ["Имя базы", "Veritabanı adı", "Database name"], "HTTP servis adı": ["Имя HTTP-сервиса", "HTTP servis adı", "HTTP service name"], "1C istifadəçi adı": ["Пользователь 1С", "1C kullanıcı adı", "1C username"], "1C parol": ["Пароль 1С", "1C parolası", "1C password"], "🔌 Bağlantını yoxla": ["🔌 Проверить связь", "🔌 Bağlantıyı kontrol et", "🔌 Test connection"], "Giriş açarı": ["Ключ доступа", "Erişim anahtarı", "Access key"], "Ödənişlər və hesabatlar yalnız açar daxil ediləndə görünür": ["Платежи и отчёты видны только при вводе ключа", "Ödemeler ve raporlar anahtar girilince görünür", "Payments and reports appear only with a key"], "Terminal": ["Терминал", "Terminal", "Terminal"], "Terminal adı": ["Имя терминала", "Terminal adı", "Terminal name"], "Anbar adı (1C-yə göndəriləcək)": ["Склад (передаётся в 1С)", "Depo adı (1C'ye gönderilir)", "Warehouse name (sent to 1C)"], "📷 QR ilə doldur": ["📷 Заполнить по QR", "📷 QR ile doldur", "📷 Fill from QR"], "Dil": ["Язык", "Dil", "Language"], "Cihaz": ["Устройство", "Cihaz", "Device"], "Ekran sönməsin": ["Не гасить экран", "Ekran kapanmasın", "Keep screen on"], "Batareya xəbərdarlığı": ["Предупреждение о батарее", "Pil uyarısı", "Battery warning"], "Avtomatik ehtiyat nüsxə": ["Автоматическая копия", "Otomatik yedek", "Automatic backup"], "Yan skan düyməsi": ["Боковая кнопка скана", "Yan tarama tuşu", "Side scan key"], "Düyməni öyrət": ["Назначить", "Tuşu öğret", "Assign"], "Eyni mal təkrar oxunanda": ["При повторном скане", "Aynı ürün tekrar okununca", "When the same item is rescanned"], "Sayı artır": ["Добавить кол-во", "Adedi artır", "Add quantity"], "Soruş": ["Спросить", "Sor", "Ask"], "Xəbərdarlıq": ["Предупредить", "Uyar", "Warn"], "PIN kod (4 rəqəm, boş = söndür)": ["PIN (4 цифры, пусто = выкл.)", "PIN (4 rakam, boş = kapalı)", "PIN (4 digits, empty = off)"], "Saxla": ["Сохранить", "Kaydet", "Save"], "Fayl rejimi": ["Файловый режим", "Dosya modu", "File mode"], "Sənədləri fayl kimi göndər": ["Отправлять документы файлами", "Belgeleri dosya olarak gönder", "Send documents as files"], "Fayllar": ["Файлы", "Dosyalar", "Files"], "📄 Mal faylını yüklə (CSV)": ["📄 Загрузить товары (CSV)", "📄 Ürün dosyasını yükle (CSV)", "📄 Load product file (CSV)"], "💾 Ayarları fayla saxla": ["💾 Сохранить настройки в файл", "💾 Ayarları dosyaya kaydet", "💾 Save settings to file"], "♻️ Ayarları geri yüklə": ["♻️ Восстановить настройки", "♻️ Ayarları geri yükle", "♻️ Restore settings"], "🗂 Ehtiyat fayl yarat (gözləyən sənədlər)": ["🗂 Создать резервный файл", "🗂 Yedek dosya oluştur", "🗂 Create backup file"], "Məbləğ": ["Сумма", "Tutar", "Amount"], "Kontragent": ["Контрагент", "Cari", "Counterparty"], "Ödəniş növü": ["Тип оплаты", "Ödeme türü", "Payment type"], "Nağd": ["Наличные", "Nakit", "Cash"], "Kart": ["Карта", "Kart", "Card"], "Bank": ["Банк", "Banka", "Bank"], "Qeyd": ["Примечание", "Not", "Note"], "Göndər": ["Отправить", "Gönder", "Send"], "Başlanğıc": ["С", "Başlangıç", "From"], "Son": ["По", "Bitiş", "To"], "Göstər": ["Показать", "Göster", "Show"], "Yüklənir...": ["Загрузка...", "Yükleniyor...", "Loading..."], "Məbləği yazın": ["Введите сумму", "Tutarı yazın", "Enter the amount"], "Şəbəkə yoxdur, yaddaşa yazıldı": ["Нет сети, сохранено в памяти", "Ağ yok, belleğe yazıldı", "No network, saved to memory"], "Giriş açarı yanlışdır": ["Неверный ключ доступа", "Erişim anahtarı hatalı", "Wrong access key"], "Jurnal boşdur": ["Журнал пуст", "Günlük boş", "Log is empty"], "Təmizlə": ["Очистить", "Temizle", "Clear"], "Son əməliyyatlar": ["Последние события", "Son işlemler", "Recent events"], "Cihaz və bağlantı": ["Устройство и связь", "Cihaz ve bağlantı", "Device and connection"], "Xoş gəlmisiniz": ["Добро пожаловать", "Hoş geldiniz", "Welcome"], "İlk quraşdırma": ["Первая настройка", "İlk kurulum", "First setup"], "Yoxla və başla": ["Проверить и начать", "Kontrol et ve başla", "Check and start"], "Server ünvanını yazın": ["Введите адрес сервера", "Sunucu adresini yazın", "Enter the server address"], "PIN kodunu daxil edin": ["Введите PIN-код", "PIN kodunu girin", "Enter PIN"], "PIN yanlışdır": ["Неверный PIN", "PIN hatalı", "Wrong PIN"], "PIN söndürüldü": ["PIN отключён", "PIN kapatıldı", "PIN disabled"], "PIN 4 rəqəm olmalıdır": ["PIN — 4 цифры", "PIN 4 rakam olmalı", "PIN must be 4 digits"], "PIN təyin olundu": ["PIN установлен", "PIN ayarlandı", "PIN set"], "Batareya zəifdir": ["Низкий заряд", "Pil zayıf", "Battery low"], "Skan düyməsinə basın": ["Нажмите кнопку скана", "Tarama tuşuna basın", "Press the scan key"], "Düymə yadda saxlandı": ["Кнопка сохранена", "Tuş kaydedildi", "Key saved"], "Bu mal artıq siyahıdadır": ["Товар уже в списке", "Bu ürün zaten listede", "Item is already in the list"]};
 function t(x){var d=D[x];if(!d||LNG==='az')return x;return d[{ru:0,tr:1,en:2}[LNG]]||x}
 function trApply(){document.querySelectorAll('[data-i]').forEach(function(e){if(!e._az)e._az=e.getAttribute('data-i');e.textContent=t(e._az)})}
 function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -2091,6 +2175,9 @@ function homeStat(){function s(i,v){var e=document.getElementById(i);if(e)e.text
 function menuGor(){['secOd','secHes'].forEach(function(i){var e=document.getElementById(i);if(e)e.style.display=CFG.acar?'':'none'})}
 var _pd0=paramDoldur;paramDoldur=function(){_pd0();var a=document.getElementById('cfgAcar');if(a)a.value=CFG.acar||'';
   ['ekran','bat','ehtiyat','fayl','klav','kamera'].forEach(function(k){var w=document.getElementById('sw_'+k);if(w){w.className='n-sw'+(CFG[k]?' on':'');w.setAttribute('aria-checked',CFG[k]?'true':'false')}});
+  (function(){var on=(CFG.avtoQiymet!==false);var w=document.getElementById('sw_avtoQiymet');if(w){w.className='n-sw'+(on?' on':'');w.setAttribute('aria-checked',on?'true':'false')}})();
+  var _ce=document.getElementById('cfgEndirim');if(_ce)_ce.value=(CFG.endirimFaiz!=null?CFG.endirimFaiz:10);
+  var _cq=document.getElementById('cfgQazanc');if(_cq)_cq.value=(CFG.qazancFaiz!=null?CFG.qazancFaiz:25);
   ['miAlis','miSatis','miQaliq'].forEach(function(k){var on=(CFG[k]!==false);var w=document.getElementById('sw_'+k);if(w){w.className='n-sw'+(on?' on':'');w.setAttribute('aria-checked',on?'true':'false')}});
   kamFormatRender();
   kameraDuymeleriGoster();
@@ -2098,7 +2185,7 @@ var _pd0=paramDoldur;paramDoldur=function(){_pd0();var a=document.getElementById
 var _cs0=cfgSaxla;cfgSaxla=function(){_cs0();var e=document.getElementById('cfgAcar');if(e){CFG.acar=e.value.trim();sj('anbar_cfg',CFG);menuGor()}};
 function tgl(k){
   // Default-açıq açarlar (undefined = açıq): ilk basış söndürsün
-  if(k==='miAlis'||k==='miSatis'||k==='miQaliq'){CFG[k]=(CFG[k]===false);}
+  if(k==='miAlis'||k==='miSatis'||k==='miQaliq'||k==='avtoQiymet'){CFG[k]=(CFG[k]===false);}
   else{CFG[k]=!CFG[k];}
   sj('anbar_cfg',CFG);paramDoldur();if(k==='ekran')wakeTetbiq();if(k==='bat')batIzle();if(k==='kamera')kameraDuymeleriGoster()}
 // ── Kamera formatları ──
@@ -2406,7 +2493,7 @@ var _se9=scanEt,_lv='',_lt=0;scanEt=function(v){var n=Date.now();if(v===_lv&&n-_
     el.setAttribute('enterkeyhint','done');sel(el);
     el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();if(skanGuard(el))p[1]()}});
     var tm=null;el.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(function(){skanGuard(el)},350)})});
-  var seq=['nAd','nAlis','nSatis','nSay'];
+  var seq=['nAd','nAlis','nEndirim','nQazanc','nSatis','nSay'];
   seq.forEach(function(id,i){var el=document.getElementById(id);if(!el)return;if(i>0)sel(el);
     el.setAttribute('enterkeyhint',i<seq.length-1?'next':'done');
     el.addEventListener('keydown',function(e){if(e.key!=='Enter')return;e.preventDefault();
