@@ -299,7 +299,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="sync-info" id="syncSt">—</div>
     <div class="n-lbl" data-i="Digər">Digər</div>
     <button class="btn-home" onclick="ayarAc()" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
-    <div class="n-foot">Anbar Terminal v3.14.1<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
+    <div class="n-foot">Anbar Terminal v3.14.2<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
   </div>
 </div>
 
@@ -2507,31 +2507,49 @@ var BOLMELER=[
   {k:'kassa_medaxil',ad:'Kassa mədaxil'},
   {k:'kassa_mexaric',ad:'Kassa məxaric'}
 ];
-function bolmeAcivmi(k){var p=CFG.bolmePerm;if(!p||typeof p!=='object')return true;return p[k]!==false;}
-function bolmeleriTetbiq(){
-  var tiles=document.querySelectorAll('[data-perm]');
-  for(var i=0;i<tiles.length;i++){
-    var k=tiles[i].getAttribute('data-perm');
-    tiles[i].style.display=bolmeAcivmi(k)?'':'none';
+
+function bolmeAcivmi(k) {
+  var p = CFG.bolmePerm;
+  // Əgər hələ heç bir parametr yoxdursa (ilk giriş), defolt olaraq false (bağlı) qaytarır
+  if (!p || typeof p !== 'object') {
+    return false; 
+  }
+  return p[k] === true; // Yalnız açıq olaraq işarələnənlər görünəcək
+}
+
+function bolmeleriTetbiq() {
+  var tiles = document.querySelectorAll('[data-perm]');
+  for (var i = 0; i < tiles.length; i++) {
+    var k = tiles[i].getAttribute('data-perm');
+    tiles[i].style.display = bolmeAcivmi(k) ? '' : 'none';
   }
 }
-function bolmeToggle(k){
-  if(!CFG.bolmePerm||typeof CFG.bolmePerm!=='object'){CFG.bolmePerm={};BOLMELER.forEach(function(b){CFG.bolmePerm[b.k]=bolmeAcivmi(b.k);});}
-  CFG.bolmePerm[k]=!CFG.bolmePerm[k];
-  sj('anbar_cfg',CFG);
-  bolmeRender();bolmeleriTetbiq();
+
+function bolmeToggle(k) {
+  if (!CFG.bolmePerm || typeof CFG.bolmePerm !== 'object') {
+    CFG.bolmePerm = {};
+    BOLMELER.forEach(function(b) {
+      CFG.bolmePerm[b.k] = false; 
+    });
+  }
+  // Mövcud dəyərin əksinə çeviririk (açıqdısa bağla, bağdısa aç)
+  CFG.bolmePerm[k] = !CFG.bolmePerm[k];
+  sj('anbar_cfg', CFG);
+  bolmeRender();
+  bolmeleriTetbiq();
 }
-function bolmeRender(){
-  var el=document.getElementById('bolmeList');if(!el)return;
-  var h='';
-  BOLMELER.forEach(function(b){
-    var on=bolmeAcivmi(b.k);
-    h+='<div style="display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid #f1f5f9">'+
-       '<div style="flex:1;font-size:13.5px;color:#0f172a">'+b.ad+'</div>'+
-       '<button type="button" class="n-sw'+(on?' on':'')+'" role="switch" aria-checked="'+(on?'true':'false')+'" onclick="bolmeToggle(\''+b.k+'\')"></button>'+
-       '</div>';
+
+function bolmeRender() {
+  var el = document.getElementById('bolmeList'); if (!el) return;
+  var h = '';
+  BOLMELER.forEach(function(b) {
+    var on = bolmeAcivmi(b.k);
+    h += '<div style="display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid #f1f5f9">' +
+         '<div style="flex:1;font-size:13.5px;color:#0f172a">' + b.ad + '</div>' +
+         '<button type="button" class="n-sw' + (on ? ' on' : '') + '" role="switch" aria-checked="' + (on ? 'true' : 'false') + '" onclick="bolmeToggle(\'' + b.k + '\')"></button>' +
+         '</div>';
   });
-  el.innerHTML=h;
+  el.innerHTML = h;
 }
 var _gz=0;document.addEventListener('visibilitychange',function(){if(document.hidden)_gz=Date.now();else{wakeTetbiq();if(CFG.pinHash&&Date.now()-_gz>300000)pinGoster()}});
 // ═══ Mal sayımı: hər oxumada +1, sistem/sayılan miqdar, məbləğ fərqi ═══
