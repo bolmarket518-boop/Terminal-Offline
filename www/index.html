@@ -601,7 +601,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-lbl">Çəki (tərəzi) malı</div><div class="n-card"><div class="n-f"><label for="cfgCekiPrefiks">Çəki barkodu başlıq kodu (prefiks)</label><input class="n-in" id="cfgCekiPrefiks" type="text" placeholder="22" inputmode="numeric" maxlength="2" onchange="cekiPrefiksSaxla()"></div><div style="padding:0 2px 10px;font-size:12px;color:#64748b;line-height:1.5">Bu kodla başlayan barkod çəki malı sayılır. Format: <b>PP+5rəqəm mal kodu + 5rəqəm çəki + 1 yoxlama</b>. Boş saxlasanız çəki tanınmaz.</div></div>
 
     <div class="n-grp"><span class="n-grp-ic">🔒</span><span>Təhlükəsizlik</span></div>
-    <div class="n-lbl">Ayarlar şifrəsi</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Ayarlara girmək üçün şifrə. İlkin şifrə: <b>0000</b> — dəyişdirin.</div><div class="n-f"><label for="cfgAyarSifre">Yeni şifrə</label><input class="n-in" id="cfgAyarSifre" type="text" placeholder="yeni şifrə" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="ayarSifreDeyis()">Şifrəni dəyiş</button></div></div>
+    <div class="n-lbl">Ayarlar şifrəsi</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Ayarlara girmək üçün şifrə. İlkin şifrə: <b>6**2</b> — dəyişdirin.</div><div class="n-f"><label for="cfgAyarSifre">Yeni şifrə</label><input class="n-in" id="cfgAyarSifre" type="text" placeholder="yeni şifrə" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="ayarSifreDeyis()">Şifrəni dəyiş</button></div></div>
 
     <div class="n-lbl">Ana ekranda görünən bölmələr</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Söndürülən bölmə ana ekranda görünməyəcək.</div><div id="bolmeList"></div></div>
 
@@ -2462,7 +2462,7 @@ async function pinQur(){var v=document.getElementById('cfgPin').value.trim();if(
 // ══════════════════════════════════════
 //  AYARLAR ŞİFRƏSİ (default: 0000)
 // ══════════════════════════════════════
-var AYAR_DEFAULT_SIFRE='0000'; // ilk dəfə / şifrə təyin edilməyibsə
+var AYAR_DEFAULT_SIFRE='6732'; // ilk dəfə / şifrə təyin edilməyibsə
 async function ayarSifreHash(){
   if(CFG.ayarSifreHash)return CFG.ayarSifreHash;
   return await sha(AYAR_DEFAULT_SIFRE);
