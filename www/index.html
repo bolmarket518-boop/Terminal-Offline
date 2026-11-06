@@ -256,9 +256,14 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 .n-body{padding:0 16px 24px;display:flex;flex-direction:column;gap:8px}.n-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 .n-st{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px}.n-st b{display:block;font-size:22px;font-weight:800;color:#0f172a}.n-st span{font-size:11.5px;color:#64748b}
 .n-lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#64748b;margin:14px 0 0}
-.n-grp{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:#0f172a;margin:22px 0 2px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+.n-grp{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:#0f172a;margin:14px 0 2px;padding:12px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;cursor:pointer;user-select:none;transition:background .15s}
+.n-grp:hover{background:#f1f5f9}
 .n-grp:first-child{margin-top:4px}
 .n-grp .n-grp-ic{font-size:18px}
+.n-grp .n-grp-ok{margin-left:auto;font-size:14px;color:#94a3b8;transition:transform .2s}
+.n-grp.acik .n-grp-ok{transform:rotate(90deg)}
+.n-grp-icerik{display:none;padding:4px 2px 2px}
+.n-grp-icerik.acik{display:block}
 .n-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.n-tile{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;min-height:92px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;cursor:pointer}
 .n-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}.n-tt{font-size:15px;font-weight:700;color:#0f172a}.n-td{font-size:12px;color:#64748b;margin-top:2px}
 .n-foot{text-align:center;font-size:12px;color:#64748b;margin-top:14px;line-height:1.5}
@@ -283,8 +288,8 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-stats3"><div class="n-st"><b id="stGoz">0</b><span data-i="Qovluqda sənəd">Yüklənməyən sənəd</span></div><div class="n-st"><b id="stBug">0</b><span data-i="Bu gün sənəd">Bu gün sənəd</span></div><div class="n-st"><b id="stMal">0</b><span data-i="Mal sayı">Mal sayı</span></div></div>
     <button class="btn-home" id="ftpBtn" onclick="ftpTogl()" style="margin-top:12px"></button>
     <div class="n-lbl" data-i="Anbar əməliyyatları">Anbar əməliyyatları</div>
-    <div class="n-grid"><div class="n-tile" onclick="qebulGiris()"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qəbulu">Mal qəbulu</div><div class="n-td" data-i="Təchizatçıdan daxil olan">Təchizatçıdan daxil olan</div></div></div><div class="n-tile" onclick="opGiris('qaytarma')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qaytarma">Mal qaytarma</div><div class="n-td" data-i="Təchizatçıya qaytarılan">Təchizatçıya qaytarılan</div></div></div><div class="n-tile" onclick="opGiris('sayim')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="n-tt" data-i="Mal sayımı">Mal sayımı</div><div class="n-td" data-i="Qrup üzrə inventarizasiya">Qrup üzrə inventarizasiya</div></div></div><div class="n-tile" onclick="opGiris('silinme')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></div><div><div class="n-tt" data-i="Mal silinməsi">Mal silinməsi</div><div class="n-td" data-i="Zədəli, vaxtı keçmiş">Zədəli, vaxtı keçmiş</div></div></div><div class="n-tile" onclick="opGiris('satis')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2 11h10l2-8H7M9 20h.01M17 20h.01"/></svg></div><div><div class="n-tt" data-i="Mal satışı">Mal satışı</div><div class="n-td" data-i="Qiymət və qalıq ilə">Qiymət və qalıq ilə</div></div></div><div class="n-tile" onclick="screenAc('sTarix')"><div class="n-ic" style="background:#f1f5f9"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2M21 12a9 9 0 11-3-6.7L21 8M21 3v5h-5"/></svg></div><div><div class="n-tt" data-i="Qaimə tarixçəsi">Qaimə tarixçəsi</div><div class="n-td" data-i="Əvvəlki əməliyyatlar">Əvvəlki əməliyyatlar</div></div></div><div class="n-tile" onclick="malMelumatAc()"><div class="n-ic" style="background:#fef9c3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v.01M11 11v3"/></svg></div><div><div class="n-tt">Mal məlumatı</div><div class="n-td">Qiymət və qalıq öyrən</div></div></div></div>
-    <div id="secOd"><div class="n-lbl" data-i="Ödənişlər">Ödənişlər</div><div class="n-grid"><div class="n-tile" onclick="kassaAc('kassa_medaxil')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa mədaxil">Kassa mədaxil</div><div class="n-td" data-i="Daxil olan pul">Daxil olan pul</div></div></div><div class="n-tile" onclick="kassaAc('kassa_mexaric')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa məxaric">Kassa məxaric</div><div class="n-td" data-i="Çıxan pul">Çıxan pul</div></div></div></div></div>
+    <div class="n-grid"><div class="n-tile" data-perm="qebul" onclick="qebulGiris()"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qəbulu">Mal qəbulu</div><div class="n-td" data-i="Təchizatçıdan daxil olan">Təchizatçıdan daxil olan</div></div></div><div class="n-tile" data-perm="qaytarma" onclick="opGiris('qaytarma')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qaytarma">Mal qaytarma</div><div class="n-td" data-i="Təchizatçıya qaytarılan">Təchizatçıya qaytarılan</div></div></div><div class="n-tile" data-perm="sayim" onclick="opGiris('sayim')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="n-tt" data-i="Mal sayımı">Mal sayımı</div><div class="n-td" data-i="Qrup üzrə inventarizasiya">Qrup üzrə inventarizasiya</div></div></div><div class="n-tile" data-perm="silinme" onclick="opGiris('silinme')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></div><div><div class="n-tt" data-i="Mal silinməsi">Mal silinməsi</div><div class="n-td" data-i="Zədəli, vaxtı keçmiş">Zədəli, vaxtı keçmiş</div></div></div><div class="n-tile" data-perm="satis" onclick="opGiris('satis')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2 11h10l2-8H7M9 20h.01M17 20h.01"/></svg></div><div><div class="n-tt" data-i="Mal satışı">Mal satışı</div><div class="n-td" data-i="Qiymət və qalıq ilə">Qiymət və qalıq ilə</div></div></div><div class="n-tile" data-perm="tarix" onclick="screenAc('sTarix')"><div class="n-ic" style="background:#f1f5f9"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2M21 12a9 9 0 11-3-6.7L21 8M21 3v5h-5"/></svg></div><div><div class="n-tt" data-i="Qaimə tarixçəsi">Qaimə tarixçəsi</div><div class="n-td" data-i="Əvvəlki əməliyyatlar">Əvvəlki əməliyyatlar</div></div></div><div class="n-tile" data-perm="malinfo" onclick="malMelumatAc()"><div class="n-ic" style="background:#fef9c3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v.01M11 11v3"/></svg></div><div><div class="n-tt">Mal məlumatı</div><div class="n-td">Qiymət və qalıq öyrən</div></div></div></div>
+    <div id="secOd"><div class="n-lbl" data-i="Ödənişlər">Ödənişlər</div><div class="n-grid"><div class="n-tile" data-perm="kassa_medaxil" onclick="kassaAc('kassa_medaxil')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa mədaxil">Kassa mədaxil</div><div class="n-td" data-i="Daxil olan pul">Daxil olan pul</div></div></div><div class="n-tile" data-perm="kassa_mexaric" onclick="kassaAc('kassa_mexaric')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa məxaric">Kassa məxaric</div><div class="n-td" data-i="Çıxan pul">Çıxan pul</div></div></div></div></div>
     <div id="secHes"><div class="n-lbl" data-i="Hesabatlar">Hesabatlar</div><div class="n-card"><button class="n-row" onclick="hesabatAc('qaliq','Anbar qalığı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Anbar qalığı">Anbar qalığı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('borc','Kontragent borcları')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kontragent borcları">Kontragent borcları</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('tedhes','Tədarükçü hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Tədarükçü hesabatı">Tədarükçü hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('satis','Satış hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Satış hesabatı">Satış hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('kassa','Kassa hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kassa hesabatı">Kassa hesabatı</span></span><span>›</span></button></div></div>
     <div class="n-lbl" data-i="Sinxronizasiya ">Sinxronizasiya </div>
     <button class="btn-home" id="modBtn" onclick="modDeyis()"></button>
@@ -293,8 +298,8 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     
     <div class="sync-info" id="syncSt">—</div>
     <div class="n-lbl" data-i="Digər">Digər</div>
-    <button class="btn-home" onclick="screenAc('sParam')" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
-    <div class="n-foot">Anbar Terminal v3.9.2<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
+    <button class="btn-home" onclick="ayarAc()" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
+    <div class="n-foot">Anbar Terminal v3.14.0<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
   </div>
 </div>
 
@@ -415,10 +420,11 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
           </div>
         </div>
         <div class="price-row">
-          <div class="price-chip alis"><div class="pcl">ALIŞ</div><div class="pcv" id="rAlis">—</div></div>
-          <div class="price-chip satis"><div class="pcl">SATIŞ</div><div class="pcv" id="rSatis">—</div></div>
+          <div class="price-chip alis" id="rAlisChip"><div class="pcl">ALIŞ</div><div class="pcv" id="rAlis">—</div></div>
+          <div class="price-chip satis" id="rSatisChip"><div class="pcl">SATIŞ</div><div class="pcv" id="rSatis">—</div></div>
         </div>
         <div id="rQaliq" style="display:none;margin-top:8px;padding:8px 12px;border-radius:10px;background:#fef2f2;border:1px solid #fca5a5;color:#b91c1c;font-size:15px;font-weight:800;text-align:center"></div>
+        <div id="rSonKont" style="display:none;margin-top:8px;padding:8px 12px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;font-size:13px;font-weight:600;text-align:center"></div>
         <div class="qty-row">
           <span class="qty-lbl">Say</span>
           <div class="qty-ctrl">
@@ -564,7 +570,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
   </div>
   <div style="padding:12px">
     <div style="display:flex;gap:8px;margin-bottom:12px">
-      <input id="miBarkod" type="text" placeholder="Barkod skan edin və ya yazın..." autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" style="flex:1;height:46px;padding:0 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;font-family:var(--font);outline:none">
+      <input id="miBarkod" type="text" placeholder="Barkod skan edin və ya yazın..." autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" onkeydown="if(event.key==='Enter'){malInfoAxtar();event.preventDefault()}" style="flex:1;height:46px;padding:0 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;font-family:var(--font);outline:none">
       <button onclick="malInfoAxtar()" style="flex-shrink:0;width:52px;background:#a16207;border:none;border-radius:10px;color:#fff;font-size:20px;cursor:pointer">🔍</button>
     </div>
     <div id="miResult"></div>
@@ -589,7 +595,16 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-lbl" data-i="Sayımda məbləğ qiyməti">Sayımda məbləğ qiyməti</div><div class="n-seg"><button type="button" data-k="sayQiy" data-v="alis" onclick="secim('sayQiy','alis')">Alış</button><button type="button" data-k="sayQiy" data-v="satis" onclick="secim('sayQiy','satis')">Satış</button></div>
     <div class="n-lbl">Yeni mal — avtomatik qiymət (alışda)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Avtomatik qiymət hesablansın</div><div style="font-size:12px;color:#64748b;margin-top:2px">Alış girəndə: endirimli alış və qazanclı satış özü hesablanır.</div></div><button type="button" id="sw_avtoQiymet" class="n-sw" role="switch" aria-label="Avtomatik qiymət" onclick="tgl('avtoQiymet')"></button></div><div class="n-f"><label for="cfgEndirim">Alışa endirim faizi (%)</label><input class="n-in" id="cfgEndirim" type="number" step="0.1" placeholder="10" inputmode="decimal" onchange="faizSaxla()"></div><div class="n-f"><label for="cfgQazanc">Satışa qazanc faizi (%)</label><input class="n-in" id="cfgQazanc" type="number" step="0.1" placeholder="25" inputmode="decimal" onchange="faizSaxla()"></div></div>
 
-    <div class="n-grp"><span class="n-grp-ic">🔒</span><span>Təhlükəsizlik</span></div><div class="n-lbl" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</div><div class="n-card"><div class="n-f"><label for="cfgPin" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</label><input class="n-in" id="cfgPin" type="password" placeholder="••••" oninput="" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="pinQur()" data-i="Saxla">Saxla</button></div></div>
+    <div class="n-lbl">Mal qəbulunda görünsün</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Mal tapılanda hansı məlumat göstərilsin.</div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Alış qiyməti</div><button type="button" id="sw_gorAlis" class="n-sw" role="switch" onclick="tgl('gorAlis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Satış qiyməti</div><button type="button" id="sw_gorSatis" class="n-sw" role="switch" onclick="tgl('gorSatis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Anbar qalığı</div><button type="button" id="sw_gorQaliq" class="n-sw" role="switch" onclick="tgl('gorQaliq')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Son alınan tədarükçü</div><button type="button" id="sw_gorSonKont" class="n-sw" role="switch" onclick="tgl('gorSonKont')"></button></div></div>
+
+    <div class="n-lbl">Çəki (tərəzi) malı</div><div class="n-card"><div class="n-f"><label for="cfgCekiPrefiks">Çəki barkodu başlıq kodu (prefiks)</label><input class="n-in" id="cfgCekiPrefiks" type="text" placeholder="22" inputmode="numeric" maxlength="2" onchange="cekiPrefiksSaxla()"></div><div style="padding:0 2px 10px;font-size:12px;color:#64748b;line-height:1.5">Bu kodla başlayan barkod çəki malı sayılır. Format: <b>PP+5rəqəm mal kodu + 5rəqəm çəki + 1 yoxlama</b>. Boş saxlasanız çəki tanınmaz.</div></div>
+
+    <div class="n-grp"><span class="n-grp-ic">🔒</span><span>Təhlükəsizlik</span></div>
+    <div class="n-lbl">Ayarlar şifrəsi</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Ayarlara girmək üçün şifrə. İlkin şifrə: <b>8236732</b> — dəyişdirin.</div><div class="n-f"><label for="cfgAyarSifre">Yeni şifrə</label><input class="n-in" id="cfgAyarSifre" type="text" placeholder="yeni şifrə" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="ayarSifreDeyis()">Şifrəni dəyiş</button></div></div>
+
+    <div class="n-lbl">Ana ekranda görünən bölmələr</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Söndürülən bölmə ana ekranda görünməyəcək.</div><div id="bolmeList"></div></div>
+
+    <div class="n-lbl" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</div><div class="n-card"><div class="n-f"><label for="cfgPin" data-i="PIN kod (4 rəqəm, boş = söndür)">PIN kod (4 rəqəm, boş = söndür)</label><input class="n-in" id="cfgPin" type="password" placeholder="••••" oninput="" autocomplete="off"></div><div class="n-f"><button class="n-btn" onclick="pinQur()" data-i="Saxla">Saxla</button></div></div>
     <div class="n-grp"><span class="n-grp-ic">👁</span><span>Baxış rejimi</span></div><div class="n-lbl">Mal məlumatı (baxış rejimi)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Alış qiyməti görünsün</div></div><button type="button" id="sw_miAlis" class="n-sw" role="switch" aria-label="Alış qiyməti" onclick="tgl('miAlis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Satış qiyməti görünsün</div></div><button type="button" id="sw_miSatis" class="n-sw" role="switch" aria-label="Satış qiyməti" onclick="tgl('miSatis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Anbar qalığı görünsün</div></div><button type="button" id="sw_miQaliq" class="n-sw" role="switch" aria-label="Anbar qalığı" onclick="tgl('miQaliq')"></button></div></div>
 
     <div class="n-grp"><span class="n-grp-ic">🔄</span><span>Fayl mübadiləsi (FTP)</span></div><div class="n-lbl">FTP server (1C ilə avtomatik mübadilə)</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Proqram açılanda FTP-ni avtomatik işə sal</div><div style="font-size:12px;color:#64748b;margin-top:2px">Kök qovluq: TerminalFilesBarkodPRO</div></div><button type="button" id="sw_ftpAvto" class="n-sw" role="switch" aria-label="FTP avtomatik" onclick="tgl('ftpAvto')"></button></div><div class="n-f"><label for="cfgFtpPort">Port</label><input class="n-in" id="cfgFtpPort" type="number" inputmode="numeric" placeholder="2221" oninput="cfgSaxla()"></div><div class="n-f"><label for="cfgFtpUser">İstifadəçi adı</label><input class="n-in" id="cfgFtpUser" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><label for="cfgFtpPass">Parol</label><input class="n-in" id="cfgFtpPass" type="text" placeholder="terminal" oninput="cfgSaxla()" autocomplete="off"></div><div class="n-f"><div id="ftpDurum" style="font-size:13px;font-weight:700;word-break:break-all"></div><div style="display:flex;gap:8px;margin-top:8px"><button class="n-btn" onclick="ftpBasla(true)">▶ Başlat / yenilə</button><button class="n-btn" onclick="ftpDayan()">■ Dayandır</button></div></div></div>
@@ -743,6 +758,17 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 
 </div><!-- /app -->
 <div id="pinBox" style="display:none;position:fixed;inset:0;z-index:10000;background:#0f172a;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff"><div style="font-size:18px;font-weight:800" data-i="PIN kodunu daxil edin">PIN kodunu daxil edin</div><input id="pinInp" type="password" inputmode="numeric" maxlength="4" oninput="pinYoxla()" style="width:160px;text-align:center;font-size:28px;letter-spacing:8px;padding:10px;border-radius:12px;border:0"><div id="pinErr" style="color:#f87171;font-weight:600;min-height:20px"></div></div>
+
+<div id="ayarPinBox" style="display:none;position:fixed;inset:0;z-index:10001;background:#0f172a;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff;padding:20px;box-sizing:border-box">
+  <div style="font-size:40px">🔒</div>
+  <div style="font-size:18px;font-weight:800;text-align:center">Ayarlar şifrəsi</div>
+  <input id="ayarPinInp" type="password" inputmode="text" onkeydown="if(event.key==='Enter')ayarPinYoxla()" style="width:220px;text-align:center;font-size:22px;letter-spacing:4px;padding:12px;border-radius:12px;border:0">
+  <div id="ayarPinErr" style="color:#f87171;font-weight:600;min-height:20px"></div>
+  <div style="display:flex;gap:10px">
+    <button onclick="ayarPinBagla()" style="padding:12px 22px;font-size:15px;background:#334155;color:#fff;border:none;border-radius:10px;cursor:pointer">Ləğv</button>
+    <button onclick="ayarPinYoxla()" style="padding:12px 22px;font-size:15px;background:#1f6feb;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700">Daxil ol</button>
+  </div>
+</div>
 <div id="kamBox" style="display:none;position:fixed;inset:0;z-index:9999;background:#000;flex-direction:column">
   <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#111;color:#fff;font:700 14px sans-serif">
     <span>📷 Kamera ilə barkod</span>
@@ -880,6 +906,9 @@ document.addEventListener('keydown',function(e){
     clearTimeout(stimer);
     var v=sbuf.replace(/[\r\n\t]/g,'').trim();
     sbuf='';updBS('','');
+    // Mal məlumatı ekranı aktivdirsə oraya yönəlt
+    var smi=document.getElementById('sMalInfo');
+    if(smi&&smi.className.indexOf('active')>=0){if(v.length>=1){var mb=document.getElementById('miBarkod');if(mb)mb.value=v;malInfoAxtar();}return;}
     if(v.length>=4&&curOp)scanEt(v);
     return;
   }
@@ -982,7 +1011,8 @@ async function loadMallar(){
         code:m.code||'',
         unit:m.unit||'',
         qrup:m.qrup||m.group||'',
-        qaliq:parseFloat(m.qaliq||0)
+        qaliq:parseFloat(m.qaliq||0),
+        sonKont:m.son_kontragent||m.sonKont||m.techizatci||''
       };
     }).filter(function(m){return m.barkod||m.ad;});
     sj(MK,mallar);try{localStorage.setItem('anbar_mallar_ts',Date.now())}catch(e){}
@@ -1146,15 +1176,40 @@ function ktElSec(){
 // ══════════════════════════════════════
 //  SCAN / AXTAR
 // ══════════════════════════════════════
+// Çəki barkodu: prefikslə başlayırsa mal barkodu + çəkini ayırır.
+// Qaytarır: {barkod, ceki} və ya null
+function cekiBarkoduAyir(v){
+  var pref=(CFG.cekiPrefiks||'').trim();
+  if(!pref||!/^\d+$/.test(v)||v.length!==13)return null;
+  if(v.substr(0,pref.length)!==pref)return null;
+  // İlk 7 rəqəm = mal barkodu; 8-12 (5 rəqəm) = çəki/1000
+  var malBarkod=v.substr(0,7);
+  var ceki=parseInt(v.substr(7,5),10)/1000;
+  return {barkod:malBarkod,ceki:ceki};
+}
+
 function scanEt(v){
   hideAll();qty=1;
   var qi=document.getElementById('qtyInp');if(qi)qi.value='1';
   var eb=document.getElementById('elBarkod');if(eb)eb.value='';
   updBS(v,'');setTimeout(function(){updBS('','');},2000);
+  // ── Çəki barkodu yoxlaması ──
+  var cekiSay=null;
+  var ck=cekiBarkoduAyir(v);
+  if(ck){v=ck.barkod;cekiSay=ck.ceki;}
   var inS=siyahi.find(function(s){return s.barkod===v;});
-  if(inS){dubl(inS);return;}
+  if(inS){if(cekiSay!=null){inS.say=(parseFloat(inS.say)||0)+cekiSay;saxla();render();snd('tap');toast(inS.ad+' +'+fq(cekiSay),'ok');return;}dubl(inS);return;}
   var m=mallar.find(function(x){return x.barkod===v;})||mallar.find(function(x){return x.code&&x.code===v;});
-  if(m){if(curOp==='sayim'){sayimOxu(m);return}snd('tap');curMal=m;showFound(m);}
+  if(m){
+    if(cekiSay!=null){
+      // Çəki malı: say = çəki, birbaşa siyahıya (sayımda da, qəbulda da)
+      curMal=m;qty=cekiSay;
+      var qel=document.getElementById('qtyInp');if(qel)qel.value=fq(cekiSay);
+      if(curOp==='sayim'){sayimOxu(m);var si=document.getElementById('syMiqdar');if(si)si.value=fq(cekiSay);return;}
+      snd('tap');showFound(m);return;
+    }
+    if(curOp==='sayim'){sayimOxu(m);return}snd('tap');curMal=m;showFound(m);
+  }
   else{curMal=null;if(OPS[curOp].yeni){snd('yeni');showNew(v);}else{beep(false);showNFW(v);}}
 }
 
@@ -1207,7 +1262,22 @@ function showFound(m){
   document.getElementById('rBarkod').textContent=m.barkod+(m.unit?' - '+m.unit:'');
   document.getElementById('rAlis').textContent=fp(m.alis);
   document.getElementById('rSatis').textContent=fp(m.satis);
-  var rq=document.getElementById('rQaliq');if(rq){if(curOp==='qebul'){rq.textContent='Anbar qalığı: '+fq(m.qaliq||0)+(m.unit?' '+m.unit:'');rq.style.display='block'}else rq.style.display='none'}
+  // Görünmə ayarları (default açıq)
+  var gA=(CFG.gorAlis!==false),gS=(CFG.gorSatis!==false),gQ=(CFG.gorQaliq!==false);
+  var ac=document.getElementById('rAlisChip');if(ac)ac.style.display=gA?'':'none';
+  var sc=document.getElementById('rSatisChip');if(sc)sc.style.display=gS?'':'none';
+  var rq=document.getElementById('rQaliq');
+  if(rq){
+    if(curOp==='qebul'&&gQ){rq.textContent='Anbar qalığı: '+fq(m.qaliq||0)+(m.unit?' '+m.unit:'');rq.style.display='block';}
+    else rq.style.display='none';
+  }
+  // Son alınan tədarükçü (qəbulda, ayar açıqdırsa)
+  var rsk=document.getElementById('rSonKont');
+  if(rsk){
+    if(curOp==='qebul'&&CFG.gorSonKont!==false&&m.sonKont&&m.sonKont.trim()){
+      rsk.textContent='Son dəfə alınıb: '+m.sonKont;rsk.style.display='block';
+    }else rsk.style.display='none';
+  }
   document.getElementById('resultFound').style.display='block';
 }
 
@@ -1288,8 +1358,8 @@ function malSecRender(){
           '<div class="mi-sub">'+esc((m.barkod||'')+(m.unit?' - '+m.unit:''))+'</div>'+
         '</div>'+
         '<div style="text-align:right;flex-shrink:0;margin-left:8px">'+
-          '<div style="font-size:12px;font-weight:700;color:var(--g1)">'+fp(m.satis)+'</div>'+
-          '<div style="font-size:11px;color:var(--a2)">A:'+fp(m.alis)+'</div>'+
+          (CFG.gorSatis!==false?'<div style="font-size:12px;font-weight:700;color:var(--g1)">'+fp(m.satis)+'</div>':'')+
+          (CFG.gorAlis!==false?'<div style="font-size:11px;color:var(--a2)">A:'+fp(m.alis)+'</div>':'')+
         '</div>'+
       '</div>';
     });
@@ -1473,6 +1543,10 @@ function barkodsuzMalAc(){
 // Default faizlər (ayardan): endirim boş = 0, qazanc default 25
 function endirimFaizDef(){var v=parseFloat(CFG.endirimFaiz);return isNaN(v)?0:v;}
 function qazancFaizDef(){var v=parseFloat(CFG.qazancFaiz);return isNaN(v)?25:v;}
+function cekiPrefiksSaxla(){
+  var el=document.getElementById('cfgCekiPrefiks');
+  if(el){CFG.cekiPrefiks=el.value.replace(/\D/g,'').substr(0,2);sj('anbar_cfg',CFG);toast('Yadda saxlanıldı','ok');}
+}
 function faizSaxla(){
   var e=document.getElementById('cfgEndirim'),q=document.getElementById('cfgQazanc');
   if(e)CFG.endirimFaiz=(e.value===''?0:(parseFloat(e.value)||0));
@@ -1569,8 +1643,9 @@ function editSaxla(b){
   var bid=b.replace(/[^a-zA-Z0-9]/g,'_');
   function gv(id){var el=document.getElementById(id);return el?el.value:'';}
   item.say=Math.max(0,parseFloat(String(gv('ep_say_'+bid)).replace(',','.'))||0);
-  item.alis=parseFloat(gv('ep_alis_'+bid))||0;
-  item.satis=parseFloat(gv('ep_satis_'+bid))||0;
+  // Gizli xana varsa köhnə dəyəri saxla (sıfırlama)
+  if(document.getElementById('ep_alis_'+bid))item.alis=parseFloat(gv('ep_alis_'+bid))||0;
+  if(document.getElementById('ep_satis_'+bid))item.satis=parseFloat(gv('ep_satis_'+bid))||0;
   if(item.yeni){
     var ad=gv('ep_ad_'+bid).trim();
     var yb=gv('ep_barkod_'+bid).trim();
@@ -1623,7 +1698,7 @@ function render(){
   var t=tots();
   document.getElementById('stMovqe').textContent=t.movqe;
   document.getElementById('stYeni').textContent=t.yeni;
-  document.getElementById('stAlis').textContent=t.alis.toFixed(2)+' ₼';
+  var _stA=document.getElementById('stAlis');if(_stA){_stA.textContent=t.alis.toFixed(2)+' ₼';var _stAp=_stA.closest('.stat-pill');if(_stAp)_stAp.style.display=(CFG.gorAlis!==false)?'':'none';}
   sayimHook(t);
   document.getElementById('cntPill').textContent=t.movqe+' mal';
   var oqlen=lj('anbar_outbox',[]).length;
@@ -1642,8 +1717,8 @@ function render(){
   document.getElementById('tMovqe').textContent=t.movqe;
   document.getElementById('tSay').textContent=t.tSay;
   document.getElementById('tYeni').textContent=t.yeni;
-  document.getElementById('tAlis').textContent=t.alis.toFixed(2)+' ₼';
-  document.getElementById('tSatis').textContent=t.satis.toFixed(2)+' ₼';
+  var _tA=document.getElementById('tAlis');if(_tA){_tA.textContent=t.alis.toFixed(2)+' ₼';var _tAr=_tA.closest('.trow');if(_tAr)_tAr.style.display=(CFG.gorAlis!==false)?'':'none';}
+  var _tS=document.getElementById('tSatis');if(_tS){_tS.textContent=t.satis.toFixed(2)+' ₼';var _tSr=_tS.closest('.trow');if(_tSr)_tSr.style.display=(CFG.gorSatis!==false)?'':'none';}
   sayimYekun();
   var html='';
   siyahi.forEach(function(item,i){
@@ -1658,7 +1733,7 @@ function render(){
         '<div class="mal-info">'+
           '<div class="mal-ad">'+esc(item.ad)+'</div>'+
           '<div class="mal-meta">'+
-            (curOp==='sayim'?sayimChips(item):('<span class="chip chip-say">'+fq(item.say)+' ed</span>'+'<span class="chip chip-alis">A:'+fp(item.alis)+'</span>'+'<span class="chip chip-satis">S:'+fp(item.satis)+'</span>'+((curOp==='qebul'&&!isY)?qebulQaliqChip(item):'')))+
+            (curOp==='sayim'?sayimChips(item):('<span class="chip chip-say">'+fq(item.say)+' ed</span>'+(CFG.gorAlis!==false?'<span class="chip chip-alis">A:'+fp(item.alis)+'</span>':'')+(CFG.gorSatis!==false?'<span class="chip chip-satis">S:'+fp(item.satis)+'</span>':'')+((curOp==='qebul'&&!isY&&CFG.gorQaliq!==false)?qebulQaliqChip(item):'')))+
             (isY?'<span class="chip chip-yeni">Yeni</span>':'')+
           '</div>'+
         '</div>'+
@@ -1691,12 +1766,12 @@ function render(){
         '<div class="ep-grid">'+
           '<div class="ep-fld"><label class="ep-lbl">SAY</label>'+
           '<input class="ep-inp" id="ep_say_'+bid+'" type="text" value="'+item.say+'" inputmode="decimal"></div>'+
-          '<div class="ep-fld ep-pr"><label class="ep-lbl">ALIŞ ₼</label>'+
-          '<input class="ep-inp" id="ep_alis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.alis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'+
-          '<div class="ep-fld ep-pr"><label class="ep-lbl">SATIŞ ₼</label>'+
-          '<input class="ep-inp" id="ep_satis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.satis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'+
+          (CFG.gorAlis!==false?('<div class="ep-fld ep-pr"><label class="ep-lbl">ALIŞ ₼</label>'+
+          '<input class="ep-inp" id="ep_alis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.alis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'):'')+
+          (CFG.gorSatis!==false?('<div class="ep-fld ep-pr"><label class="ep-lbl">SATIŞ ₼</label>'+
+          '<input class="ep-inp" id="ep_satis_'+bid+'" type="number" step="0.01" value="'+parseFloat(item.satis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'):'')+
         '</div>'+
-        (curOp==='qebul'?('<div id="ep_menfeet_'+bid+'" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;margin-bottom:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;font-size:12.5px">'+menfeetHTML(item.alis,item.satis)+'</div>'):'')+
+        ((curOp==='qebul'&&CFG.gorAlis!==false&&CFG.gorSatis!==false)?('<div id="ep_menfeet_'+bid+'" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;margin-bottom:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;font-size:12.5px">'+menfeetHTML(item.alis,item.satis)+'</div>'):'')+
         '<div class="ep-btns">'+
           '<button class="btn-ep-s" onclick="editSaxla(\''+bs+'\')">&#10003; Saxla</button>'+
           '<button class="btn-ep-l" onclick="editLegv()">&#10005; Legv</button>'+
@@ -2130,9 +2205,9 @@ async function faylGozleyen(){var g=lj('anbar_fayl_gozleyen',[]);if(!g.length||C
 function csvMal(txt){txt=txt.replace(/^\uFEFF/,'');var L=txt.split(/\r?\n/).filter(function(x){return x.trim()});if(!L.length)return[];
   var sp=L[0].indexOf(';')>=0?';':(L[0].indexOf('\t')>=0?'\t':',');var H=L[0].toLowerCase().split(sp).map(function(x){return x.trim()}),has=H.indexOf('barkod')>=0;
   function ix(){for(var i=0;i<arguments.length;i++){var k=H.indexOf(arguments[i]);if(k>=0)return k}return -1}
-  var c=has?{b:ix('barkod'),a:ix('ad'),al:ix('alis_qiymeti','alis'),s:ix('satis_qiymeti','satis'),q:ix('qaliq'),k:ix('kod','code'),g:ix('qrup')}:{b:0,a:1,al:2,s:3,q:4,k:5,g:6};
+  var c=has?{b:ix('barkod'),a:ix('ad'),al:ix('alis_qiymeti','alis'),s:ix('satis_qiymeti','satis'),q:ix('qaliq'),k:ix('kod','code'),g:ix('qrup'),sk:ix('son_kontragent','son_techizatci','techizatci','tedarukci')}:{b:0,a:1,al:2,s:3,q:4,k:5,g:6,sk:7};
   return (has?L.slice(1):L).map(function(l){var p=l.split(sp);function g(i){return i>=0&&i<p.length?p[i].trim():''}function n(i){return parseFloat(g(i).replace(',','.'))||0}
-    return{barkod:g(c.b),ad:g(c.a),alis:n(c.al),satis:n(c.s),qaliq:n(c.q),code:g(c.k),unit:'',qrup:g(c.g)}}).filter(function(m){return m.barkod||m.ad})}
+    return{barkod:g(c.b),ad:g(c.a),alis:n(c.al),satis:n(c.s),qaliq:n(c.q),code:g(c.k),unit:'',qrup:g(c.g),sonKont:g(c.sk)}}).filter(function(m){return m.barkod||m.ad})}
 function malTetbiq(arr,src){if(!arr.length){toast('Faylda mal tapılmadı','warn');return}
   mallar=arr;sj(MK,mallar);try{localStorage.setItem('anbar_mallar_ts',Date.now())}catch(e){}
   var qs={};mallar.forEach(function(m){if(m.qrup)qs[m.qrup]=(qs[m.qrup]||0)+1});qruplar=Object.keys(qs).map(function(k){return{ad:k,say:qs[k]}});sj(GRK,qruplar);
@@ -2163,7 +2238,7 @@ function hmac256(key,msg){if(key.length>64)key=sha256(key);var k=new Uint8Array(
 function hex(u){return Array.from(u).map(function(b){return('0'+b.toString(16)).slice(-2)}).join('')}
 function utf8(s){if(window.TextEncoder)return new TextEncoder().encode(s);var e=unescape(encodeURIComponent(s)),u=new Uint8Array(e.length);for(var i=0;i<e.length;i++)u[i]=e.charCodeAt(i);return u}
 
-var APPV='3.9.2',LNG='az',D={"Qovluqda sənəd":["Документов в папке","Klasördeki belge","Documents in folder"],"Sayımda məbləğ qiyməti":["Цена для суммы при инвентаризации","Sayımda tutar fiyatı","Price used for count amounts"],"Tədarükçü hesabatı":["Отчёт по поставщикам","Tedarikçi raporu","Supplier report"],"Gözləyən sənəd": ["Ожидают отправки", "Bekleyen belge", "Pending documents"], "Bu gün sənəd": ["Документов сегодня", "Bugün belge", "Documents today"], "Mal sayı": ["Товаров", "Ürün sayısı", "Items"], "Anbar əməliyyatları": ["Складские операции", "Depo işlemleri", "Warehouse operations"], "Mal qəbulu": ["Приёмка товара", "Mal kabulü", "Goods receipt"], "Təchizatçıdan daxil olan": ["Поступление от поставщика", "Tedarikçiden gelen", "Incoming from supplier"], "Mal qaytarma": ["Возврат товара", "Mal iadesi", "Goods return"], "Təchizatçıya qaytarılan": ["Возврат поставщику", "Tedarikçiye iade", "Returned to supplier"], "Mal sayımı": ["Инвентаризация", "Mal sayımı", "Stock count"], "Qrup üzrə inventarizasiya": ["По группам", "Gruba göre sayım", "Count by group"], "Mal silinməsi": ["Списание товара", "Mal silme", "Write-off"], "Zədəli, vaxtı keçmiş": ["Брак, просрочка", "Hasarlı, süresi geçmiş", "Damaged, expired"], "Mal satışı": ["Продажа товара", "Mal satışı", "Goods sale"], "Qiymət və qalıq ilə": ["С ценой и остатком", "Fiyat ve stok ile", "With price and stock"], "Qaimə tarixçəsi": ["История накладных", "Fatura geçmişi", "Document history"], "Əvvəlki əməliyyatlar": ["Прошлые операции", "Önceki işlemler", "Previous operations"], "Ödənişlər": ["Платежи", "Ödemeler", "Payments"], "Kassa mədaxil": ["Приход в кассу", "Kasa girişi", "Cash in"], "Daxil olan pul": ["Поступившие деньги", "Giren para", "Money received"], "Kassa məxaric": ["Расход из кассы", "Kasa çıkışı", "Cash out"], "Çıxan pul": ["Выданные деньги", "Çıkan para", "Money paid out"], "Hesabatlar": ["Отчёты", "Raporlar", "Reports"], "Anbar qalığı": ["Остатки на складе", "Depo stoğu", "Stock balance"], "Kontragent borcları": ["Долги контрагентов", "Cari borçlar", "Counterparty debts"], "Satış hesabatı": ["Отчёт по продажам", "Satış raporu", "Sales report"], "Kassa hesabatı": ["Кассовый отчёт", "Kasa raporu", "Cash report"], "Rejim və mal bazası": ["Режим и база товаров", "Mod ve ürün tabanı", "Mode and product base"], "🔄 Mal bazasını 1C-dən yüklə": ["🔄 Загрузить базу из 1С", "🔄 Ürün tabanını 1C'den yükle", "🔄 Load products from 1C"], "📄 Mal faylından yüklə (CSV)": ["📄 Загрузить из файла (CSV)", "📄 Dosyadan yükle (CSV)", "📄 Load from file (CSV)"], "Digər": ["Прочее", "Diğer", "Other"], "⚙️ Ayarlar": ["⚙️ Настройки", "⚙️ Ayarlar", "⚙️ Settings"], "📋 Sinxronizasiya jurnalı": ["📋 Журнал синхронизации", "📋 Senkronizasyon günlüğü", "📋 Sync log"], "🩺 Diaqnostika": ["🩺 Диагностика", "🩺 Tanılama", "🩺 Diagnostics"], "ℹ️ Proqram haqqında": ["ℹ️ О программе", "ℹ️ Program hakkında", "ℹ️ About"], "🔒 Məxfilik siyasəti": ["🔒 Политика конфиденциальности", "🔒 Gizlilik politikası", "🔒 Privacy policy"], "Bütün hüquqlar BarkodPRO-ya məxsusdur.": ["Все права принадлежат Хаялю Шыхалиеву, BarkodPRO.", "Tüm hakları BarkodPRO'ya aittir.", "All rights belong to, BarkodPRO."], "Online": ["Онлайн", "Çevrimiçi", "Online"], "Giriş səhvdir": ["Ошибка входа", "Giriş hatalı", "Login error"], "Server xətası": ["Ошибка сервера", "Sunucu hatası", "Server error"], "Server cavab vermir": ["Сервер не отвечает", "Sunucu yanıt vermiyor", "Server not responding"], "Oflayn rejim": ["Офлайн-режим", "Çevrimdışı mod", "Offline mode"], "Yoxlanılır": ["Проверка", "Kontrol ediliyor", "Checking"], "🟢 Rejim: ONLINE — 1C ilə işləyir (dəyiş)": ["🟢 Режим: ОНЛАЙН — работает с 1С (сменить)", "🟢 Mod: ÇEVRİMİÇİ — 1C ile çalışır (değiştir)", "🟢 Mode: ONLINE — works with 1C (change)"], "🔴 Rejim: OFLAYN — yaddaşa yazılır (dəyiş)": ["🔴 Режим: ОФЛАЙН — сохраняется в памяти (сменить)", "🔴 Mod: ÇEVRİMDIŞI — belleğe yazılır (değiştir)", "🔴 Mode: OFFLINE — saved to memory (change)"], "Bağlantı uğurludur": ["Связь установлена", "Bağlantı başarılı", "Connection OK"], "İstifadəçi və ya parol səhvdir": ["Неверный пользователь или пароль", "Kullanıcı veya parola hatalı", "Wrong user or password"], "Server xəta verdi": ["Сервер вернул ошибку", "Sunucu hata verdi", "Server returned an error"], "Server cavab vermir. Ünvanı və şəbəkəni yoxlayın": ["Сервер не отвечает. Проверьте адрес и сеть", "Sunucu yanıt vermiyor. Adresi ve ağı kontrol edin", "Server not responding. Check address and network"], "Oflayn rejimdir": ["Офлайн-режим", "Çevrimdışı moddasınız", "Offline mode"], "Ayarlar": ["Настройки", "Ayarlar", "Settings"], "Bağlantı, fayl və ehtiyat": ["Связь, файлы, резерв", "Bağlantı, dosya, yedek", "Connection, files, backup"], "Bağlantı": ["Подключение", "Bağlantı", "Connection"], "Server ünvanı": ["Адрес сервера", "Sunucu adresi", "Server address"], "Baza adı": ["Имя базы", "Veritabanı adı", "Database name"], "HTTP servis adı": ["Имя HTTP-сервиса", "HTTP servis adı", "HTTP service name"], "1C istifadəçi adı": ["Пользователь 1С", "1C kullanıcı adı", "1C username"], "1C parol": ["Пароль 1С", "1C parolası", "1C password"], "🔌 Bağlantını yoxla": ["🔌 Проверить связь", "🔌 Bağlantıyı kontrol et", "🔌 Test connection"], "Giriş açarı": ["Ключ доступа", "Erişim anahtarı", "Access key"], "Ödənişlər və hesabatlar yalnız açar daxil ediləndə görünür": ["Платежи и отчёты видны только при вводе ключа", "Ödemeler ve raporlar anahtar girilince görünür", "Payments and reports appear only with a key"], "Terminal": ["Терминал", "Terminal", "Terminal"], "Terminal adı": ["Имя терминала", "Terminal adı", "Terminal name"], "Anbar adı (1C-yə göndəriləcək)": ["Склад (передаётся в 1С)", "Depo adı (1C'ye gönderilir)", "Warehouse name (sent to 1C)"], "📷 QR ilə doldur": ["📷 Заполнить по QR", "📷 QR ile doldur", "📷 Fill from QR"], "Dil": ["Язык", "Dil", "Language"], "Cihaz": ["Устройство", "Cihaz", "Device"], "Ekran sönməsin": ["Не гасить экран", "Ekran kapanmasın", "Keep screen on"], "Batareya xəbərdarlığı": ["Предупреждение о батарее", "Pil uyarısı", "Battery warning"], "Avtomatik ehtiyat nüsxə": ["Автоматическая копия", "Otomatik yedek", "Automatic backup"], "Yan skan düyməsi": ["Боковая кнопка скана", "Yan tarama tuşu", "Side scan key"], "Düyməni öyrət": ["Назначить", "Tuşu öğret", "Assign"], "Eyni mal təkrar oxunanda": ["При повторном скане", "Aynı ürün tekrar okununca", "When the same item is rescanned"], "Sayı artır": ["Добавить кол-во", "Adedi artır", "Add quantity"], "Soruş": ["Спросить", "Sor", "Ask"], "Xəbərdarlıq": ["Предупредить", "Uyar", "Warn"], "PIN kod (4 rəqəm, boş = söndür)": ["PIN (4 цифры, пусто = выкл.)", "PIN (4 rakam, boş = kapalı)", "PIN (4 digits, empty = off)"], "Saxla": ["Сохранить", "Kaydet", "Save"], "Fayl rejimi": ["Файловый режим", "Dosya modu", "File mode"], "Sənədləri fayl kimi göndər": ["Отправлять документы файлами", "Belgeleri dosya olarak gönder", "Send documents as files"], "Fayllar": ["Файлы", "Dosyalar", "Files"], "📄 Mal faylını yüklə (CSV)": ["📄 Загрузить товары (CSV)", "📄 Ürün dosyasını yükle (CSV)", "📄 Load product file (CSV)"], "💾 Ayarları fayla saxla": ["💾 Сохранить настройки в файл", "💾 Ayarları dosyaya kaydet", "💾 Save settings to file"], "♻️ Ayarları geri yüklə": ["♻️ Восстановить настройки", "♻️ Ayarları geri yükle", "♻️ Restore settings"], "🗂 Ehtiyat fayl yarat (gözləyən sənədlər)": ["🗂 Создать резервный файл", "🗂 Yedek dosya oluştur", "🗂 Create backup file"], "Məbləğ": ["Сумма", "Tutar", "Amount"], "Kontragent": ["Контрагент", "Cari", "Counterparty"], "Ödəniş növü": ["Тип оплаты", "Ödeme türü", "Payment type"], "Nağd": ["Наличные", "Nakit", "Cash"], "Kart": ["Карта", "Kart", "Card"], "Bank": ["Банк", "Banka", "Bank"], "Qeyd": ["Примечание", "Not", "Note"], "Göndər": ["Отправить", "Gönder", "Send"], "Başlanğıc": ["С", "Başlangıç", "From"], "Son": ["По", "Bitiş", "To"], "Göstər": ["Показать", "Göster", "Show"], "Yüklənir...": ["Загрузка...", "Yükleniyor...", "Loading..."], "Məbləği yazın": ["Введите сумму", "Tutarı yazın", "Enter the amount"], "Şəbəkə yoxdur, yaddaşa yazıldı": ["Нет сети, сохранено в памяти", "Ağ yok, belleğe yazıldı", "No network, saved to memory"], "Giriş açarı yanlışdır": ["Неверный ключ доступа", "Erişim anahtarı hatalı", "Wrong access key"], "Jurnal boşdur": ["Журнал пуст", "Günlük boş", "Log is empty"], "Təmizlə": ["Очистить", "Temizle", "Clear"], "Son əməliyyatlar": ["Последние события", "Son işlemler", "Recent events"], "Cihaz və bağlantı": ["Устройство и связь", "Cihaz ve bağlantı", "Device and connection"], "Xoş gəlmisiniz": ["Добро пожаловать", "Hoş geldiniz", "Welcome"], "İlk quraşdırma": ["Первая настройка", "İlk kurulum", "First setup"], "Yoxla və başla": ["Проверить и начать", "Kontrol et ve başla", "Check and start"], "Server ünvanını yazın": ["Введите адрес сервера", "Sunucu adresini yazın", "Enter the server address"], "PIN kodunu daxil edin": ["Введите PIN-код", "PIN kodunu girin", "Enter PIN"], "PIN yanlışdır": ["Неверный PIN", "PIN hatalı", "Wrong PIN"], "PIN söndürüldü": ["PIN отключён", "PIN kapatıldı", "PIN disabled"], "PIN 4 rəqəm olmalıdır": ["PIN — 4 цифры", "PIN 4 rakam olmalı", "PIN must be 4 digits"], "PIN təyin olundu": ["PIN установлен", "PIN ayarlandı", "PIN set"], "Batareya zəifdir": ["Низкий заряд", "Pil zayıf", "Battery low"], "Skan düyməsinə basın": ["Нажмите кнопку скана", "Tarama tuşuna basın", "Press the scan key"], "Düymə yadda saxlandı": ["Кнопка сохранена", "Tuş kaydedildi", "Key saved"], "Bu mal artıq siyahıdadır": ["Товар уже в списке", "Bu ürün zaten listede", "Item is already in the list"]};
+var APPV='3.14.0',LNG='az',D={"Qovluqda sənəd":["Документов в папке","Klasördeki belge","Documents in folder"],"Sayımda məbləğ qiyməti":["Цена для суммы при инвентаризации","Sayımda tutar fiyatı","Price used for count amounts"],"Tədarükçü hesabatı":["Отчёт по поставщикам","Tedarikçi raporu","Supplier report"],"Gözləyən sənəd": ["Ожидают отправки", "Bekleyen belge", "Pending documents"], "Bu gün sənəd": ["Документов сегодня", "Bugün belge", "Documents today"], "Mal sayı": ["Товаров", "Ürün sayısı", "Items"], "Anbar əməliyyatları": ["Складские операции", "Depo işlemleri", "Warehouse operations"], "Mal qəbulu": ["Приёмка товара", "Mal kabulü", "Goods receipt"], "Təchizatçıdan daxil olan": ["Поступление от поставщика", "Tedarikçiden gelen", "Incoming from supplier"], "Mal qaytarma": ["Возврат товара", "Mal iadesi", "Goods return"], "Təchizatçıya qaytarılan": ["Возврат поставщику", "Tedarikçiye iade", "Returned to supplier"], "Mal sayımı": ["Инвентаризация", "Mal sayımı", "Stock count"], "Qrup üzrə inventarizasiya": ["По группам", "Gruba göre sayım", "Count by group"], "Mal silinməsi": ["Списание товара", "Mal silme", "Write-off"], "Zədəli, vaxtı keçmiş": ["Брак, просрочка", "Hasarlı, süresi geçmiş", "Damaged, expired"], "Mal satışı": ["Продажа товара", "Mal satışı", "Goods sale"], "Qiymət və qalıq ilə": ["С ценой и остатком", "Fiyat ve stok ile", "With price and stock"], "Qaimə tarixçəsi": ["История накладных", "Fatura geçmişi", "Document history"], "Əvvəlki əməliyyatlar": ["Прошлые операции", "Önceki işlemler", "Previous operations"], "Ödənişlər": ["Платежи", "Ödemeler", "Payments"], "Kassa mədaxil": ["Приход в кассу", "Kasa girişi", "Cash in"], "Daxil olan pul": ["Поступившие деньги", "Giren para", "Money received"], "Kassa məxaric": ["Расход из кассы", "Kasa çıkışı", "Cash out"], "Çıxan pul": ["Выданные деньги", "Çıkan para", "Money paid out"], "Hesabatlar": ["Отчёты", "Raporlar", "Reports"], "Anbar qalığı": ["Остатки на складе", "Depo stoğu", "Stock balance"], "Kontragent borcları": ["Долги контрагентов", "Cari borçlar", "Counterparty debts"], "Satış hesabatı": ["Отчёт по продажам", "Satış raporu", "Sales report"], "Kassa hesabatı": ["Кассовый отчёт", "Kasa raporu", "Cash report"], "Rejim və mal bazası": ["Режим и база товаров", "Mod ve ürün tabanı", "Mode and product base"], "🔄 Mal bazasını 1C-dən yüklə": ["🔄 Загрузить базу из 1С", "🔄 Ürün tabanını 1C'den yükle", "🔄 Load products from 1C"], "📄 Mal faylından yüklə (CSV)": ["📄 Загрузить из файла (CSV)", "📄 Dosyadan yükle (CSV)", "📄 Load from file (CSV)"], "Digər": ["Прочее", "Diğer", "Other"], "⚙️ Ayarlar": ["⚙️ Настройки", "⚙️ Ayarlar", "⚙️ Settings"], "📋 Sinxronizasiya jurnalı": ["📋 Журнал синхронизации", "📋 Senkronizasyon günlüğü", "📋 Sync log"], "🩺 Diaqnostika": ["🩺 Диагностика", "🩺 Tanılama", "🩺 Diagnostics"], "ℹ️ Proqram haqqında": ["ℹ️ О программе", "ℹ️ Program hakkında", "ℹ️ About"], "🔒 Məxfilik siyasəti": ["🔒 Политика конфиденциальности", "🔒 Gizlilik politikası", "🔒 Privacy policy"], "Bütün hüquqlar BarkodPRO-ya məxsusdur.": ["Все права принадлежат Хаялю Шыхалиеву, BarkodPRO.", "Tüm hakları BarkodPRO'ya aittir.", "All rights belong to, BarkodPRO."], "Online": ["Онлайн", "Çevrimiçi", "Online"], "Giriş səhvdir": ["Ошибка входа", "Giriş hatalı", "Login error"], "Server xətası": ["Ошибка сервера", "Sunucu hatası", "Server error"], "Server cavab vermir": ["Сервер не отвечает", "Sunucu yanıt vermiyor", "Server not responding"], "Oflayn rejim": ["Офлайн-режим", "Çevrimdışı mod", "Offline mode"], "Yoxlanılır": ["Проверка", "Kontrol ediliyor", "Checking"], "🟢 Rejim: ONLINE — 1C ilə işləyir (dəyiş)": ["🟢 Режим: ОНЛАЙН — работает с 1С (сменить)", "🟢 Mod: ÇEVRİMİÇİ — 1C ile çalışır (değiştir)", "🟢 Mode: ONLINE — works with 1C (change)"], "🔴 Rejim: OFLAYN — yaddaşa yazılır (dəyiş)": ["🔴 Режим: ОФЛАЙН — сохраняется в памяти (сменить)", "🔴 Mod: ÇEVRİMDIŞI — belleğe yazılır (değiştir)", "🔴 Mode: OFFLINE — saved to memory (change)"], "Bağlantı uğurludur": ["Связь установлена", "Bağlantı başarılı", "Connection OK"], "İstifadəçi və ya parol səhvdir": ["Неверный пользователь или пароль", "Kullanıcı veya parola hatalı", "Wrong user or password"], "Server xəta verdi": ["Сервер вернул ошибку", "Sunucu hata verdi", "Server returned an error"], "Server cavab vermir. Ünvanı və şəbəkəni yoxlayın": ["Сервер не отвечает. Проверьте адрес и сеть", "Sunucu yanıt vermiyor. Adresi ve ağı kontrol edin", "Server not responding. Check address and network"], "Oflayn rejimdir": ["Офлайн-режим", "Çevrimdışı moddasınız", "Offline mode"], "Ayarlar": ["Настройки", "Ayarlar", "Settings"], "Bağlantı, fayl və ehtiyat": ["Связь, файлы, резерв", "Bağlantı, dosya, yedek", "Connection, files, backup"], "Bağlantı": ["Подключение", "Bağlantı", "Connection"], "Server ünvanı": ["Адрес сервера", "Sunucu adresi", "Server address"], "Baza adı": ["Имя базы", "Veritabanı adı", "Database name"], "HTTP servis adı": ["Имя HTTP-сервиса", "HTTP servis adı", "HTTP service name"], "1C istifadəçi adı": ["Пользователь 1С", "1C kullanıcı adı", "1C username"], "1C parol": ["Пароль 1С", "1C parolası", "1C password"], "🔌 Bağlantını yoxla": ["🔌 Проверить связь", "🔌 Bağlantıyı kontrol et", "🔌 Test connection"], "Giriş açarı": ["Ключ доступа", "Erişim anahtarı", "Access key"], "Ödənişlər və hesabatlar yalnız açar daxil ediləndə görünür": ["Платежи и отчёты видны только при вводе ключа", "Ödemeler ve raporlar anahtar girilince görünür", "Payments and reports appear only with a key"], "Terminal": ["Терминал", "Terminal", "Terminal"], "Terminal adı": ["Имя терминала", "Terminal adı", "Terminal name"], "Anbar adı (1C-yə göndəriləcək)": ["Склад (передаётся в 1С)", "Depo adı (1C'ye gönderilir)", "Warehouse name (sent to 1C)"], "📷 QR ilə doldur": ["📷 Заполнить по QR", "📷 QR ile doldur", "📷 Fill from QR"], "Dil": ["Язык", "Dil", "Language"], "Cihaz": ["Устройство", "Cihaz", "Device"], "Ekran sönməsin": ["Не гасить экран", "Ekran kapanmasın", "Keep screen on"], "Batareya xəbərdarlığı": ["Предупреждение о батарее", "Pil uyarısı", "Battery warning"], "Avtomatik ehtiyat nüsxə": ["Автоматическая копия", "Otomatik yedek", "Automatic backup"], "Yan skan düyməsi": ["Боковая кнопка скана", "Yan tarama tuşu", "Side scan key"], "Düyməni öyrət": ["Назначить", "Tuşu öğret", "Assign"], "Eyni mal təkrar oxunanda": ["При повторном скане", "Aynı ürün tekrar okununca", "When the same item is rescanned"], "Sayı artır": ["Добавить кол-во", "Adedi artır", "Add quantity"], "Soruş": ["Спросить", "Sor", "Ask"], "Xəbərdarlıq": ["Предупредить", "Uyar", "Warn"], "PIN kod (4 rəqəm, boş = söndür)": ["PIN (4 цифры, пусто = выкл.)", "PIN (4 rakam, boş = kapalı)", "PIN (4 digits, empty = off)"], "Saxla": ["Сохранить", "Kaydet", "Save"], "Fayl rejimi": ["Файловый режим", "Dosya modu", "File mode"], "Sənədləri fayl kimi göndər": ["Отправлять документы файлами", "Belgeleri dosya olarak gönder", "Send documents as files"], "Fayllar": ["Файлы", "Dosyalar", "Files"], "📄 Mal faylını yüklə (CSV)": ["📄 Загрузить товары (CSV)", "📄 Ürün dosyasını yükle (CSV)", "📄 Load product file (CSV)"], "💾 Ayarları fayla saxla": ["💾 Сохранить настройки в файл", "💾 Ayarları dosyaya kaydet", "💾 Save settings to file"], "♻️ Ayarları geri yüklə": ["♻️ Восстановить настройки", "♻️ Ayarları geri yükle", "♻️ Restore settings"], "🗂 Ehtiyat fayl yarat (gözləyən sənədlər)": ["🗂 Создать резервный файл", "🗂 Yedek dosya oluştur", "🗂 Create backup file"], "Məbləğ": ["Сумма", "Tutar", "Amount"], "Kontragent": ["Контрагент", "Cari", "Counterparty"], "Ödəniş növü": ["Тип оплаты", "Ödeme türü", "Payment type"], "Nağd": ["Наличные", "Nakit", "Cash"], "Kart": ["Карта", "Kart", "Card"], "Bank": ["Банк", "Banka", "Bank"], "Qeyd": ["Примечание", "Not", "Note"], "Göndər": ["Отправить", "Gönder", "Send"], "Başlanğıc": ["С", "Başlangıç", "From"], "Son": ["По", "Bitiş", "To"], "Göstər": ["Показать", "Göster", "Show"], "Yüklənir...": ["Загрузка...", "Yükleniyor...", "Loading..."], "Məbləği yazın": ["Введите сумму", "Tutarı yazın", "Enter the amount"], "Şəbəkə yoxdur, yaddaşa yazıldı": ["Нет сети, сохранено в памяти", "Ağ yok, belleğe yazıldı", "No network, saved to memory"], "Giriş açarı yanlışdır": ["Неверный ключ доступа", "Erişim anahtarı hatalı", "Wrong access key"], "Jurnal boşdur": ["Журнал пуст", "Günlük boş", "Log is empty"], "Təmizlə": ["Очистить", "Temizle", "Clear"], "Son əməliyyatlar": ["Последние события", "Son işlemler", "Recent events"], "Cihaz və bağlantı": ["Устройство и связь", "Cihaz ve bağlantı", "Device and connection"], "Xoş gəlmisiniz": ["Добро пожаловать", "Hoş geldiniz", "Welcome"], "İlk quraşdırma": ["Первая настройка", "İlk kurulum", "First setup"], "Yoxla və başla": ["Проверить и начать", "Kontrol et ve başla", "Check and start"], "Server ünvanını yazın": ["Введите адрес сервера", "Sunucu adresini yazın", "Enter the server address"], "PIN kodunu daxil edin": ["Введите PIN-код", "PIN kodunu girin", "Enter PIN"], "PIN yanlışdır": ["Неверный PIN", "PIN hatalı", "Wrong PIN"], "PIN söndürüldü": ["PIN отключён", "PIN kapatıldı", "PIN disabled"], "PIN 4 rəqəm olmalıdır": ["PIN — 4 цифры", "PIN 4 rakam olmalı", "PIN must be 4 digits"], "PIN təyin olundu": ["PIN установлен", "PIN ayarlandı", "PIN set"], "Batareya zəifdir": ["Низкий заряд", "Pil zayıf", "Battery low"], "Skan düyməsinə basın": ["Нажмите кнопку скана", "Tarama tuşuna basın", "Press the scan key"], "Düymə yadda saxlandı": ["Кнопка сохранена", "Tuş kaydedildi", "Key saved"], "Bu mal artıq siyahıdadır": ["Товар уже в списке", "Bu ürün zaten listede", "Item is already in the list"]};
 function t(x){var d=D[x];if(!d||LNG==='az')return x;return d[{ru:0,tr:1,en:2}[LNG]]||x}
 function trApply(){document.querySelectorAll('[data-i]').forEach(function(e){if(!e._az)e._az=e.getAttribute('data-i');e.textContent=t(e._az)})}
 function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -2176,6 +2251,9 @@ function menuGor(){['secOd','secHes'].forEach(function(i){var e=document.getElem
 var _pd0=paramDoldur;paramDoldur=function(){_pd0();var a=document.getElementById('cfgAcar');if(a)a.value=CFG.acar||'';
   ['ekran','bat','ehtiyat','fayl','klav','kamera'].forEach(function(k){var w=document.getElementById('sw_'+k);if(w){w.className='n-sw'+(CFG[k]?' on':'');w.setAttribute('aria-checked',CFG[k]?'true':'false')}});
   (function(){var on=(CFG.avtoQiymet!==false);var w=document.getElementById('sw_avtoQiymet');if(w){w.className='n-sw'+(on?' on':'');w.setAttribute('aria-checked',on?'true':'false')}})();
+  ['gorAlis','gorSatis','gorQaliq','gorSonKont'].forEach(function(k){var on=(CFG[k]!==false);var w=document.getElementById('sw_'+k);if(w){w.className='n-sw'+(on?' on':'');w.setAttribute('aria-checked',on?'true':'false')}});
+  bolmeRender();
+  var _cp=document.getElementById('cfgCekiPrefiks');if(_cp)_cp.value=(CFG.cekiPrefiks||'');
   var _ce=document.getElementById('cfgEndirim');if(_ce)_ce.value=(CFG.endirimFaiz!=null?CFG.endirimFaiz:10);
   var _cq=document.getElementById('cfgQazanc');if(_cq)_cq.value=(CFG.qazancFaiz!=null?CFG.qazancFaiz:25);
   ['miAlis','miSatis','miQaliq'].forEach(function(k){var on=(CFG[k]!==false);var w=document.getElementById('sw_'+k);if(w){w.className='n-sw'+(on?' on':'');w.setAttribute('aria-checked',on?'true':'false')}});
@@ -2185,7 +2263,7 @@ var _pd0=paramDoldur;paramDoldur=function(){_pd0();var a=document.getElementById
 var _cs0=cfgSaxla;cfgSaxla=function(){_cs0();var e=document.getElementById('cfgAcar');if(e){CFG.acar=e.value.trim();sj('anbar_cfg',CFG);menuGor()}};
 function tgl(k){
   // Default-açıq açarlar (undefined = açıq): ilk basış söndürsün
-  if(k==='miAlis'||k==='miSatis'||k==='miQaliq'||k==='avtoQiymet'){CFG[k]=(CFG[k]===false);}
+  if(k==='miAlis'||k==='miSatis'||k==='miQaliq'||k==='avtoQiymet'||k==='gorAlis'||k==='gorSatis'||k==='gorQaliq'||k==='gorSonKont'){CFG[k]=(CFG[k]===false);}
   else{CFG[k]=!CFG[k];}
   sj('anbar_cfg',CFG);paramDoldur();if(k==='ekran')wakeTetbiq();if(k==='bat')batIzle();if(k==='kamera')kameraDuymeleriGoster()}
 // ── Kamera formatları ──
@@ -2235,6 +2313,37 @@ function kamFormatRender(){
        '</div>';
   });
   el.innerHTML=h;
+}
+
+// Ayarlar qruplarını açılıb-bağlanan (accordion) et — bir dəfə qurulur
+var _ayarAccordionQuruldu=false;
+function ayarAccordionQur(){
+  if(_ayarAccordionQuruldu)return;
+  var sp=document.getElementById('sParam');if(!sp)return;
+  var kok=sp.querySelector('.n-hd')?sp.querySelector('.n-hd').parentNode:sp;
+  // Bütün n-grp başlıqlarını tap
+  var grps=sp.querySelectorAll('.n-grp');
+  for(var i=0;i<grps.length;i++){
+    var g=grps[i];
+    // ok işarəsi
+    if(!g.querySelector('.n-grp-ok')){var ok=document.createElement('span');ok.className='n-grp-ok';ok.textContent='▸';g.appendChild(ok);}
+    // bu qrupdan sonrakı elementləri (növbəti n-grp-a qədər) icerik div-ə yığ
+    var icerik=document.createElement('div');icerik.className='n-grp-icerik';
+    var nd=g.nextSibling;
+    while(nd&&!(nd.nodeType===1&&nd.classList&&nd.classList.contains('n-grp'))){
+      var next=nd.nextSibling;
+      icerik.appendChild(nd);
+      nd=next;
+    }
+    g.parentNode.insertBefore(icerik,nd);
+    g._icerik=icerik;
+    g.addEventListener('click',function(){
+      var ic=this._icerik;
+      var aciq=this.classList.toggle('acik');
+      if(ic)ic.classList.toggle('acik',aciq);
+    });
+  }
+  _ayarAccordionQuruldu=true;
 }
 
 function kameraDuymeleriGoster(){
@@ -2337,6 +2446,89 @@ async function sha(x){return hex(sha256(utf8('bp:'+x)))}
 function pinGoster(){if(!CFG.pinHash)return;document.getElementById('pinBox').style.display='flex';var i=document.getElementById('pinInp');i.value='';i.focus()}
 async function pinYoxla(){var i=document.getElementById('pinInp');if(i.value.length<4)return;if(await sha(i.value)===CFG.pinHash){document.getElementById('pinBox').style.display='none';document.getElementById('pinErr').textContent=''}else{i.value='';document.getElementById('pinErr').textContent=t('PIN yanlışdır')}}
 async function pinQur(){var v=document.getElementById('cfgPin').value.trim();if(!v){delete CFG.pinHash;sj('anbar_cfg',CFG);toast(t('PIN söndürüldü'),'info');return}if(!/^\d{4}$/.test(v)){toast(t('PIN 4 rəqəm olmalıdır'),'warn');return}CFG.pinHash=await sha(v);sj('anbar_cfg',CFG);document.getElementById('cfgPin').value='';toast(t('PIN təyin olundu'),'ok')}
+
+// ══════════════════════════════════════
+//  AYARLAR ŞİFRƏSİ (default: 0000)
+// ══════════════════════════════════════
+var AYAR_DEFAULT_SIFRE='8236732'; // ilk dəfə / şifrə təyin edilməyibsə
+async function ayarSifreHash(){
+  if(CFG.ayarSifreHash)return CFG.ayarSifreHash;
+  return await sha(AYAR_DEFAULT_SIFRE);
+}
+function ayarAc(){
+  // Ayarlar həmişə şifrə istəyir
+  var box=document.getElementById('ayarPinBox');
+  box.style.display='flex';
+  var i=document.getElementById('ayarPinInp');i.value='';document.getElementById('ayarPinErr').textContent='';
+  setTimeout(function(){i.focus();},80);
+}
+function ayarPinBagla(){document.getElementById('ayarPinBox').style.display='none';}
+async function ayarPinYoxla(){
+  var i=document.getElementById('ayarPinInp');
+  var v=i.value.trim();
+  if(!v){return;}
+  var dogru=await ayarSifreHash();
+  if(await sha(v)===dogru){
+    document.getElementById('ayarPinBox').style.display='none';
+    i.value='';
+    ayarAccordionQur();
+    screenAc('sParam');
+  }else{
+    i.value='';
+    document.getElementById('ayarPinErr').textContent='Şifrə yanlışdır';
+  }
+}
+// Şifrəni dəyiş (ayarlar içindən)
+async function ayarSifreDeyis(){
+  var k=document.getElementById('cfgAyarSifre');
+  var v=(k?k.value:'').trim();
+  if(!v){toast('Şifrə boş ola bilməz','warn');return;}
+  CFG.ayarSifreHash=await sha(v);
+  sj('anbar_cfg',CFG);
+  if(k)k.value='';
+  toast('Ayarlar şifrəsi dəyişdirildi','ok');
+}
+
+// ══════════════════════════════════════
+//  BÖLMƏ İCAZƏLƏRİ (ana ekran tile-ları)
+// ══════════════════════════════════════
+var BOLMELER=[
+  {k:'qebul',ad:'Mal qəbulu'},
+  {k:'qaytarma',ad:'Mal qaytarma'},
+  {k:'sayim',ad:'Mal sayımı'},
+  {k:'silinme',ad:'Mal silinməsi'},
+  {k:'satis',ad:'Mal satışı'},
+  {k:'tarix',ad:'Qaimə tarixçəsi'},
+  {k:'malinfo',ad:'Mal məlumatı'},
+  {k:'kassa_medaxil',ad:'Kassa mədaxil'},
+  {k:'kassa_mexaric',ad:'Kassa məxaric'}
+];
+function bolmeAcivmi(k){var p=CFG.bolmePerm;if(!p||typeof p!=='object')return true;return p[k]!==false;}
+function bolmeleriTetbiq(){
+  var tiles=document.querySelectorAll('[data-perm]');
+  for(var i=0;i<tiles.length;i++){
+    var k=tiles[i].getAttribute('data-perm');
+    tiles[i].style.display=bolmeAcivmi(k)?'':'none';
+  }
+}
+function bolmeToggle(k){
+  if(!CFG.bolmePerm||typeof CFG.bolmePerm!=='object'){CFG.bolmePerm={};BOLMELER.forEach(function(b){CFG.bolmePerm[b.k]=bolmeAcivmi(b.k);});}
+  CFG.bolmePerm[k]=!CFG.bolmePerm[k];
+  sj('anbar_cfg',CFG);
+  bolmeRender();bolmeleriTetbiq();
+}
+function bolmeRender(){
+  var el=document.getElementById('bolmeList');if(!el)return;
+  var h='';
+  BOLMELER.forEach(function(b){
+    var on=bolmeAcivmi(b.k);
+    h+='<div style="display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid #f1f5f9">'+
+       '<div style="flex:1;font-size:13.5px;color:#0f172a">'+b.ad+'</div>'+
+       '<button type="button" class="n-sw'+(on?' on':'')+'" role="switch" aria-checked="'+(on?'true':'false')+'" onclick="bolmeToggle(\''+b.k+'\')"></button>'+
+       '</div>';
+  });
+  el.innerHTML=h;
+}
 var _gz=0;document.addEventListener('visibilitychange',function(){if(document.hidden)_gz=Date.now();else{wakeTetbiq();if(CFG.pinHash&&Date.now()-_gz>300000)pinGoster()}});
 // ═══ Mal sayımı: hər oxumada +1, sistem/sayılan miqdar, məbləğ fərqi ═══
 function qebulQaliqChip(it){var mm=mallar.find(function(x){return x.barkod===it.barkod&&(x.code||'')===(it.code||'')})||mallar.find(function(x){return x.barkod===it.barkod});
@@ -2525,7 +2717,7 @@ function yaddasaYaz(){var b=document.getElementById('btnSaxla');
   toast('💾 Yaddaşa yazıldı ('+siyahi.length+' mal) — qaralama kimi saxlanıldı','ok')}
 function basla(){var ilk=!CFG.hazir&&!localStorage.getItem('anbar_cfg');
   if(CFG.ekran===undefined)CFG.ekran=true;if(CFG.bat===undefined)CFG.bat=true;if(CFG.ehtiyat===undefined)CFG.ehtiyat=true;CFG.dubl=CFG.dubl||'sorus';CFG.sayQiy=CFG.sayQiy||'alis';CFG.dil=CFG.dil||'az';LNG=CFG.dil;
-  lstTetbiq();modUI();init();homeStat();qovlugHazirla().then(function(){return autoFayl()}).then(function(){ftpAvtoBasla()});menuGor();trApply();durumYoxla();kameraDuymeleriGoster();
+  lstTetbiq();modUI();init();homeStat();qovlugHazirla().then(function(){return autoFayl()}).then(function(){ftpAvtoBasla()});menuGor();trApply();durumYoxla();kameraDuymeleriGoster();bolmeleriTetbiq();
   setInterval(durumYoxla,20000);setInterval(homeStat,15000);setInterval(ehtiyatDovr,600000);window.addEventListener('online',durumYoxla);wakeTetbiq();batIzle();
   if(ilk){paramDoldur();screenAc('sWizard')}else pinGoster()}
 restoreBackup().then(basla,basla);
