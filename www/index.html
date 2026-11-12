@@ -301,7 +301,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="sync-info" id="syncSt">—</div>
     <div class="n-lbl" data-i="Digər">Digər</div>
     <button class="btn-home" onclick="ayarAc()" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
-    <div class="n-foot">Anbar Terminal v3.15.0<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
+    <div class="n-foot">Anbar Terminal v3.15.1<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
   </div>
 </div>
 
@@ -1817,7 +1817,7 @@ function docCur(){
   return{id:curDraftId||(curDraftId=Date.now()),op:curOp,anbar:CFG.anbarAd,tarix:h.tar,kontragent:h.ted,qeyd:h.qeyd,siyahi:siyahi,editNo:curEditNo||'',movqe:siyahi.length,cemi:tots().alis.toFixed(2)};
 }
 function mkPayload(d){
-  var p={emeliyyat:d.op||d.emeliyyat,anbar:cl(d.anbar||d.anbarAd||CFG.anbarAd),tarix:d.tarix||bugunStr(),kontragent:cl(d.kontragent||d.ted),qeyd:cl(d.qeyd),
+  var _op=d.op||d.emeliyyat;var p={emeliyyat:(_op==='qiymet'?'qebul':_op),menbe:(_op==='qiymet'?'qiymet':undefined),anbar:cl(d.anbar||d.anbarAd||CFG.anbarAd),tarix:d.tarix||bugunStr(),kontragent:cl(d.kontragent||d.ted),qeyd:cl(d.qeyd),
     siyahi:(d.siyahi||[]).slice().reverse().map(function(s){return{barkod:cl(s.barkod),ad:cl(s.ad),say:s.say,alis:Math.round((s.alis||0)*10000)/10000,satis:Math.round((s.satis||0)*10000)/10000,yeni:!!s.yeni,code:cl(s.code),sis:(s.sis!=null?s.sis:undefined)};}),
     clientId:String(d.id),tarixYaz:new Date().toISOString()};
   if(d.editNo)p.no=d.editNo;
