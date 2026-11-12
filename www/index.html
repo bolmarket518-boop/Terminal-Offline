@@ -246,6 +246,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 /* OFFLINE BADGE */
 .offline-badge{background:#FAEEDA;border:1px solid #EF9F27;border-radius:8px;padding:8px 12px;font-size:12px;color:var(--a1);font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:0}
 @supports(height:100dvh){.modal-box{height:100dvh;max-height:100dvh}}
+.topbar.qiymet-bg{background:var(--p1)}.stats-strip.qiymet-bg{background:var(--p2)}.result-found.qiymet{background:var(--p4);border-color:var(--p3)}.found-badge.qiymet{background:var(--p1)}.btn-elave.qiymet{background:var(--p1)}.cnt-pill.qiymet{background:var(--p4);color:var(--p1)}.mal-num.qiymet{background:var(--p4);color:var(--p1)}.total-hdr.qiymet{background:var(--p4)}.total-hdr.qiymet .total-hdr-txt{color:var(--p1)}.btn-gonder.qiymet{background:var(--p1)}.qk-badge.qiymet{background:var(--p4);color:var(--p1)}
 </style>
 <script src="html5-qrcode.min.js"></script>
 <style>
@@ -274,6 +275,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 .n-row{display:flex;width:100%;justify-content:space-between;align-items:center;border:0;border-top:1px solid #f1f5f9;background:#fff;padding:14px;font-size:14px;font-weight:600;color:#0f172a;text-align:left}.n-row:first-child{border-top:0}.n-row span{color:#94a3b8}
 .n-sw{position:relative;flex:none;width:44px;height:26px;border:0;border-radius:999px;background:#cbd5e1;padding:0}.n-sw.on{background:#1d4ed8}.n-sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s}.n-sw.on::after{left:20px}
 .n-stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.n-seg{display:flex;gap:4px;background:#e2e8f0;border-radius:12px;padding:4px}.n-seg button{flex:1;border:0;border-radius:9px;padding:9px 0;font-size:13px;font-weight:700;color:#475569;background:transparent}.n-seg button.on{background:#1d4ed8;color:#fff}.n-lab2{display:block;font-size:11.5px;font-weight:600;color:#64748b;margin-bottom:4px}.n-tb{width:100%;border-collapse:collapse;font-size:13px}.n-tb th,.n-tb td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left}.n-tb th{background:#f8fafc;color:#64748b;font-size:11.5px}#hesTar{display:flex}.lst-k .mal-kart{padding:4px 7px;gap:6px;border-radius:8px}.lst-k .mal-num{width:20px;height:20px;font-size:10px}.lst-k .mal-ad{font-size:12px}.lst-k .mal-meta{margin-top:1px;gap:3px}.lst-k .chip{font-size:10px;padding:1px 5px}.lst-k .mal-edit,.lst-k .mal-del{width:26px;height:26px;font-size:12px}.lst-k #listCont{gap:3px!important}.lst-b .mal-kart{padding:11px 12px}.lst-b .mal-ad{font-size:15px}.lst-b .mal-num{width:28px;height:28px;font-size:12px}.lst-b .chip{font-size:12px;padding:3px 8px}.lst-b .mal-edit,.lst-b .mal-del{width:36px;height:36px}.nflash{animation:nflash 1.4s ease-out}@keyframes nflash{0%{background:#bfdbfe;box-shadow:0 0 0 3px #3b82f6}100%{background:transparent;box-shadow:none}}#secOd,#secHes,#modBtn,#pendBtn{display:none!important}@media (orientation:landscape){#spl img{object-fit:contain!important}}#sOp.sayim-mod .ep-pr{display:none}
+.topbar.qiymet-bg{background:var(--p1)}.stats-strip.qiymet-bg{background:var(--p2)}.result-found.qiymet{background:var(--p4);border-color:var(--p3)}.found-badge.qiymet{background:var(--p1)}.btn-elave.qiymet{background:var(--p1)}.cnt-pill.qiymet{background:var(--p4);color:var(--p1)}.mal-num.qiymet{background:var(--p4);color:var(--p1)}.total-hdr.qiymet{background:var(--p4)}.total-hdr.qiymet .total-hdr-txt{color:var(--p1)}.btn-gonder.qiymet{background:var(--p1)}.qk-badge.qiymet{background:var(--p4);color:var(--p1)}
 </style>
 </head>
 <body>
@@ -288,7 +290,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="n-stats3"><div class="n-st"><b id="stGoz">0</b><span data-i="Qovluqda sənəd">Yüklənməyən sənəd</span></div><div class="n-st"><b id="stBug">0</b><span data-i="Bu gün sənəd">Bu gün sənəd</span></div><div class="n-st"><b id="stMal">0</b><span data-i="Mal sayı">Mal sayı</span></div></div>
     <button class="btn-home" id="ftpBtn" onclick="ftpTogl()" style="margin-top:12px"></button>
     <div class="n-lbl" data-i="Anbar əməliyyatları">Anbar əməliyyatları</div>
-    <div class="n-grid"><div class="n-tile" data-perm="qebul" onclick="qebulGiris()"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qəbulu">Mal qəbulu</div><div class="n-td" data-i="Təchizatçıdan daxil olan">Təchizatçıdan daxil olan</div></div></div><div class="n-tile" data-perm="qaytarma" onclick="opGiris('qaytarma')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qaytarma">Mal qaytarma</div><div class="n-td" data-i="Təchizatçıya qaytarılan">Təchizatçıya qaytarılan</div></div></div><div class="n-tile" data-perm="sayim" onclick="opGiris('sayim')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="n-tt" data-i="Mal sayımı">Mal sayımı</div><div class="n-td" data-i="Qrup üzrə inventarizasiya">Qrup üzrə inventarizasiya</div></div></div><div class="n-tile" data-perm="silinme" onclick="opGiris('silinme')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></div><div><div class="n-tt" data-i="Mal silinməsi">Mal silinməsi</div><div class="n-td" data-i="Zədəli, vaxtı keçmiş">Zədəli, vaxtı keçmiş</div></div></div><div class="n-tile" data-perm="satis" onclick="opGiris('satis')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2 11h10l2-8H7M9 20h.01M17 20h.01"/></svg></div><div><div class="n-tt" data-i="Mal satışı">Mal satışı</div><div class="n-td" data-i="Qiymət və qalıq ilə">Qiymət və qalıq ilə</div></div></div><div class="n-tile" data-perm="tarix" onclick="screenAc('sTarix')"><div class="n-ic" style="background:#f1f5f9"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2M21 12a9 9 0 11-3-6.7L21 8M21 3v5h-5"/></svg></div><div><div class="n-tt" data-i="Qaimə tarixçəsi">Qaimə tarixçəsi</div><div class="n-td" data-i="Əvvəlki əməliyyatlar">Əvvəlki əməliyyatlar</div></div></div><div class="n-tile" data-perm="malinfo" onclick="malMelumatAc()"><div class="n-ic" style="background:#fef9c3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v.01M11 11v3"/></svg></div><div><div class="n-tt">Mal məlumatı</div><div class="n-td">Qiymət və qalıq öyrən</div></div></div></div>
+    <div class="n-grid"><div class="n-tile" data-perm="qebul" onclick="qebulGiris()"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qəbulu">Mal qəbulu</div><div class="n-td" data-i="Təchizatçıdan daxil olan">Təchizatçıdan daxil olan</div></div></div><div class="n-tile" data-perm="qaytarma" onclick="opGiris('qaytarma')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 20h16"/></svg></div><div><div class="n-tt" data-i="Mal qaytarma">Mal qaytarma</div><div class="n-td" data-i="Təchizatçıya qaytarılan">Təchizatçıya qaytarılan</div></div></div><div class="n-tile" data-perm="sayim" onclick="opGiris('sayim')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="n-tt" data-i="Mal sayımı">Mal sayımı</div><div class="n-td" data-i="Qrup üzrə inventarizasiya">Qrup üzrə inventarizasiya</div></div></div><div class="n-tile" data-perm="silinme" onclick="opGiris('silinme')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></div><div><div class="n-tt" data-i="Mal silinməsi">Mal silinməsi</div><div class="n-td" data-i="Zədəli, vaxtı keçmiş">Zədəli, vaxtı keçmiş</div></div></div><div class="n-tile" data-perm="satis" onclick="opGiris('satis')"><div class="n-ic" style="background:#eff6ff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2 11h10l2-8H7M9 20h.01M17 20h.01"/></svg></div><div><div class="n-tt" data-i="Mal satışı">Mal satışı</div><div class="n-td" data-i="Qiymət və qalıq ilə">Qiymət və qalıq ilə</div></div></div><div class="n-tile" data-perm="qiymet" onclick="opGiris('qiymet')"><div class="n-ic" style="background:#EEEDFE"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3C3489" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><path d="M7.5 7.5h.01"/></svg></div><div><div class="n-tt" data-i="Qiymət sənədi">Qiymət sənədi</div><div class="n-td" data-i="Mövcud malların qiyməti">Mövcud malların qiyməti</div></div></div><div class="n-tile" data-perm="tarix" onclick="screenAc('sTarix')"><div class="n-ic" style="background:#f1f5f9"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2M21 12a9 9 0 11-3-6.7L21 8M21 3v5h-5"/></svg></div><div><div class="n-tt" data-i="Qaimə tarixçəsi">Qaimə tarixçəsi</div><div class="n-td" data-i="Əvvəlki əməliyyatlar">Əvvəlki əməliyyatlar</div></div></div><div class="n-tile" data-perm="malinfo" onclick="malMelumatAc()"><div class="n-ic" style="background:#fef9c3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v.01M11 11v3"/></svg></div><div><div class="n-tt">Mal məlumatı</div><div class="n-td">Qiymət və qalıq öyrən</div></div></div></div>
     <div id="secOd"><div class="n-lbl" data-i="Ödənişlər">Ödənişlər</div><div class="n-grid"><div class="n-tile" data-perm="kassa_medaxil" onclick="kassaAc('kassa_medaxil')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa mədaxil">Kassa mədaxil</div><div class="n-td" data-i="Daxil olan pul">Daxil olan pul</div></div></div><div class="n-tile" data-perm="kassa_mexaric" onclick="kassaAc('kassa_mexaric')"><div class="n-ic" style="background:#f0fdf4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></div><div><div class="n-tt" data-i="Kassa məxaric">Kassa məxaric</div><div class="n-td" data-i="Çıxan pul">Çıxan pul</div></div></div></div></div>
     <div id="secHes"><div class="n-lbl" data-i="Hesabatlar">Hesabatlar</div><div class="n-card"><button class="n-row" onclick="hesabatAc('qaliq','Anbar qalığı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Anbar qalığı">Anbar qalığı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('borc','Kontragent borcları')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kontragent borcları">Kontragent borcları</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('tedhes','Tədarükçü hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Tədarükçü hesabatı">Tədarükçü hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('satis','Satış hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Satış hesabatı">Satış hesabatı</span></span><span>›</span></button><button class="n-row" onclick="hesabatAc('kassa','Kassa hesabatı')"><span style="display:flex;align-items:center;gap:10px;color:#0f172a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span data-i="Kassa hesabatı">Kassa hesabatı</span></span><span>›</span></button></div></div>
     <div class="n-lbl" data-i="Sinxronizasiya ">Sinxronizasiya </div>
@@ -299,7 +301,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
     <div class="sync-info" id="syncSt">—</div>
     <div class="n-lbl" data-i="Digər">Digər</div>
     <button class="btn-home" onclick="ayarAc()" data-i="⚙️ Ayarlar" style="color:var(--p2);border-color:var(--p3)">⚙️ Ayarlar</button><button class="btn-home" onclick="jurnalGor()" data-i="📋 Sinxronizasiya jurnalı" style="color:#374151">📋 Sinxronizasiya jurnalı</button><button class="btn-home" onclick="screenAc('sHaqqinda')" data-i="ℹ️ Proqram haqqında" style="color:#374151">ℹ️ Proqram haqqında</button><button class="btn-home" onclick="screenAc('sMexfilik')" data-i="🔒 Məxfilik siyasəti" style="color:#374151">🔒 Məxfilik siyasəti</button>
-    <div class="n-foot">Anbar Terminal v3.14.3<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
+    <div class="n-foot">Anbar Terminal v3.15.0<br><span data-i="Bütün hüquqlar BarkodPRO-ya məxsusdur.">Bütün hüquqlar BarkodPRO-ya məxsusdur.</span></div>
   </div>
 </div>
 
@@ -597,6 +599,7 @@ body{font-family:var(--font);background:#f0f4f8;min-height:100vh;overflow-x:hidd
 
     <div class="n-lbl">Mal qəbulunda görünsün</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Mal tapılanda hansı məlumat göstərilsin.</div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Alış qiyməti</div><button type="button" id="sw_gorAlis" class="n-sw" role="switch" onclick="tgl('gorAlis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Satış qiyməti</div><button type="button" id="sw_gorSatis" class="n-sw" role="switch" onclick="tgl('gorSatis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Anbar qalığı</div><button type="button" id="sw_gorQaliq" class="n-sw" role="switch" onclick="tgl('gorQaliq')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1;font-size:14px;font-weight:600;color:#0f172a">Son alınan tədarükçü</div><button type="button" id="sw_gorSonKont" class="n-sw" role="switch" onclick="tgl('gorSonKont')"></button></div></div>
     <div class="n-lbl">Qiymət düzəlişi</div><div class="n-card"><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Qiymətləri dəyişmək olar</div><div style="font-size:12px;color:#64748b;margin-top:2px">Söndürülsə alış və satış qiyməti görünür, amma dəyişdirilə bilməz. Yeni mala qiymət yazmaq olar.</div></div><button type="button" id="sw_qiyDeyis" class="n-sw" role="switch" aria-label="Qiymət düzəlişi" onclick="tgl('qiyDeyis')"></button></div></div>
+    <div class="n-lbl">Qiymət sənədində görünsün</div><div class="n-card"><div style="padding:0 2px 8px;font-size:12px;color:#64748b">Qiymət sənədində hansı xana və məlumat göstərilsin. Skan edilən mal birbaşa siyahıya düşür, təkrar skanda say artır.</div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Alış qiyməti</div></div><button type="button" id="sw_qsAlis" class="n-sw" role="switch" aria-label="Alış qiyməti" onclick="tgl('qsAlis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Satış qiyməti</div></div><button type="button" id="sw_qsSatis" class="n-sw" role="switch" aria-label="Satış qiyməti" onclick="tgl('qsSatis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Anbar qalığı</div></div><button type="button" id="sw_qsQaliq" class="n-sw" role="switch" aria-label="Anbar qalığı" onclick="tgl('qsQaliq')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Son alınan tədarükçü</div></div><button type="button" id="sw_qsSonKont" class="n-sw" role="switch" aria-label="Son alınan tədarükçü" onclick="tgl('qsSonKont')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Mənfəət (məbləğ və faiz)</div></div><button type="button" id="sw_qsMenfeet" class="n-sw" role="switch" aria-label="Mənfəət (məbləğ və faiz)" onclick="tgl('qsMenfeet')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Qiymətləri dəyişmək olar</div><div style="font-size:12px;color:#64748b;margin-top:2px">Söndürülsə qiymət görünür, amma dəyişdirilə bilməz.</div></div><button type="button" id="sw_qsQiyDeyis" class="n-sw" role="switch" aria-label="Qiymətləri dəyişmək olar" onclick="tgl('qsQiyDeyis')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Tarix xanası</div></div><button type="button" id="sw_qsTarix" class="n-sw" role="switch" aria-label="Tarix xanası" onclick="tgl('qsTarix')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Kontragent xanası</div></div><button type="button" id="sw_qsKont" class="n-sw" role="switch" aria-label="Kontragent xanası" onclick="tgl('qsKont')"></button></div><div class="n-f" style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#0f172a">Qeyd xanası</div></div><button type="button" id="sw_qsQeyd" class="n-sw" role="switch" aria-label="Qeyd xanası" onclick="tgl('qsQeyd')"></button></div></div>
 
     <div class="n-lbl">Çəki (tərəzi) malı</div><div class="n-card"><div class="n-f"><label for="cfgCekiPrefiks">Çəki barkodu başlıq kodu (prefiks)</label><input class="n-in" id="cfgCekiPrefiks" type="text" placeholder="22" inputmode="numeric" maxlength="2" onchange="cekiPrefiksSaxla()"></div><div style="padding:0 2px 10px;font-size:12px;color:#64748b;line-height:1.5">Bu kodla başlayan barkod çəki malı sayılır. Format: <b>PP+5rəqəm mal kodu + 5rəqəm çəki + 1 yoxlama</b>. Boş saxlasanız çəki tanınmaz.</div></div>
 
@@ -884,6 +887,7 @@ var OPS={
   sayim:{title:'Mal Sayımı',sk:'anbar_sayim',tc:'sayim-bg',sc:'sayim-bg',yeni:false,ep:'/terminal'},
   silinme:{title:'Mal Silinməsi',sk:'anbar_silinme',tc:'qaytarma-bg',sc:'qaytarma-bg',yeni:false,ep:'/terminal'},
   satis:{title:'Mal Satışı',sk:'anbar_satis',tc:'qebul-bg',sc:'qebul-bg',yeni:false,ep:'/terminal'},
+  qiymet:{title:'Qiymət Sənədi',sk:'anbar_qiymet',tc:'qiymet-bg',sc:'qiymet-bg',yeni:false,ep:'/terminal'},
   kassa_medaxil:{title:'Kassa mədaxil',ep:'/terminal'},
   kassa_mexaric:{title:'Kassa məxaric',ep:'/terminal'}
 };
@@ -970,10 +974,10 @@ function opUI(op){
   document.getElementById('opTitle').textContent=c.title;
   document.getElementById('opSub').textContent=CFG.anbarAd+' - '+mallar.length+' mal yüklü';
   [['opTopbar','topbar ',c.tc],['opStats','stats-strip ',c.sc],['btnElave','btn-elave ',op],['foundBadge','found-badge ',op],['cntPill','cnt-pill ',op],['totalHdr','total-hdr ',op],['btnGonder','btn-gonder ',op],['resultFound','result-found ',op]].forEach(function(a){document.getElementById(a[0]).className=a[1]+a[2];});
-  var qe=document.getElementById('qebulExtra');if(qe)qe.style.display=(op==='qebul'||op==='qaytarma'||op==='satis')?'flex':'none';
+  var qe=document.getElementById('qebulExtra');if(qe)qe.style.display=(op==='qebul'||op==='qaytarma'||op==='satis'||(op==='qiymet'&&qsXanaVar()))?'flex':'none';qsXanaTetbiq(op);
   var se=document.getElementById('sayimExtra');if(se)se.style.display=(op==='sayim')?'block':'none';
   var bbm=document.getElementById('btnBarkodsuzMal');if(bbm)bbm.style.display=(OPS[op]&&OPS[op].yeni)?'':'none';
-  if(op==='qebul')ktYukle();
+  if(alisKimi(op))ktYukle();
   if(op==='sayim')qrupYukle2();
   hideAll();updBS('','');
   var eb=document.getElementById('elBarkod');if(eb)eb.value='';
@@ -1211,9 +1215,10 @@ function scanEt(v){
       curMal=m;qty=cekiSay;
       var qel=document.getElementById('qtyInp');if(qel)qel.value=fq(cekiSay);
       if(curOp==='sayim'){sayimOxu(m,cekiSay);return;}
+      if(curOp==='qiymet'){qiymetOxu(m,cekiSay);return;}
       snd('tap');showFound(m);return;
     }
-    if(curOp==='sayim'){sayimOxu(m);return}snd('tap');curMal=m;showFound(m);
+    if(curOp==='sayim'){sayimOxu(m);return}if(curOp==='qiymet'){qiymetOxu(m);return}snd('tap');curMal=m;showFound(m);
   }
   else{curMal=null;if(OPS[curOp].yeni){snd('yeni');showNew(v);}else{beep(false);showNFW(v);}}
 }
@@ -1268,18 +1273,18 @@ function showFound(m){
   document.getElementById('rAlis').textContent=fp(m.alis);
   document.getElementById('rSatis').textContent=fp(m.satis);
   // Görünmə ayarları (default açıq)
-  var gA=(CFG.gorAlis!==false),gS=(CFG.gorSatis!==false),gQ=(CFG.gorQaliq!==false);
+  var gA=(gor('Alis')),gS=(gor('Satis')),gQ=(gor('Qaliq'));
   var ac=document.getElementById('rAlisChip');if(ac)ac.style.display=gA?'':'none';
   var sc=document.getElementById('rSatisChip');if(sc)sc.style.display=gS?'':'none';
   var rq=document.getElementById('rQaliq');
   if(rq){
-    if(curOp==='qebul'&&gQ){rq.textContent='Anbar qalığı: '+fq(m.qaliq||0)+(m.unit?' '+m.unit:'');rq.style.display='block';}
+    if(alisKimi(curOp)&&gQ){rq.textContent='Anbar qalığı: '+fq(m.qaliq||0)+(m.unit?' '+m.unit:'');rq.style.display='block';}
     else rq.style.display='none';
   }
   // Son alınan tədarükçü (qəbulda, ayar açıqdırsa)
   var rsk=document.getElementById('rSonKont');
   if(rsk){
-    if(curOp==='qebul'&&CFG.gorSonKont!==false&&m.sonKont&&m.sonKont.trim()){
+    if(alisKimi(curOp)&&gor('SonKont')&&m.sonKont&&m.sonKont.trim()){
       rsk.textContent='Son dəfə alınıb: '+m.sonKont;rsk.style.display='block';
     }else rsk.style.display='none';
   }
@@ -1315,7 +1320,7 @@ function showNew(b){
 }
 
 function showNFW(b){
-  var nm={qaytarma:'Mal Qaytarma',sayim:'Mal Sayımı',silinme:'Mal Silinməsi',satis:'Mal Satışı'};
+  var nm={qaytarma:'Mal Qaytarma',sayim:'Mal Sayımı',silinme:'Mal Silinməsi',satis:'Mal Satışı',qiymet:'Qiymət Sənədi'};
   document.getElementById('nfwBc').textContent=b;
   document.getElementById('nfwSub').textContent=(nm[curOp]||'')+' əməliyyatında yeni mal olmaz';
   document.getElementById('nfWarn').style.display='block';
@@ -1363,8 +1368,8 @@ function malSecRender(){
           '<div class="mi-sub">'+esc((m.barkod||'')+(m.unit?' - '+m.unit:''))+'</div>'+
         '</div>'+
         '<div style="text-align:right;flex-shrink:0;margin-left:8px">'+
-          (CFG.gorSatis!==false?'<div style="font-size:12px;font-weight:700;color:var(--g1)">'+fp(m.satis)+'</div>':'')+
-          (CFG.gorAlis!==false?'<div style="font-size:11px;color:var(--a2)">A:'+fp(m.alis)+'</div>':'')+
+          (gor('Satis')?'<div style="font-size:12px;font-weight:700;color:var(--g1)">'+fp(m.satis)+'</div>':'')+
+          (gor('Alis')?'<div style="font-size:11px;color:var(--a2)">A:'+fp(m.alis)+'</div>':'')+
         '</div>'+
       '</div>';
     });
@@ -1391,6 +1396,7 @@ function malSecRender(){
 function malSecSec(m){
   modalBagla('mMalSec');
   var axtEl=document.getElementById('malSecAxt');if(axtEl)axtEl.value='';
+  if(curOp==='qiymet'){qiymetOxu(m);return;}
   var inS=siyahi.find(function(x){return x.barkod===m.barkod&&x.ad===m.ad;});
   if(inS)showUpdate(inS);else{curMal=m;showFound(m);}
 }
@@ -1667,7 +1673,10 @@ function editSaxla(b){
 }
 
 // Qiymət düzəlişi icazəsi (Ayarlar). Bağlıdırsa mövcud malların qiyməti görünür, amma dəyişmir. Yeni mal istisnadır.
-function qKilid(it){return CFG.qiyDeyis===false&&!(it&&it.yeni)}
+function qKilid(it){return CFG[curOp==='qiymet'?'qsQiyDeyis':'qiyDeyis']===false&&!(it&&it.yeni)}
+// Görünmə ayarı: Qiymət sənədində qs*, qalan sənədlərdə gor* (default açıq)
+function gor(k){return curOp==='qiymet'?CFG['qs'+k]!==false:CFG['gor'+k]!==false}
+function alisKimi(op){return op==='qebul'||op==='qiymet'}
 function qLk(it){return qKilid(it)?' readonly tabindex="-1" style="background:#f1f5f9;color:#64748b;cursor:not-allowed"':''}
 
 function editLegv(){editB=null;render();}
@@ -1709,7 +1718,7 @@ function render(){
   var t=tots();
   document.getElementById('stMovqe').textContent=t.movqe;
   document.getElementById('stYeni').textContent=t.yeni;
-  var _stA=document.getElementById('stAlis');if(_stA){_stA.textContent=t.alis.toFixed(2)+' ₼';var _stAp=_stA.closest('.stat-pill');if(_stAp)_stAp.style.display=(CFG.gorAlis!==false)?'':'none';}
+  var _stA=document.getElementById('stAlis');if(_stA){_stA.textContent=t.alis.toFixed(2)+' ₼';var _stAp=_stA.closest('.stat-pill');if(_stAp)_stAp.style.display=(gor('Alis'))?'':'none';}
   sayimHook(t);
   document.getElementById('cntPill').textContent=t.movqe+' mal';
   var oqlen=lj('anbar_outbox',[]).length;
@@ -1728,8 +1737,8 @@ function render(){
   document.getElementById('tMovqe').textContent=t.movqe;
   document.getElementById('tSay').textContent=t.tSay;
   document.getElementById('tYeni').textContent=t.yeni;
-  var _tA=document.getElementById('tAlis');if(_tA){_tA.textContent=t.alis.toFixed(2)+' ₼';var _tAr=_tA.closest('.trow');if(_tAr)_tAr.style.display=(CFG.gorAlis!==false)?'':'none';}
-  var _tS=document.getElementById('tSatis');if(_tS){_tS.textContent=t.satis.toFixed(2)+' ₼';var _tSr=_tS.closest('.trow');if(_tSr)_tSr.style.display=(CFG.gorSatis!==false)?'':'none';}
+  var _tA=document.getElementById('tAlis');if(_tA){_tA.textContent=t.alis.toFixed(2)+' ₼';var _tAr=_tA.closest('.trow');if(_tAr)_tAr.style.display=(gor('Alis'))?'':'none';}
+  var _tS=document.getElementById('tSatis');if(_tS){_tS.textContent=t.satis.toFixed(2)+' ₼';var _tSr=_tS.closest('.trow');if(_tSr)_tSr.style.display=(gor('Satis'))?'':'none';}
   sayimYekun();
   var html='';
   siyahi.forEach(function(item,i){
@@ -1744,7 +1753,7 @@ function render(){
         '<div class="mal-info">'+
           '<div class="mal-ad">'+esc(item.ad)+'</div>'+
           '<div class="mal-meta">'+
-            (curOp==='sayim'?sayimChips(item):('<span class="chip chip-say">'+fq(item.say)+' ed</span>'+(CFG.gorAlis!==false?'<span class="chip chip-alis">A:'+fp(item.alis)+'</span>':'')+(CFG.gorSatis!==false?'<span class="chip chip-satis">S:'+fp(item.satis)+'</span>':'')+((curOp==='qebul'&&!isY&&CFG.gorQaliq!==false)?qebulQaliqChip(item):'')))+
+            (curOp==='sayim'?sayimChips(item):('<span class="chip chip-say">'+fq(item.say)+' ed</span>'+(gor('Alis')?'<span class="chip chip-alis">A:'+fp(item.alis)+'</span>':'')+(gor('Satis')?'<span class="chip chip-satis">S:'+fp(item.satis)+'</span>':'')+((alisKimi(curOp)&&!isY&&gor('Qaliq'))?qebulQaliqChip(item):'')))+
             (isY?'<span class="chip chip-yeni">Yeni</span>':'')+
           '</div>'+
         '</div>'+
@@ -1777,12 +1786,12 @@ function render(){
         '<div class="ep-grid">'+
           '<div class="ep-fld"><label class="ep-lbl">SAY</label>'+
           '<input class="ep-inp" id="ep_say_'+bid+'" type="text" value="'+item.say+'" inputmode="decimal"></div>'+
-          (CFG.gorAlis!==false?('<div class="ep-fld ep-pr"><label class="ep-lbl">ALIŞ ₼</label>'+
+          (gor('Alis')?('<div class="ep-fld ep-pr"><label class="ep-lbl">ALIŞ ₼</label>'+
           '<input class="ep-inp" id="ep_alis_'+bid+'"'+qLk(item)+' type="number" step="0.01" value="'+parseFloat(item.alis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'):'')+
-          (CFG.gorSatis!==false?('<div class="ep-fld ep-pr"><label class="ep-lbl">SATIŞ ₼</label>'+
+          (gor('Satis')?('<div class="ep-fld ep-pr"><label class="ep-lbl">SATIŞ ₼</label>'+
           '<input class="ep-inp" id="ep_satis_'+bid+'"'+qLk(item)+' type="number" step="0.01" value="'+parseFloat(item.satis).toFixed(2)+'" inputmode="decimal" oninput="menfeetYenile(\''+bs+'\')"></div>'):'')+
         '</div>'+
-        ((curOp==='qebul'&&CFG.gorAlis!==false&&CFG.gorSatis!==false)?('<div id="ep_menfeet_'+bid+'" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;margin-bottom:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;font-size:12.5px">'+menfeetHTML(item.alis,item.satis)+'</div>'):'')+
+        (((curOp==='qebul'||(curOp==='qiymet'&&CFG.qsMenfeet!==false))&&gor('Alis')&&gor('Satis'))?('<div id="ep_menfeet_'+bid+'" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;margin-bottom:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;font-size:12.5px">'+menfeetHTML(item.alis,item.satis)+'</div>'):'')+
         (qLk(item)?'<div style="font-size:11.5px;color:#64748b;margin:0 0 6px">🔒 Qiymətləri dəyişmək icazəsi yoxdur</div>':'')+
         '<div class="ep-btns">'+
           '<button class="btn-ep-s" onclick="editSaxla(\''+bs+'\')">&#10003; Saxla</button>'+
@@ -1800,7 +1809,7 @@ function render(){
 var sending=false;
 function secimOxu(){
   function gv(id){var el=document.getElementById(id);return el?el.value:'';}
-  var q=(curOp==='qebul'||curOp==='qaytarma'||curOp==='satis');
+  var q=(curOp==='qebul'||curOp==='qaytarma'||curOp==='satis'||curOp==='qiymet');
   return{ted:q?gv('qebulKontragent'):'',tar:q?(gv('qebulTarix')||bugunStr()):bugunStr(),qeyd:q?gv('qebulQeyd'):''};
 }
 function docCur(){
@@ -1836,9 +1845,9 @@ function cixis(){var op=curOp||curGirisOp;siyahi=[];curDraftId=null;curEditNo=nu
 function gondereHazirla(){
   if(!siyahi.length)return;
   var t=tots(),h=secimOxu();
-  var html='<div style="display:flex;flex-direction:column;gap:8px">'+sat('Əməliyyat',OPS[curOp].title)+(curEditNo?sat('Redaktə','#'+curEditNo):'')+sat('Anbar',CFG.anbarAd)+sat('Mövqe',t.movqe)+sat('Ümumi say',fq(t.tSay)+' ed')+sat('Alış cəmi',t.alis.toFixed(2)+' ₼');
-  if(curOp==='qebul'||curOp==='qaytarma'||curOp==='satis'){html+=sat('Tarix',h.tar)+(h.ted?sat('Kontragent',h.ted):'')+(h.qeyd?sat('Qeyd',h.qeyd):'');
-    if(!h.ted)html+='<div style="background:var(--a4);border-radius:8px;padding:8px;font-size:12px;color:var(--a1);font-weight:600">⚠ Kontragent seçilməyib</div>';}
+  var html='<div style="display:flex;flex-direction:column;gap:8px">'+sat('Əməliyyat',OPS[curOp].title)+(curEditNo?sat('Redaktə','#'+curEditNo):'')+sat('Anbar',CFG.anbarAd)+sat('Mövqe',t.movqe)+sat('Ümumi say',fq(t.tSay)+' ed')+(gor('Alis')?sat('Alış cəmi',t.alis.toFixed(2)+' ₼'):'');
+  if(curOp==='qebul'||curOp==='qaytarma'||curOp==='satis'||curOp==='qiymet'){html+=sat('Tarix',h.tar)+(h.ted?sat('Kontragent',h.ted):'')+(h.qeyd?sat('Qeyd',h.qeyd):'');
+    if(!h.ted&&!(curOp==='qiymet'&&CFG.qsKont===false))html+='<div style="background:var(--a4);border-radius:8px;padding:8px;font-size:12px;color:var(--a1);font-weight:600">⚠ Kontragent seçilməyib</div>';}
   if(t.yeni)html+='<div style="background:var(--r4);border-radius:8px;padding:8px;font-size:12px;color:var(--r2);font-weight:600">⚠ '+t.yeni+' yeni mal 1C-də yaradılacaq</div>';
   document.getElementById('gonderOzet').innerHTML=html+'</div>';
   modalAc('mGonder');
@@ -2034,12 +2043,12 @@ function opGiris(op){
 }
 
 function qaimeListYukle(){
-  var op=curGirisOp,adlar={qebul:'Mal Qəbulu',qaytarma:'Mal Qaytarma',sayim:'Mal Sayımı',silinme:'Mal Silinməsi',satis:'Mal Satışı'};
+  var op=curGirisOp,adlar={qebul:'Mal Qəbulu',qaytarma:'Mal Qaytarma',sayim:'Mal Sayımı',silinme:'Mal Silinməsi',satis:'Mal Satışı',qiymet:'Qiymət Sənədi'};
   var T=document.getElementById('qaimeListTitle');if(T)T.textContent=adlar[op];
   var sub=document.getElementById('qaimeListSub');if(sub)sub.textContent='Göndərilməmiş qaimələr';
   var tb=document.querySelector('#sQaimeList .topbar');if(tb)tb.className='topbar '+(OPS[op]&&OPS[op].tc||'qebul-bg');
   var yb=document.getElementById('btnYeniQaime');
-  if(yb)yb.style.background={qebul:'var(--g2)',qaytarma:'var(--r2)',sayim:'var(--b3)',silinme:'var(--r2)',satis:'var(--g2)'}[op];
+  if(yb)yb.style.background={qebul:'var(--g2)',qaytarma:'var(--r2)',sayim:'var(--b3)',silinme:'var(--r2)',satis:'var(--g2)',qiymet:'var(--p1)'}[op];
   var list=lj('anbar_drafts',[]).filter(function(d){return d.op===op;}).map(function(d){d.draft=true;return d;})
     .concat(lj('anbar_outbox',[]).filter(function(d){return d.op===op;}).map(function(d){d.offline=true;d.draft=false;return d;}));
   var cnt=document.getElementById('qaimeListCnt');if(cnt)cnt.textContent=list.length;
@@ -2275,7 +2284,7 @@ var _pd0=paramDoldur;paramDoldur=function(){_pd0();var a=document.getElementById
 var _cs0=cfgSaxla;cfgSaxla=function(){_cs0();var e=document.getElementById('cfgAcar');if(e){CFG.acar=e.value.trim();sj('anbar_cfg',CFG);menuGor()}};
 function tgl(k){
   // Default-açıq açarlar (undefined = açıq): ilk basış söndürsün
-  if(k==='miAlis'||k==='miSatis'||k==='miQaliq'||k==='avtoQiymet'||k==='gorAlis'||k==='gorSatis'||k==='gorQaliq'||k==='gorSonKont'||k==='qiyDeyis'){CFG[k]=(CFG[k]===false);if(k==='qiyDeyis'){editB=null;try{if(curOp)render()}catch(e){}}}
+  if(k.indexOf('qs')===0||k==='miAlis'||k==='miSatis'||k==='miQaliq'||k==='avtoQiymet'||k==='gorAlis'||k==='gorSatis'||k==='gorQaliq'||k==='gorSonKont'||k==='qiyDeyis'){CFG[k]=(CFG[k]===false);if(k==='qiyDeyis'||k==='qsQiyDeyis'){editB=null;try{if(curOp)render()}catch(e){}}}
   else{CFG[k]=!CFG[k];}
   sj('anbar_cfg',CFG);paramDoldur();if(k==='ekran')wakeTetbiq();if(k==='bat')batIzle();if(k==='kamera')kameraDuymeleriGoster()}
 // ── Kamera formatları ──
@@ -2371,7 +2380,7 @@ function kameraDuymeleriGoster(){
 }
 function faylDeyis(){tgl('fayl')}
 function secim(k,v){CFG[k]=v;sj('anbar_cfg',CFG);if(k==='dil'){LNG=v;trApply();durumUI();modUI()}paramDoldur()}
-function dubl(x){var r=CFG.dubl||'sorus';if(curOp==='sayim')r='artir';
+function dubl(x){var r=CFG.dubl||'sorus';if(curOp==='sayim'||curOp==='qiymet')r='artir';
   if(r==='artir'){x.say=(x.say||0)+1;snd('tekrar');toast(x.ad+': '+x.say,'ok');ustuQaldir(x);return}
   if(r==='xeber'){snd('tekrar');toast(t('Bu mal artıq siyahıdadır'),'warn');return}
   snd('tekrar');showUpdate(x)}
@@ -2510,6 +2519,7 @@ var BOLMELER=[
   {k:'sayim',ad:'Mal sayımı'},
   {k:'silinme',ad:'Mal silinməsi'},
   {k:'satis',ad:'Mal satışı'},
+  {k:'qiymet',ad:'Qiymət sənədi'},
   {k:'tarix',ad:'Qaimə tarixçəsi'},
   {k:'malinfo',ad:'Mal məlumatı'},
   {k:'kassa_medaxil',ad:'Kassa mədaxil'},
@@ -2805,6 +2815,33 @@ var _td9=tarixDetalAc;tarixDetalAc=function(idx){_td9(idx);var cont=document.get
 var _ql9=qaimeListDetalAc;qaimeListDetalAc=function(idx){_ql9(idx);var cont=document.getElementById('qaimeListCont'),h=cont&&cont._qaimeData?cont._qaimeData[idx]:null;if(!h||!h.offline)return;
   var g=document.querySelector('#qaimeModalBody > div:last-child');if(!g)return;
   g.insertAdjacentHTML('beforeend','<div style="grid-column:1/-1">'+bH('btnQlDuz','✏️ Düzəliş et','width:100%;background:var(--b3);color:#fff')+'</div>');document.getElementById('btnQlDuz').onclick=function(){modalBagla('mQaime');gozleyenDuzelis(h.id)}};
+</script>
+<script>
+// ═══ v3.15.0: Qiymət sənədi — alış kimi, yeni mal yoxdur; skan birbaşa siyahıya, təkrar skan +1 ═══
+function qiymetOxu(m,cekiSay){
+  var elave=(cekiSay!=null)?cekiSay:1;
+  var ex=siyahi.find(function(x){return x.barkod===m.barkod&&(x.code||'')===(m.code||'')});
+  if(ex){ex.say=Math.round(((parseFloat(ex.say)||0)+elave)*1000)/1000;toast(ex.ad+': '+fq(ex.say),'ok');}
+  else{siyahi.unshift({barkod:m.barkod,ad:m.ad,say:elave,alis:m.alis,satis:m.satis,yeni:false,code:m.code||''});toast(m.ad+': '+fq(elave),'ok');}
+  snd(ex?'tekrar':'tap');hideAll();
+  var eb=document.getElementById('elBarkod');if(eb)eb.value='';
+  ustuQaldir(ex||siyahi[0]);
+}
+function qsXanaVar(){return CFG.qsTarix!==false||CFG.qsKont!==false||CFG.qsQeyd!==false}
+function qsXanaTetbiq(op){
+  var q=(op==='qiymet');
+  var t=document.getElementById('qebulTarix'),k=document.getElementById('qebulKontragent'),n=document.getElementById('qebulQeyd');
+  var tw=t&&t.parentElement,kw=k&&k.parentElement&&k.parentElement.parentElement,nw=n&&n.parentElement;
+  if(tw)tw.style.display=(q&&CFG.qsTarix===false)?'none':'';
+  if(kw)kw.style.display=(q&&CFG.qsKont===false)?'none':'';
+  if(nw)nw.style.display=(q&&CFG.qsQeyd===false)?'none':'';
+  var g=tw&&tw.parentElement;if(g)g.style.gridTemplateColumns=(q&&(CFG.qsTarix===false||CFG.qsKont===false))?'1fr':'1fr 1fr';
+}
+(function(){var _pdQ=paramDoldur;paramDoldur=function(){_pdQ();
+  ['qsAlis','qsSatis','qsQaliq','qsSonKont','qsMenfeet','qsQiyDeyis','qsTarix','qsKont','qsQeyd'].forEach(function(k){var on=(CFG[k]!==false);var w=document.getElementById('sw_'+k);if(w){w.className='n-sw'+(on?' on':'');w.setAttribute('aria-checked',on?'true':'false')}});
+  if(curOp==='qiymet'){try{opUIqs()}catch(e){}}
+}})();
+function opUIqs(){var qe=document.getElementById('qebulExtra');if(qe)qe.style.display=qsXanaVar()?'flex':'none';qsXanaTetbiq('qiymet');render();}
 </script>
 </body>
 </html>
